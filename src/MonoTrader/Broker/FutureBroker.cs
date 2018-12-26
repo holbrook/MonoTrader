@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoTrader.Market
+namespace MonoTrader.Broker
 {
-    class Orderbook
+    class FutureBroker
     {
     }
 }
