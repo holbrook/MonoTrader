@@ -8,12 +8,34 @@ namespace MonoTrader.Base
 {
     public abstract class PositionBase
     {
-        //        order_book_id str 合约代码
-        //quantity    int 当前持仓股数
-        //pnl float 持仓累计盈亏
-        //sellable int 该仓位可卖出股数。T＋1的市场中sellable = 所有持仓-今日买入的仓位
-        //market_value    float 获得该持仓的实时市场价值
-        //value_percent float 获得该持仓的实时市场价值在总投资组合价值中所占比例，取值范围[0, 1]
-        //avg_price   float 平均建仓成本
+        
+
+        /// <summary>
+        /// 持仓累计盈亏
+        /// </summary>
+        public float Profit { get; set; }
+
+        /// <summary>
+        /// 持仓市值
+        /// </summary>
+        public float MarketValue { get; set; }
+
+        /// <summary>
+        /// 平均成本
+        /// </summary>
+        public float AvgPrice { get; set; }
+        
+        /// <summary>
+        /// 当前持仓
+        /// </summary>
+        public int Quantity { get; set; }
+
+        /// <summary>
+        /// 今仓。对于T+1股票，可用=持仓-今仓
+        /// </summary>
+        public int TodayQuantity { get; set; }
+
+
+
     }
 }

@@ -4,27 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoTrader.Order
+namespace MonoTrader.Base
 {
 
     public enum OrderStatus
     {
-        /*
-         * PENDING_NEW	待报
-ACTIVE	可撤
-FILLED	全成
-PENDING_CANCEL	待撤
-CANCELLED	已撤
-REJECTED	拒单
-*/
+        NEW = 0,                         //未报
+        PENDING = 1,                             //正报，待报
+        ACTIVE = 2,                           //已报，可撤
+        FILLED = 3,                           //全成
+        PENDING_CANCEL = 4,                              //待撤：已报待撤，部成待撤
+        CANCELLED = 5,                                      //已撤
+        PARTIALLY_CANCELLED = 6,                                  //部撤，部成已撤                                
+        REJECTED = 7                                               //废单，拒单
     }
 
     public enum OrderSide
     {
-        /*
-         * BUY	买
-SELL	卖
-*/
+        /// <summary>
+        /// 买
+        /// </summary>
+        BUY =1 ,
+
+        /// <summary>
+        /// 卖
+        /// </summary>
+        SELL =2
     }
 
     public enum POSITION_EFFECT - 开平

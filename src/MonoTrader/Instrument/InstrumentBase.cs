@@ -37,7 +37,7 @@ namespace MonoTrader.Instrument
         /// <summary>
         /// 证券代码
         /// </summary>
-        public string Code { get; set; }
+        public string InstrumentID { get; set; }
 
         /// <summary>
         /// 证券简称

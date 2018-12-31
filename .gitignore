@@ -1,2 +1,9 @@
 **/.vs
 **/obj
+
+*.nupkg
+
+**/packages
+*.suo
+*.user
+*.sln.docstates

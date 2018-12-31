@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoTrader.Broker
+namespace MonoTrader.Base
 {
-    interface IBroker
+    /// <summary>
+    /// 一个标记接口(Mark Interface)
+    /// </summary>
+    public interface IBroker
     {
     }
 }

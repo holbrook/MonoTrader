@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MonoTrader.Broker
 {
+    /// <summary>
+    /// 投资组合
+    /// </summary>
     public class Portfolio
     {
 //        cash float 可用资金，为子账户可用资金的加总

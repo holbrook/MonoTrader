@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace MonoTrader.Stock
 {
-    public class Account:AccountBase
+    public class Account:AccountBase<Position>
     {
-        public Dictionary<string, Position> Positions { get; set; }
+        /// <summary>
+        /// 未到账的应收分红
+        /// </summary>
+        public float DividendReceivable { get; set; }
     }
 }
