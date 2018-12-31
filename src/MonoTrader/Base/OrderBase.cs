@@ -32,20 +32,35 @@ namespace MonoTrader.Base
         SELL =2
     }
 
-    public enum POSITION_EFFECT - 开平
-枚举值 说明
-OPEN    开仓
-CLOSE   平仓
+    public enum OrderType
+    {
+        /// <summary>
+        /// 市价单
+        /// </summary>
+        MARKET = 1,
 
-        public enum ORDER_TYPE - 订单类型
-枚举值 说明
-MARKET  市价单
-LIMIT   限价单
+        /// <summary>
+        /// 限价单
+        /// </summary>
+        LIMIT =2
+    }
+
+
+
 
     public abstract class OrderBase
     {
-//        order_id int 唯一标识订单的id
-//order_book_id str 合约代码
+        /// <summary>
+        /// 唯一标识订单的id
+        /// </summary>
+        public string OrderID { get; set; }
+
+        /// <summary>
+        /// 合约代码
+        /// </summary>
+        public string InstrumentID { get; set; }
+
+
 //datetime    datetime.datetime 订单创建时间
 //side SIDE    订单方向
 //price   float 订单价格，只有在订单类型为'限价单'的时候才有意义
