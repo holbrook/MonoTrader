@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -49,31 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\FutureAccount.cs" />
-    <Compile Include="Account\FuturePosition.cs" />
-    <Compile Include="Account\Portfolio.cs" />
-    <Compile Include="Base\AccountBase.cs" />
-    <Compile Include="Base\PositionBase.cs" />
-    <Compile Include="Broker\Broker.cs" />
-    <Compile Include="Broker\FutureBroker.cs" />
-    <Compile Include="Broker\IBroker.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="Instrument\ETF.cs" />
-    <Compile Include="Instrument\Future.cs" />
-    <Compile Include="Instrument\Index.cs" />
-    <Compile Include="Instrument\InstrumentBase.cs" />
-    <Compile Include="Instrument\Stock.cs" />
-    <Compile Include="IStrategy.cs" />
-    <Compile Include="Market\Bar.cs" />
-    <Compile Include="Market\Tick.cs" />
-    <Compile Include="Order\OrderBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stock\Account.cs" />
-    <Compile Include="Stock\Position.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Risk\" />
-    <Folder Include="Strategy\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

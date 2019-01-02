@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F1E2B7B5-E1BD-4D19-B646-BEFCC4B634AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MonoTrade</RootNamespace>
+    <AssemblyName>MonoTrade</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Base\AccountBase.cs" />
+    <Compile Include="Base\IBroker.cs" />
+    <Compile Include="Base\OrderBase.cs" />
+    <Compile Include="Base\PositionBase.cs" />
+    <Compile Include="Broker\Broker.cs" />
+    <Compile Include="Broker\FutureBroker.cs" />
+    <Compile Include="Future\Account.cs" />
+    <Compile Include="Future\BiPosition.cs" />
+    <Compile Include="Future\Order.cs" />
+    <Compile Include="Future\Position.cs" />
+    <Compile Include="Instrument\ETF.cs" />
+    <Compile Include="Instrument\Future.cs" />
+    <Compile Include="Instrument\Index.cs" />
+    <Compile Include="Instrument\InstrumentBase.cs" />
+    <Compile Include="Instrument\Stock.cs" />
+    <Compile Include="Market\Bar.cs" />
+    <Compile Include="Market\Tick.cs" />
+    <Compile Include="Stock\Account.cs" />
+    <Compile Include="Stock\IBroker.cs" />
+    <Compile Include="Stock\Position.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="IStrategy.cs" />
+    <Compile Include="Portfolio.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\" />
+    <Folder Include="Broker\" />
+    <Folder Include="Future\" />
+    <Folder Include="Instrument\" />
+    <Folder Include="Market\" />
+    <Folder Include="Stock\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -6,11 +6,22 @@ using System.Threading.Tasks;
 
 namespace MonoTrader.Market
 {
-    class Bar
+    public class Bar
     {
-//        order_book_id str 合约代码
+        /// <summary>
+        /// 证券代码
+        /// </summary>
+        public string InstrumentID { get; set; }
+
+        /// <summary>
+        /// 时间戳
+        /// </summary>
+        public DateTime Timestamp { get; set; }
+
+
+
 //symbol  str 合约简称
-//datetime datetime.datetime   时间戳
+
 //open    float 开盘价
 //close   float 收盘价
 //high    float 最高价

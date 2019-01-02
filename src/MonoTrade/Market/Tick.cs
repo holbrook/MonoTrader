@@ -9,14 +9,14 @@ namespace MonoTrader.Market
     public class Tick
     {
         /// <summary>
-        /// 合约代码
+        /// 证券代码
         /// </summary>
-        public string Code { get; set; }
+        public string InstrumentID { get; set; }
 
         /// <summary>
         /// 当前快照数据的时间戳
         /// </summary>
-        public DateTime TimeStamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         /// <summary>
         /// 当日开盘价
@@ -33,9 +33,12 @@ namespace MonoTrader.Market
         /// </summary>
         public float Low { get; set; }
 
+        /// <summary>
+        /// 最新价
+        /// </summary>
+        public float Last { get; set; }
 
 
-//        last float 当前最新价
 //prev_settlement float 昨日结算价
 //prev_close float 昨日收盘价
 //volume float 截止到当前的成交量
