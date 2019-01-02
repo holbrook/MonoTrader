@@ -54,6 +54,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="IStrategy.cs" />
     <Compile Include="Portfolio.cs" />
+    <Compile Include="Stock\Command\OrderSharesCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />
@@ -62,6 +63,7 @@
     <Folder Include="Instrument\" />
     <Folder Include="Market\" />
     <Folder Include="Stock\" />
+    <Folder Include="Stock\Command\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
