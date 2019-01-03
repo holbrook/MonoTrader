@@ -1,5 +1,5 @@
 ﻿using System;
-using MonoTrader.Base;
+using Tangle.Trading.Base;
 
 namespace MonoTrade.Stock.Command
 {

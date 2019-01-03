@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoTrader.Base
+namespace Tangle.Trading.Base
 {
     public abstract class PositionBase
     {
