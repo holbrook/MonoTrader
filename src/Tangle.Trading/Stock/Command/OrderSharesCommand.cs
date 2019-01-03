@@ -5,6 +5,7 @@ namespace MonoTrade.Stock.Command
 {
     /// <summary>
     /// 指定股数交易（股票专用）
+    /// 返回订单号
     /// </summary>
     public class OrderSharesCommand
     {
