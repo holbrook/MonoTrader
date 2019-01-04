@@ -1,0 +1,35 @@
+#如果要注释掉某行，请在行首用“#”号(半角)，如此行。
+[Gateway]
+#IP为网关的地址，PORT为网关对外围的端口号。
+IP1=192.168.1.185
+PORT1=7022
+
+IP2=192.168.1.185
+PORT2=7023
+
+TIMEOUT=10000           #连接网关（GEND)的超时时间，单位：毫秒
+QUERYTIMEOUT=60000     #查询TIMEOUT时间，单位毫秒
+
+#是否记录日志，0-只记录异常日志，其他表示记录全部日志，缺省值为0
+LOGFLAG=1
+
+LOGHISTORYFILEKEEPDAYS
+[SSL]
+PERMITSSL=0
+(0-不支持SSL，1-支持SSL)
+
+VERSION=3
+(1-TLSv1,2=SSLv2,3=SSLv3)
+
+ROOTCERTF=D:\Test\ca.crt
+(根证书路径及文件名)
+
+LOCALCERTF=D:\Test\client.crt
+(客户端证书路径及文件名)
+
+LOCALKEYF=D:\Test\client.key
+(客户端私钥路径及文件名)
+
+
+     
+
