@@ -1,11 +1,10 @@
-﻿using Tangle.Trading.Broker;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoTrader
+namespace Tangle.Trading
 {
     /// <summary>
     /// 策略上下文
