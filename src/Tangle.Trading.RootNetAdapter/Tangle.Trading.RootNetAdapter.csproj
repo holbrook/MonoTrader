@@ -54,9 +54,38 @@
     <Compile Include="IRootNetBroker.cs" />
     <Compile Include="RootNetBroker.cs" />
     <Compile Include="RNField.cs" />
+    <Compile Include="RTSubscribeAPI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="3rd\config_模板.ini" />
+    <None Include="3rd\config.ini" />
+    <None Include="3rd\CrootMQ.dll" />
+    <None Include="3rd\gwconfig_模板.inf" />
+    <None Include="3rd\gwconfig.inf" />
+    <None Include="3rd\gwdict.txt" />
+    <None Include="3rd\GWDPApi.dll" />
+    <None Include="3rd\GWDPApi.lib" />
+    <None Include="3rd\GWDPApiCS.dll" />
+    <None Include="3rd\GWDPApiInternal.dll" />
+    <None Include="3rd\gwfuncid.dat" />
+    <None Include="3rd\libeay32.dll" />
+    <None Include="3rd\libeay32.lib" />
+    <None Include="3rd\mfc100.dll" />
+    <None Include="3rd\msvcp100.dll" />
+    <None Include="3rd\msvcr100.dll" />
+    <None Include="3rd\RTSubscApi.dll" />
+    <None Include="3rd\RTSubscApi.lib" />
+    <None Include="3rd\ssleay32.dll" />
+    <None Include="3rd\ssleay32.lib" />
+    <None Include="3rd\StructData.inf" />
+    <None Include="3rd\TerminalInfoAPI.dll" />
+    <None Include="3rd\TestGWDPApi.exe" />
+    <None Include="3rd\TestGWDPApiCS副本.exe" />
+    <None Include="3rd\VC2010CallsRTSubscAPI.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="3rd\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
