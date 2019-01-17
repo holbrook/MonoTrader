@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoTrader.Future
+namespace Tangle.Trading.Future
 {
     /// <summary>
     /// 期货双向持仓汇总

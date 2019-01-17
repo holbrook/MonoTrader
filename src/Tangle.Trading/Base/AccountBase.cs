@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Tangle.Trading.Base
 {
+    public abstract class AccountBase
+    { }
     /// <summary>
     /// 账户的基类
     /// </summary>
