@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Tangle.Trading.Base
 {
 
-    public enum OrderStatus
+    public enum ORDER_STATUS
     {
         NEW = 0,                         //未报
         PENDING = 1,                             //正报，待报
@@ -19,7 +19,7 @@ namespace Tangle.Trading.Base
         REJECTED = 7                                               //废单，拒单
     }
 
-    public enum OrderSide
+    public enum ORDER_SIDE
     {
         /// <summary>
         /// 买
@@ -32,7 +32,7 @@ namespace Tangle.Trading.Base
         SELL =2
     }
 
-    public enum OrderType
+    public enum ORDER_TYPE
     {
         /// <summary>
         /// 市价单

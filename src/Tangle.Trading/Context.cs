@@ -12,5 +12,6 @@ namespace Tangle.Trading
     public class Context
     {
         public Portfolio Portfolio { get; set; }
+        public Tangle.Trading.Stock.Account StockAccount { get; set; }
     }
 }

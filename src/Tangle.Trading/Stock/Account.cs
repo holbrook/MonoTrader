@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoTrader.Stock
+namespace Tangle.Trading.Stock
 {
     public class Account:AccountBase<Position>
     {
