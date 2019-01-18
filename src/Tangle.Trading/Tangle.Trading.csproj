@@ -72,7 +72,7 @@
     <Compile Include="StrategyMarketDataExtensions.cs" />
     <Compile Include="Stock\IStockBroker.cs" />
     <Compile Include="StrategyFutureBrokerExtensions.cs" />
-    <Compile Include="Base\MatchBase.cs" />
+    <Compile Include="Base\Match.cs" />
     <Compile Include="Future\FutureMatch.cs" />
     <Compile Include="NEEQMM\NEEQMMMatch.cs" />
     <Compile Include="Future\FutureBroker.cs" />

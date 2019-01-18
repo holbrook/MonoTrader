@@ -1,6 +1,7 @@
 ﻿using System;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using MonoTrader.Market;
 using Tangle.Trading.Base;
 using Tangle.Trading.Stock;
 
@@ -27,6 +28,16 @@ namespace Tangle.Trading.PyStrategy
             //传入函数
             scope.SetVariable("order_shares", (Func<string, int, OrderType,Order>)this.OrderShares);
 
+
+        }
+
+        public void HandleMatch(Match match)
+        {
+
+        }
+
+        public void HandleTick(Tick tick)
+        {
 
         }
 

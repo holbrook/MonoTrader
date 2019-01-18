@@ -1,7 +1,9 @@
 ﻿using System;
+using Tangle.Trading.Base;
+
 namespace Tangle.Trading.NEEQMM
 {
-    public class NEEQMMMatch
+    public class NEEQMMMatch:Match
     {
         public string MatchID { get; private set; }                // char szMatchedSN[16+1];          ///< 成交编号
         public DateTime MatchTime { get; private set; }        //成交时间
