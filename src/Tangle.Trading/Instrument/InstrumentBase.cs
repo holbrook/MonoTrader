@@ -52,7 +52,7 @@ namespace MonoTrader.Instrument
         /// <summary>
         /// 最小价格变动单位
         /// </summary>
-        public float TickSize { get; set; }
+        public decimal TickSize { get; set; }
 
         /// <summary>
         /// 上市日期

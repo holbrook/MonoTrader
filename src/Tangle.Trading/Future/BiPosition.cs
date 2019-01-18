@@ -14,27 +14,27 @@ namespace Tangle.Trading.Future
     public class BiPosition : PositionBase
     {
 
-        //holding_pnl float 当日持仓盈亏
-        //realized_pnl float 当日平仓盈亏
+        //holding_pnl decimal 当日持仓盈亏
+        //realized_pnl decimal 当日平仓盈亏
 
         /// <summary>
         /// 当日盈亏，当日浮动盈亏+当日平仓盈亏
         /// </summary>
-        public float TodayProfit { get; set; }
+        public decimal TodayProfit { get; set; }
 
 
-        public float TodayHoldingProfit { get; set; }
+        public decimal TodayHoldingProfit { get; set; }
 
 
         /// <summary>
         /// 仓位交易费用
         /// </summary>
-        public float TransactionCost { get; set; }
+        public decimal TransactionCost { get; set; }
 
         /// <summary>
         /// 仓位总保证金
         /// </summary>
-        public float Margin { get; set; }
+        public decimal Margin { get; set; }
 
         public Position LongPosition { get; set; }
         public Position ShortPosition { get; set; }

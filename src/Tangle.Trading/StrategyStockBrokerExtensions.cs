@@ -1,6 +1,5 @@
 ﻿using System;
 using Tangle.Trading.Base;
-using Tangle.Trading.Stock;
 
 namespace Tangle.Trading
 {
@@ -18,7 +17,7 @@ namespace Tangle.Trading
 3. 行情和交易分开
 4. 每一个account对应一个tradeapi, 而且account应该设计为一个pool.
 */
-    public static class StrategyBrokerExtension
+    public static class StrategyBrokerExtensions
     {
 
         /// <summary>
@@ -34,12 +33,15 @@ namespace Tangle.Trading
         /// <item>style=LimitOrder(limit_price)</item>
         /// </list>
         ///</param>
-        public static Order OrderShares(this IStrategy stgy, string instrumentID, int amount, OrderType style= null)
+        public static Tangle.Trading.Stock.Order OrderShares(this IStrategy stgy, 
+        string instrumentID, int amount, OrderType style= null)
         {
             //TODO: if null, default as MarketOrder
             Console.WriteLine(string.Format("调用{0},{1}", instrumentID, amount));
             return null;
         }
+
+
 
 
     }

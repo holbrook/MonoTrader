@@ -20,9 +20,9 @@ namespace Tangle.Trading.Base
     /// </summary>
     public class LimitOrder:OrderType
     {
-        public float LimitPrice { get; private set; }
+        public decimal LimitPrice { get; private set; }
 
-        public LimitOrder(float limitPrice)
+        public LimitOrder(decimal limitPrice)
         {
             LimitPrice = limitPrice;
         }

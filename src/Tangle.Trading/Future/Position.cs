@@ -15,12 +15,12 @@ namespace Tangle.Trading.Future
         /// <summary>
         /// 当日盈亏
         /// </summary>
-        public float DailyProfit {get;set;}
+        public decimal DailyProfit {get;set;}
 
         /// <summary>
         /// 交易费用
         /// </summary>
-        public float TransactionCost { get; set; }
+        public decimal TransactionCost { get; set; }
 
         /// <summary>
         /// 可平持仓
@@ -30,12 +30,12 @@ namespace Tangle.Trading.Future
         /// <summary>
         /// 占用保证金
         /// </summary>
-        public float Margin { get; set; }
+        public decimal Margin { get; set; }
 
         /// <summary>
         /// 开仓均价
         /// </summary>
-        public float AvgOpenPrice { get; set; }
+        public decimal AvgOpenPrice { get; set; }
 
         
     }

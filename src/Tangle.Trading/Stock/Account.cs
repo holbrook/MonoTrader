@@ -12,6 +12,6 @@ namespace Tangle.Trading.Stock
         /// <summary>
         /// 未到账的应收分红
         /// </summary>
-        public float DividendReceivable { get; set; }
+        public decimal DividendReceivable { get; set; }
     }
 }

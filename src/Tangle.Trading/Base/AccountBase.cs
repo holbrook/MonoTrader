@@ -17,27 +17,27 @@ namespace Tangle.Trading.Base
         /// <summary>
         /// 可用资金
         /// </summary>
-        public float Cash { get; set; }
+        public decimal Cash { get; set; }
 
         /// <summary>
         /// 冻结资金
         /// </summary>
-        public float FrozenCash { get; set; }
+        public decimal FrozenCash { get; set; }
  
         /// <summary>
         /// 所有证券的市值
         /// </summary>
-        public float MarketValue { get; set; }
+        public decimal MarketValue { get; set; }
         
         /// <summary>
         /// 总资产（证券市值+现金）
         /// </summary>
-        public float TotalValue { get; set; }
+        public decimal TotalValue { get; set; }
 
         /// <summary>
         /// 当日交易费用
         /// </summary>
-        public float TransactionCost { get; set; }
+        public decimal TransactionCost { get; set; }
 
         /// <summary>
         /// 持仓信息

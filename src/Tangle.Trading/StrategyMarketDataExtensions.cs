@@ -4,7 +4,7 @@ namespace Tangle.Trading
     /// <summary>
     /// 策略行情类的扩展方法，在编写策略时可以直接调用
     /// </summary>
-    public static class StrategyMarketDataExtension
+    public static class StrategyMarketDataExtensions
     {
         /// <summary>
         /// 订阅合约行情。该操作会导致合约池内合约的增加

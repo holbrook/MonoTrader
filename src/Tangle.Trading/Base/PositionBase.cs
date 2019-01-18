@@ -13,17 +13,17 @@ namespace Tangle.Trading.Base
         /// <summary>
         /// 持仓累计盈亏
         /// </summary>
-        public float Profit { get; set; }
+        public decimal Profit { get; set; }
 
         /// <summary>
         /// 持仓市值
         /// </summary>
-        public float MarketValue { get; set; }
+        public decimal MarketValue { get; set; }
 
         /// <summary>
         /// 平均成本
         /// </summary>
-        public float AvgPrice { get; set; }
+        public decimal AvgPrice { get; set; }
         
         /// <summary>
         /// 当前持仓

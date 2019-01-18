@@ -14,12 +14,12 @@ namespace MonoTrader.Instrument
         /// <summary>
         /// 期货合约最低保证金率
         /// </summary>
-        public float MarginRate { get; set; }
+        public decimal MarginRate { get; set; }
 
         /// <summary>
         /// 合约乘数，例如沪深300股指期货的乘数为300.0
         /// </summary>
-        public float ContractMultiplier { get; set; }
+        public decimal ContractMultiplier { get; set; }
 
         /// <summary>
         /// 合约距离到期天数
