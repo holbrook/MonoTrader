@@ -12,6 +12,12 @@ namespace Tangle.Trading
     /// </summary>
     public class Context
     {
+        /// <summary>
+        /// 策略相关的证券数组。里面所有证券的行情、成交回报等信息会被订阅。
+        /// </summary>
+        /// <value>The securities.</value>
+        public string[] Securities { get; set; }
+
         public Portfolio Portfolio { get; private set; }
 
         // Account 应该放到一个Pool中，随时扩充
