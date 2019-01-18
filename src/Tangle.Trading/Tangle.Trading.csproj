@@ -77,10 +77,10 @@
     <Compile Include="NEEQMM\NEEQMMMatch.cs" />
     <Compile Include="Future\FutureBroker.cs" />
     <Compile Include="Stock\StockMatch.cs" />
+    <Compile Include="IBroker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />
-    <Folder Include="Broker\" />
     <Folder Include="Future\" />
     <Folder Include="Instrument\" />
     <Folder Include="Market\" />
