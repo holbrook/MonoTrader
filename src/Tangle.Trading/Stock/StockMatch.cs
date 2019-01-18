@@ -3,7 +3,7 @@ using Tangle.Trading.Base;
 
 namespace Tangle.Trading.Stock
 {
-    public class StockMatch :MatchBase
+    public class StockMatch :Match
     {
         public StockMatch()
         {
