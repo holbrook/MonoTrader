@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.PyStrategy",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPyStrategy", "..\Tests\TestPyStrategy\TestPyStrategy.csproj", "{49BA7E92-AED7-4AB9-9FBA-6DE7F57D0935}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutureHedgingStrategy", "..\Strategies\FutureHedgingStrategy\FutureHedgingStrategy.csproj", "{2F68630E-5708-4877-A2BF-70173B2AD761}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgingStrategy", "..\Strategies\FutureHedgingStrategy\HedgingStrategy.csproj", "{2F68630E-5708-4877-A2BF-70173B2AD761}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

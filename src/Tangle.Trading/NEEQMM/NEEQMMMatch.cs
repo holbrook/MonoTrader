@@ -21,12 +21,12 @@ namespace Tangle.Trading.NEEQMM
         }
         bool IsCanceled { get; set; }                          // 是否撤单      chIsWithdraw[1+1];         ///< 撤单标志
 
-        public double MatchedPrice { get; private set; }       //成交价格
-        public int MatchedVolume { get; private set; }   //成交数量
-        public double MatchedAmount { get; private set; }         ///< 成交金额
-                                                                  ///
-        public string OrderID { get; private set; }            // 委托合同序号
-        public double OrderPrice { get; private set; }        //委托价格
-        public long OrderVolume { get; private set; }       //委托数量   
+        //public double MatchedPrice { get; private set; }       //成交价格
+        //public int MatchedVolume { get; private set; }   //成交数量
+        //public double MatchedAmount { get; private set; }         ///< 成交金额
+        //                                                          ///
+        //public string OrderID { get; private set; }            // 委托合同序号
+        //public double OrderPrice { get; private set; }        //委托价格
+        //public long OrderVolume { get; private set; }       //委托数量   
     }
 }

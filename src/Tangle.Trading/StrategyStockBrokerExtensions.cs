@@ -41,8 +41,5 @@ namespace Tangle.Trading
             return null;
         }
 
-
-
-
     }
 }

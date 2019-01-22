@@ -78,6 +78,7 @@
     <Compile Include="Future\FutureBroker.cs" />
     <Compile Include="Stock\StockMatch.cs" />
     <Compile Include="IBroker.cs" />
+    <Compile Include="StrategyPlatformExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />
