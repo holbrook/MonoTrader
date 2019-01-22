@@ -40,7 +40,7 @@ namespace Tangle.Trading.RootNetAdapter
 
         [DllImport("RTSubscApi.dll", CharSet = CharSet.Ansi,
             CallingConvention = CallingConvention.StdCall,
-            EntryPoint = "")]
+            EntryPoint = "RTSubscAPISubscribe")]
         static extern int Unsubscribe(uint handle);
 
         [DllImport("RTSubscApi.dll", CharSet = CharSet.Ansi,

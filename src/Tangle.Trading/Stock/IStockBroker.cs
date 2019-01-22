@@ -9,6 +9,6 @@ namespace Tangle.Trading.Stock
     /// </summary>
     public interface IStockBroker
     {
-        Order OrderShares(string instrumentID, int amount, OrderType style = null);
+        Order OrderShares(string orderbookID, int amount, OrderType style = null);
     }
 }

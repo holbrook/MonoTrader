@@ -58,7 +58,7 @@ namespace Tangle.Trading.Base
         /// <summary>
         /// 合约代码
         /// </summary>
-        public string InstrumentID { get; set; }
+        public string OrderbookID { get; set; }
 
 
 //datetime    datetime.datetime 订单创建时间

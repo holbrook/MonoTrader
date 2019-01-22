@@ -25,7 +25,7 @@ namespace Tangle.Trading
         /// </summary>
         /// <returns>The shares.</returns>
         /// <param name="stgy">Stgy.</param>
-        /// <param name="instrumentID">Identifier or ins.</param>
+        /// <param name="orderbookID">Identifier or ins.</param>
         /// <param name="amount">需要落单的股数。正数代表买入，负数代表卖出。将会根据一手xx股来向下调整到一手的倍数，比如中国A股就是调整成100股的倍数。</param>
         /// <param name="style">订单类型，默认是市价单。目前支持的订单类型有：
         /// <list type="">
@@ -34,10 +34,10 @@ namespace Tangle.Trading
         /// </list>
         ///</param>
         public static Tangle.Trading.Stock.Order OrderShares(this IStrategy stgy, 
-        string instrumentID, int amount, OrderType style= null)
+        string orderbookID, int amount, OrderType style= null)
         {
             //TODO: if null, default as MarketOrder
-            Console.WriteLine(string.Format("调用{0},{1}", instrumentID, amount));
+            Console.WriteLine(string.Format("调用{0},{1}", orderbookID, amount));
             return null;
         }
 

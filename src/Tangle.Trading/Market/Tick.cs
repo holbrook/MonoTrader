@@ -12,7 +12,7 @@ namespace MonoTrader.Market
         /// <summary>
         /// 证券代码
         /// </summary>
-        public string InstrumentID { get; set; }
+        public string OrderbookID { get; set; }
 
         /// <summary>
         /// 当前快照数据的时间戳

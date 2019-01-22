@@ -11,7 +11,7 @@ namespace MonoTrader.Market
         /// <summary>
         /// 证券代码
         /// </summary>
-        public string InstrumentID { get; set; }
+        public string OrderbookID { get; set; }
 
         /// <summary>
         /// 时间戳
