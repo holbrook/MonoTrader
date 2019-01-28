@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.RootNetAdapt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRootNetAdapter", "..\Tests\TestRootNetAdapter\TestRootNetAdapter.csproj", "{BCB743B8-D9A7-4C80-AFD2-7E01E3642403}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.CEPEngine", "Tangle.Trading.CEPEngine\Tangle.Trading.CEPEngine.csproj", "{708133F1-BFA1-434C-819D-0B6F14F8B06A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.PyStrategy", "Tangle.Trading.PyStrategy\Tangle.Trading.PyStrategy.csproj", "{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPyStrategy", "..\Tests\TestPyStrategy\TestPyStrategy.csproj", "{49BA7E92-AED7-4AB9-9FBA-6DE7F57D0935}"
@@ -37,10 +35,6 @@ Global
 		{BCB743B8-D9A7-4C80-AFD2-7E01E3642403}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB743B8-D9A7-4C80-AFD2-7E01E3642403}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB743B8-D9A7-4C80-AFD2-7E01E3642403}.Release|Any CPU.Build.0 = Release|Any CPU
-		{708133F1-BFA1-434C-819D-0B6F14F8B06A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{708133F1-BFA1-434C-819D-0B6F14F8B06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{708133F1-BFA1-434C-819D-0B6F14F8B06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{708133F1-BFA1-434C-819D-0B6F14F8B06A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}.Release|Any CPU.ActiveCfg = Release|Any CPU
