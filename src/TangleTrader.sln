@@ -9,15 +9,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRootNetAdapter", "..\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.CEPEngine", "Tangle.Trading.CEPEngine\Tangle.Trading.CEPEngine.csproj", "{708133F1-BFA1-434C-819D-0B6F14F8B06A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.Speaker", "Tangle.Trading.Speaker\Tangle.Trading.Speaker.csproj", "{D1888FC0-B4AC-4473-9ADE-5C6964AD4823}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.StrategyPool", "Tangle.Trading.StrategyPool\Tangle.Trading.StrategyPool.csproj", "{46993A2A-1BDD-4FBE-9D9E-5485E7A09139}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.PyStrategy", "Tangle.Trading.PyStrategy\Tangle.Trading.PyStrategy.csproj", "{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPyStrategy", "..\Tests\TestPyStrategy\TestPyStrategy.csproj", "{49BA7E92-AED7-4AB9-9FBA-6DE7F57D0935}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgingStrategy", "..\Strategies\FutureHedgingStrategy\HedgingStrategy.csproj", "{2F68630E-5708-4877-A2BF-70173B2AD761}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHedging", "..\Tests\TestHedging\TestHedging.csproj", "{77B680F0-3136-4AC7-9B6F-ACE3C1DC2014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.Core", "Tangle.Trading.Core\Tangle.Trading.Core.csproj", "{4CD1989B-AE30-4955-9E32-C46F868CD009}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +41,6 @@ Global
 		{708133F1-BFA1-434C-819D-0B6F14F8B06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{708133F1-BFA1-434C-819D-0B6F14F8B06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{708133F1-BFA1-434C-819D-0B6F14F8B06A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1888FC0-B4AC-4473-9ADE-5C6964AD4823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1888FC0-B4AC-4473-9ADE-5C6964AD4823}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1888FC0-B4AC-4473-9ADE-5C6964AD4823}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1888FC0-B4AC-4473-9ADE-5C6964AD4823}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46993A2A-1BDD-4FBE-9D9E-5485E7A09139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46993A2A-1BDD-4FBE-9D9E-5485E7A09139}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46993A2A-1BDD-4FBE-9D9E-5485E7A09139}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46993A2A-1BDD-4FBE-9D9E-5485E7A09139}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B38A61B-73F5-4DBD-94D3-3AA4A7C03720}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +53,14 @@ Global
 		{2F68630E-5708-4877-A2BF-70173B2AD761}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F68630E-5708-4877-A2BF-70173B2AD761}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F68630E-5708-4877-A2BF-70173B2AD761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B680F0-3136-4AC7-9B6F-ACE3C1DC2014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B680F0-3136-4AC7-9B6F-ACE3C1DC2014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B680F0-3136-4AC7-9B6F-ACE3C1DC2014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B680F0-3136-4AC7-9B6F-ACE3C1DC2014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD1989B-AE30-4955-9E32-C46F868CD009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD1989B-AE30-4955-9E32-C46F868CD009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD1989B-AE30-4955-9E32-C46F868CD009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CD1989B-AE30-4955-9E32-C46F868CD009}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

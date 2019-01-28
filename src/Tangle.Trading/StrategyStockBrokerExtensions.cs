@@ -38,6 +38,8 @@ namespace Tangle.Trading
         {
             //TODO: if null, default as MarketOrder
             Console.WriteLine(string.Format("调用{0},{1}", orderbookID, amount));
+
+            
             return null;
         }
 
