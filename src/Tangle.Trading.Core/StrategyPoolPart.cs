@@ -5,6 +5,7 @@ using Tangle.PluginModel;
 
 namespace Tangle.Trading.Core
 {
+    [PartAttribute("策略池")]
     public class StrategyPoolPart : IPart
     {
 
@@ -21,7 +22,7 @@ namespace Tangle.Trading.Core
             //new CompositionContainer(new AssemblyCatalog(Assembly.GetExecutingAssembly())).ComposeParts(this);
             foreach (var b in Brokers)
             {
-                Console.WriteLine(b.GetType());
+                Console.WriteLine(b.GetType()+b.GetHashCode().ToString());
             }
         }
 
