@@ -37,6 +37,7 @@
     <Reference Include="Common.Logging.Core">
       <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +74,11 @@
     <Compile Include="Stock\StockMatch.cs" />
     <Compile Include="IBroker.cs" />
     <Compile Include="StrategyPlatformExtensions.cs" />
+    <Compile Include="IBrokerMeta.cs" />
+    <Compile Include="BrokerAttribute.cs" />
+    <Compile Include="DemoBroker.cs" />
+    <Compile Include="DemoBroker2.cs" />
+    <Compile Include="NEEQMM\INEEQMMBroker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />

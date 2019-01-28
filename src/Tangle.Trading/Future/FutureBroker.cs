@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tangle.Trading.Future
 {
-    class FutureBroker
+    public interface IFutureBroker
     {
     }
 }
