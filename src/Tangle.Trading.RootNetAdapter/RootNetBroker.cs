@@ -51,7 +51,15 @@ namespace Tangle.Trading.RootNetAdapter
                 oPackage.SetValue(field.Flag, field.FieldName, field.FieldValue);
             }
 
-            return oPackage.ExchangeMessage();
+            bool ret = oPackage.ExchangeMessage();
+
+            var x = oPackage.GetValue(0, "successflag");
+            var c = oPackage.GetValue(0, "errorcode");
+            var y = oPackage.GetValue(0, "failinfo");
+            Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
+            
+
+            return ret;
         }
 
         public void Start()
@@ -77,6 +85,9 @@ namespace Tangle.Trading.RootNetAdapter
             string funcCode = "00100030";                   //普通买卖委托
 
             List<RNField> req = new List<RNField>();
+
+            //req.Add(new RNField(0, "recordCnt", "1"));
+
             req.Add(new RNField(1, "optId", commonParams.optId));                  //柜员代码
             req.Add(new RNField(1, "optPwd", commonParams.optPwd));                //柜员密码
             req.Add(new RNField(1, "optMode", commonParams.optMode));              //委托方式
@@ -98,6 +109,9 @@ namespace Tangle.Trading.RootNetAdapter
 
             req.Add(new RNField(1, "orderQty", quantity.ToString()));   //委托数量    Y
 
+            req.Add(new RNField(1, "permitPhone", "123456789"));   //主叫电话
+            //req.Add(new RNField(1, "permitMac", "E3A4D7CBF6AF"));
+            
             //basicStkId 基础证券代码 N 转股回售时送可转债代码, 权证行权时送权证代码，其他委托时使用stkId
             //permitMac   登录Mac地址 N
             //permitPhone 电话委托的主叫号码   N
