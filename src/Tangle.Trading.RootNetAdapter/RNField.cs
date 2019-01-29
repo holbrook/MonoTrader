@@ -18,5 +18,10 @@ namespace Tangle.Trading.RootNetAdapter
             FieldName = fieldName;
             FieldValue = fieldValue;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}:{1}={2}", Flag, FieldName, FieldValue);
+        }
     }
 }
