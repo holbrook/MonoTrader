@@ -49,8 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Tangle.Trading.RootNetAdapter\Tangle.Trading.RootNetAdapter.csproj">
-      <Project>{9172d22f-643b-444a-8901-0dcd2d466907}</Project>
+      <Project>{9172D22F-643B-444A-8901-0DCD2D466907}</Project>
       <Name>Tangle.Trading.RootNetAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Tangle.Trading\Tangle.Trading.csproj">
+      <Project>{F1E2B7B5-E1BD-4D19-B646-BEFCC4B634AD}</Project>
+      <Name>Tangle.Trading</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -60,7 +60,6 @@
     <Compile Include="Context.cs" />
     <Compile Include="IStrategy.cs" />
     <Compile Include="Portfolio.cs" />
-    <Compile Include="Stock\Command\OrderSharesCommand.cs" />
     <Compile Include="StrategyStockBrokerExtensions.cs" />
     <Compile Include="Stock\Order.cs" />
     <Compile Include="StrategyMarketDataExtensions.cs" />
@@ -86,7 +85,6 @@
     <Folder Include="Instrument\" />
     <Folder Include="Market\" />
     <Folder Include="Stock\" />
-    <Folder Include="Stock\Command\" />
     <Folder Include="NEEQMM\" />
   </ItemGroup>
   <ItemGroup>

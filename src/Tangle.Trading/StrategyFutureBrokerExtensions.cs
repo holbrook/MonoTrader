@@ -15,7 +15,7 @@ namespace Tangle.Trading
         /// <param name="price">Price.</param>
         /// <param name="style">Style.</param>
         public static Tangle.Trading.Future.Order BuyOpen(this IStrategy stgy,
-        string instrumentID, int amount, decimal price, OrderType style = null)
+        string instrumentID, int amount, decimal price=-1)
         {
             return null;
         }

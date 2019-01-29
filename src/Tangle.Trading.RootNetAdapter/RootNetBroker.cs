@@ -62,76 +62,64 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.UnInit();
         }
 
-        //委托
-        void Order()
-        {
-
-            //设置功能号
-            string funcCode = "00100030";
-
-            //设置包头flag
-            short flag = 0;
-
-            List<RNField> req = new List<RNField>();
-            req.Add(new RNField(0, "recordCnt", "1"));                  //设置请求记录数
-            req.Add(new RNField(1, "optId", "99990"));                  //设置柜员代码
-            req.Add(new RNField(1, "optPwd", "666666"));                //设置柜员密码
-            req.Add(new RNField(1, "optMode", "A1"));             //设置委托方式
-            req.Add(new RNField(1, "exchId", "0"));               //设置市场代码
-            req.Add(new RNField(1, "regId", "A012345678"));             //设置股东代码
-            req.Add(new RNField(1, "tradePwd", "666666"));              //设置交易密码
-            req.Add(new RNField(1, "stkId", "600030"));                 //设置证券代码
-            req.Add(new RNField(1, "orderType", "B"));                  //设置买卖方向
-            req.Add(new RNField(1, "orderQty", "100"));                 //设置委托数量
-            req.Add(new RNField(1, "orderPrice", "23.26"));             //设置委托价格
-            req.Add(new RNField(1, "permitMac","E3A4D7CBF6AF"));              //设置MAC地址
-
-            SendPackage(funcCode, flag, req);
-            //和网关交互
-            if (oPackage.ExchangeMessage() == false)
-            {
-                MessageBox.Show("委托请求（00100211）交互失败");
-                oPackage.UnInit();
-                return;
-            }
-
-            //获取成功失败标志
-            if (oPackage.GetValue(0, "successflag").Equals("0") == false)
-            {//失败
-                MessageBox.Show(string.Format("委托失败，错误代码：{0}，错误信息{1}", oPackage.GetValue(0, "errorcode"), oPackage.GetValue(0, "failinfo")));
-                oPackage.UnInit();
-                return;
-            }
-
-            //获取返回记录条数
-            int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
-            //获取返回的合同序号
-            string sContractNum = oPackage.GetValue(1, " contractNum");
-
-
-        }
 
         public void SynchronizeAccount()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public Stock.Order OrderShares(string orderbookID, int amount, OrderType style = null)
+        public Stock.Order AddOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
+        {
+            ////设置功能号
+            //string funcCode = "00100030";
+
+            ////设置包头flag
+            //short flag = 0;
+
+            //List<RNField> req = new List<RNField>();
+            //req.Add(new RNField(0, "recordCnt", "1"));                  //设置请求记录数
+            //req.Add(new RNField(1, "optId", "99990"));                  //设置柜员代码
+            //req.Add(new RNField(1, "optPwd", "666666"));                //设置柜员密码
+            //req.Add(new RNField(1, "optMode", "A1"));             //设置委托方式
+            //req.Add(new RNField(1, "exchId", "0"));               //设置市场代码
+            //req.Add(new RNField(1, "regId", "A012345678"));             //设置股东代码
+            //req.Add(new RNField(1, "tradePwd", "666666"));              //设置交易密码
+            //req.Add(new RNField(1, "stkId", "600030"));                 //设置证券代码
+            //req.Add(new RNField(1, "orderType", "B"));                  //设置买卖方向
+            //req.Add(new RNField(1, "orderQty", "100"));                 //设置委托数量
+            //req.Add(new RNField(1, "orderPrice", "23.26"));             //设置委托价格
+            //req.Add(new RNField(1, "permitMac", "E3A4D7CBF6AF"));              //设置MAC地址
+
+            //SendPackage(funcCode, flag, req);
+            ////和网关交互
+            //if (oPackage.ExchangeMessage() == false)
+            //{
+            //    MessageBox.Show("委托请求（00100211）交互失败");
+            //    oPackage.UnInit();
+            //    return;
+            //}
+
+            ////获取成功失败标志
+            //if (oPackage.GetValue(0, "successflag").Equals("0") == false)
+            //{//失败
+            //    MessageBox.Show(string.Format("委托失败，错误代码：{0}，错误信息{1}", oPackage.GetValue(0, "errorcode"), oPackage.GetValue(0, "failinfo")));
+            //    oPackage.UnInit();
+            //    return;
+            //}
+
+            ////获取返回记录条数
+            //int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
+            ////获取返回的合同序号
+            //string sContractNum = oPackage.GetValue(1, " contractNum");
+            return null;
+        }
+
+        public void CancelOrder(Stock.Order order)
         {
             throw new NotImplementedException();
         }
 
-        Stock.Order IStockBroker.AddOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IStockBroker.CancelOrder(Stock.Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Stock.Order> IStockBroker.GetOpenOrders()
+        public List<Stock.Order> GetOpenOrders()
         {
             string funcCode = "00807300";        //查询可撤单委托
 
@@ -175,7 +163,7 @@ namespace Tangle.Trading.RootNetAdapter
                 order.Side = RootNet2Tangle.TransOrderType(oPackage.GetValue(i, "orderType"));  //买卖类别
                 order.OrderPrice = decimal.Parse(oPackage.GetValue(i, "orderPrice"));   //委托价格
                 order.Quantity = int.Parse(oPackage.GetValue(i, "orderQty"));   //委托数量
-                order.FilledQuantity = int.Parse((oPackage.GetValue(i, "knockQty"));   //成交数量,单位为委托单位
+                order.FilledQuantity = int.Parse(oPackage.GetValue(i, "knockQty"));   //成交数量,单位为委托单位
                 order.CancelledQuantity = int.Parse(oPackage.GetValue(i, "withdrawQty"));   //撤单数量,单位为委托单位
                 order.OrderTime = DateTime.Parse(oPackage.GetValue(i, "orderTime"));     //委托时间
 
@@ -196,22 +184,23 @@ namespace Tangle.Trading.RootNetAdapter
             throw new NotImplementedException();
         }
 
-        Order IFutureBroker.AddOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IFutureBroker.CancelOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Order> IFutureBroker.GetOpenOrders()
-        {
-            throw new NotImplementedException();
-        }
 
         void IFutureBroker.SynchronizeAccount()
+        {
+            throw new NotImplementedException();
+        }
+
+        Future.Order IFutureBroker.AddOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IFutureBroker.CancelOrder(Future.Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Future.Order> IFutureBroker.GetOpenOrders()
         {
             throw new NotImplementedException();
         }

@@ -25,7 +25,6 @@ namespace Tangle.Trading.Future
         CLOSE_TODAY = 3
         //CLSOE_YESTERDAY = 4
     };
-} 
 
     public class Order:OrderBase
     {

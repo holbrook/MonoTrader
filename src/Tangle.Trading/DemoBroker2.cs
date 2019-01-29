@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Tangle.Trading.Base;
 using Tangle.Trading.NEEQMM;
@@ -17,12 +18,34 @@ namespace Tangle.Trading
 
         public AccountBase Account => throw new NotImplementedException();
 
-        public Order OrderShares(string orderbookID, int amount, OrderType style = null)
+        public void Initialize(dynamic param)
         {
             throw new NotImplementedException();
         }
 
+
+
         public void SynchronizeAccount()
+        {
+            throw new NotImplementedException();
+        }
+
+        Order IStockBroker.AddOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IStockBroker.CancelOrder(Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Order> IStockBroker.GetOpenOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IStockBroker.SynchronizeAccount()
         {
             throw new NotImplementedException();
         }

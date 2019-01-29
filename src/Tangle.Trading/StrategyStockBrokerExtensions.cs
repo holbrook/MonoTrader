@@ -34,7 +34,7 @@ namespace Tangle.Trading
         /// </list>
         ///</param>
         public static Tangle.Trading.Stock.Order OrderShares(this IStrategy stgy, 
-        string orderbookID, int amount, OrderType style= null)
+        string orderbookID, int amount)
         {
             //TODO: if null, default as MarketOrder
             Console.WriteLine(string.Format("调用{0},{1}", orderbookID, amount));

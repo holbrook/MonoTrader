@@ -19,20 +19,12 @@ namespace Tangle.Trading
             throw new NotImplementedException();
         }
 
-        public Order AddOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = -1)
-        {
-            throw new NotImplementedException();
-        }
 
         public void CancelOrder(Stock.Order order)
         {
             throw new NotImplementedException();
         }
 
-        public void CancelOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<Stock.Order> GetOpenOrders()
         {
@@ -44,7 +36,7 @@ namespace Tangle.Trading
             throw new NotImplementedException();
         }
 
-        public Stock.Order OrderShares(string orderbookID, int amount, OrderType style = null)
+        public Stock.Order OrderShares(string orderbookID, int amount)
         {
             return null;
         }
@@ -54,7 +46,23 @@ namespace Tangle.Trading
 
         }
 
-        List<Order> IFutureBroker.GetOpenOrders()
+        Future.Order IFutureBroker.AddOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IFutureBroker.CancelOrder(Future.Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        List<Future.Order> IFutureBroker.GetOpenOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IFutureBroker.SynchronizeAccount()
         {
             throw new NotImplementedException();
         }
