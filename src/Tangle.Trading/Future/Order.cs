@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tangle.Trading.Future
 {
-    public enum PositionEffect
+    public enum POSITION_EFFECT
     {
         /// <summary>
         /// 开仓
@@ -17,8 +17,15 @@ namespace Tangle.Trading.Future
         /// <summary>
         /// 平仓
         /// </summary>
-        CLOSE =2
-    } 
+        CLOSE =2,
+
+        /// <summary>
+        /// 平今仓
+        /// </summary>
+        CLOSE_TODAY = 3
+        //CLSOE_YESTERDAY = 4
+    };
+} 
 
     public class Order:OrderBase
     {

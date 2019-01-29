@@ -29,7 +29,9 @@ namespace Tangle.Trading.Base
         /// <summary>
         /// 卖
         /// </summary>
-        SELL =2
+        SELL =2,
+
+        UNKNOWN = 0
     }
 
     public enum ORDER_TYPE
@@ -60,19 +62,56 @@ namespace Tangle.Trading.Base
         /// </summary>
         public string OrderbookID { get; set; }
 
+        /// <summary>
+        /// 合约名称
+        /// </summary>
+        /// <value>The name of the orderbook.</value>
+        public string OrderbookName { get; set; }
 
-//datetime    datetime.datetime 订单创建时间
-//side SIDE    订单方向
-//price   decimal 订单价格，只有在订单类型为'限价单'的时候才有意义
-//quantity    int 订单数量
-//filled_quantity int 订单已成交数量
-//unfilled_quantity int 订单未成交数量
-//type ORDER_TYPE  订单类型
-//transaction_cost    decimal 费用
-//avg_price decimal 成交均价
-//status ORDER_STATUS    订单状态
-//message str 信息。比如拒单时候此处会提示拒单原因
-//trading_datetime    datetime.datetime 订单的交易日期（对应期货夜盘）
-//position_effect POSITION_EFFECT 订单开平（期货专用）
+        /// <summary>
+        /// 订单方向
+        /// </summary>
+        /// <value>The side.</value>
+        public ORDER_SIDE Side { get; set; }
+
+        /// <summary>
+        /// 委托价格，只有在订单类型为'限价单'的时候才有意义
+        /// </summary>
+        /// <value>The order price.</value>
+        public decimal OrderPrice { get; set; }
+
+        /// <summary>
+        /// 委托数量
+        /// </summary>
+        /// <value>The quantity.</value>
+        public int Quantity { get; set; }
+
+        /// <summary>
+        /// 成交数量
+        /// </summary>
+        /// <value>The filled quantity.</value>
+        public int FilledQuantity { get; set; }
+
+        /// <summary>
+        /// 撤单数量
+        /// </summary>
+        /// <value>The un filled quantity.</value>
+        public int  CancelledQuantity { get; set; }
+
+        /// <summary>
+        /// 订单创建时间
+        /// </summary>
+        /// <value>The order time.</value>
+        public DateTime OrderTime { get; set; }
+
+
+        //datetime    datetime.datetime 
+        //type ORDER_TYPE  订单类型
+        //transaction_cost    decimal 费用
+        //avg_price decimal 成交均价
+        //status ORDER_STATUS    订单状态
+        //message str 信息。比如拒单时候此处会提示拒单原因
+        //trading_datetime    datetime.datetime 订单的交易日期（对应期货夜盘）
+        //position_effect POSITION_EFFECT 订单开平（期货专用）
     }
 }

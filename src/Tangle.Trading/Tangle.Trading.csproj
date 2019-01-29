@@ -62,7 +62,6 @@
     <Compile Include="Portfolio.cs" />
     <Compile Include="Stock\Command\OrderSharesCommand.cs" />
     <Compile Include="StrategyStockBrokerExtensions.cs" />
-    <Compile Include="Base\OrderType.cs" />
     <Compile Include="Stock\Order.cs" />
     <Compile Include="StrategyMarketDataExtensions.cs" />
     <Compile Include="Stock\IStockBroker.cs" />
@@ -70,7 +69,7 @@
     <Compile Include="Base\Match.cs" />
     <Compile Include="Future\FutureMatch.cs" />
     <Compile Include="NEEQMM\NEEQMMMatch.cs" />
-    <Compile Include="Future\FutureBroker.cs" />
+    <Compile Include="Future\IFutureBroker.cs" />
     <Compile Include="Stock\StockMatch.cs" />
     <Compile Include="IBroker.cs" />
     <Compile Include="StrategyPlatformExtensions.cs" />
@@ -79,6 +78,7 @@
     <Compile Include="DemoBroker.cs" />
     <Compile Include="DemoBroker2.cs" />
     <Compile Include="NEEQMM\INEEQMMBroker.cs" />
+    <Compile Include="IFeed.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />

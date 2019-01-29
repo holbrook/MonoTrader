@@ -46,6 +46,8 @@
     <Compile Include="RootNetBroker.cs" />
     <Compile Include="RNField.cs" />
     <Compile Include="RTSubscribeAPI.cs" />
+    <Compile Include="RootNet2Tangle.cs" />
+    <Compile Include="Tangle2RootNet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="3rd\config_模板.ini" />

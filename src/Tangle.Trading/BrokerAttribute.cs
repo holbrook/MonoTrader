@@ -8,12 +8,12 @@ namespace Tangle.Trading
     {
         public Type BrokerType { get; private set; }
 
-        public string[] Markets { get; private set; }
+        public string[] Exchanges { get; private set; }
 
-        public BrokerAttribute(Type type, string[] markets)
+        public BrokerAttribute(Type type, string[] exchanges)
         {
             BrokerType = type;
-            Markets = markets;
+            Exchanges = exchanges;
         }
 
 
