@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading", "Tangle.Trading\Tangle.Trading.csproj", "{F1E2B7B5-E1BD-4D19-B646-BEFCC4B634AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.RootNetAdapter", "Tangle.Trading.RootNetAdapter\Tangle.Trading.RootNetAdapter.csproj", "{9172D22F-643B-444A-8901-0DCD2D466907}"
@@ -16,6 +18,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHedging", "..\Tests\TestHedging\TestHedging.csproj", "{77B680F0-3136-4AC7-9B6F-ACE3C1DC2014}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Trading.Core", "Tangle.Trading.Core\Tangle.Trading.Core.csproj", "{4CD1989B-AE30-4955-9E32-C46F868CD009}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.PluginModel", "..\..\TangleFramework\src\Tangle.PluginModel\Tangle.PluginModel.csproj", "{F06571B0-398F-45A3-B887-842CE494819E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tangle.Framework", "..\..\TangleFramework\src\Tangle.Framework\Tangle.Framework.csproj", "{B6142CEF-47D1-44B6-8761-50474F290736}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin1", "Plugin1\Plugin1.csproj", "{3084B24D-6527-4026-8C23-D0B3A4C90551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTrader", "ConsoleTrader\ConsoleTrader.csproj", "{D6B5B8D5-2483-4EB9-A786-30876426CA6F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9172D22F-643B-444A-8901-0DCD2D466907} = {9172D22F-643B-444A-8901-0DCD2D466907}
+		{3084B24D-6527-4026-8C23-D0B3A4C90551} = {3084B24D-6527-4026-8C23-D0B3A4C90551}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +69,22 @@ Global
 		{4CD1989B-AE30-4955-9E32-C46F868CD009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CD1989B-AE30-4955-9E32-C46F868CD009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CD1989B-AE30-4955-9E32-C46F868CD009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06571B0-398F-45A3-B887-842CE494819E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06571B0-398F-45A3-B887-842CE494819E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06571B0-398F-45A3-B887-842CE494819E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06571B0-398F-45A3-B887-842CE494819E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6142CEF-47D1-44B6-8761-50474F290736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6142CEF-47D1-44B6-8761-50474F290736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6142CEF-47D1-44B6-8761-50474F290736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6142CEF-47D1-44B6-8761-50474F290736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3084B24D-6527-4026-8C23-D0B3A4C90551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3084B24D-6527-4026-8C23-D0B3A4C90551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3084B24D-6527-4026-8C23-D0B3A4C90551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3084B24D-6527-4026-8C23-D0B3A4C90551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B5B8D5-2483-4EB9-A786-30876426CA6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B5B8D5-2483-4EB9-A786-30876426CA6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B5B8D5-2483-4EB9-A786-30876426CA6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B5B8D5-2483-4EB9-A786-30876426CA6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

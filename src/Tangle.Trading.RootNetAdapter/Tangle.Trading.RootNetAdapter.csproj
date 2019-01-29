@@ -14,7 +14,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\..\bin\Debug\Plugins\</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -22,7 +22,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\..\bin\Release\Plugins\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -50,8 +50,6 @@
     <Compile Include="Tangle2RootNet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="3rd\config_模板.ini" />
-    <None Include="3rd\config.ini" />
     <None Include="3rd\CrootMQ.dll" />
     <None Include="3rd\gwconfig_模板.inf" />
     <None Include="3rd\gwconfig.inf" />
@@ -72,16 +70,15 @@
     <None Include="3rd\ssleay32.lib" />
     <None Include="3rd\StructData.inf" />
     <None Include="3rd\TerminalInfoAPI.dll" />
-    <None Include="3rd\TestGWDPApi.exe" />
-    <None Include="3rd\TestGWDPApiCS副本.exe" />
-    <None Include="3rd\VC2010CallsRTSubscAPI.exe" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Tangle.Trading\Tangle.Trading.csproj">
-      <Project>{F1E2B7B5-E1BD-4D19-B646-BEFCC4B634AD}</Project>
+      <Project>{f1e2b7b5-e1bd-4d19-b646-befcc4b634ad}</Project>
       <Name>Tangle.Trading</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /r /y $(ProjectDir)3rd\*  $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
