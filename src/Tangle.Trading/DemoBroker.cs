@@ -14,7 +14,7 @@ namespace Tangle.Trading
     {
         public AccountBase Account => throw new NotImplementedException();
 
-        public Stock.Order AddOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price = -1)
+        public string AddOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
         {
             throw new NotImplementedException();
         }

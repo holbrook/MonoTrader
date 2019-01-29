@@ -82,9 +82,9 @@ namespace Tangle.Trading.RootNetAdapter
             req.Add(new RNField(1, "optMode", commonParams.optMode));              //委托方式
             req.Add(new RNField(1, "regId", commonParams.regId));                  // 股东代码 N
             req.Add(new RNField(1, "tradePwd", commonParams.tradePwd));                   //交易密码 Y
-            req.Add(new RNField(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 Y
-            req.Add(new RNField(1, "stkId", Tangle2RootNet.OrderbookID2stkId(orderbookID));     //证券代码    Y 转股回售、权证行权时不使用这个字段
-            req.Add(new RNField(1, "orderType", Tangle2RootNet.TransOrderType(side));   //交易类型 Y   JB - 行权，KS - ETF赎回，IS - 场内开放式基金可赎回数量
+            req.Add(new RNField(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID))); //市场代码 Y
+            req.Add(new RNField(1, "stkId", Tangle2RootNet.OrderbookID2stkId(orderbookID)));     //证券代码    Y 转股回售、权证行权时不使用这个字段
+            req.Add(new RNField(1, "orderType", Tangle2RootNet.TransOrderType(side)));   //交易类型 Y   JB - 行权，KS - ETF赎回，IS - 场内开放式基金可赎回数量
 
             //委托价格    Y 市价委托时固定送0
             if (0m == price)
@@ -114,7 +114,7 @@ namespace Tangle.Trading.RootNetAdapter
             //PC; IIP: 123.112.54.8; LIP: 192.168.8.7; MAC: 00000000000000E0; HD: TF655AY91GHRVL; PCN: BJ - OA - ZHNAG - XC; CPU: BFEBFBFF000306A9; PI: C,NTFS,80"
             //req.Add(new RNField(0, "recordCnt", "1"));                  //设置请求记录数
 
-            if (!SendPackage(funcCode, flag, req))
+            if (!SendPackage(funcCode, req,0))
                 return null;
 
             //返回合同号
@@ -186,10 +186,7 @@ namespace Tangle.Trading.RootNetAdapter
             return orders;
         }
 
-        public void SynchronizeAccount()
-        {
-            throw new NotImplementedException();
-        }
+       
 
 
 

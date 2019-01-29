@@ -14,6 +14,8 @@ namespace TestRootNetAdapter
 
             RootNetBroker broker = new RootNetBroker();
             broker.Initialize(null);
+
+            string a = broker.AddOrder("600000.XSHE", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 8000);
             var orders = broker.GetOpenOrders();
         }
     }

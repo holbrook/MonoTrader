@@ -30,7 +30,7 @@ namespace Tangle.Trading
             throw new NotImplementedException();
         }
 
-        Order IStockBroker.AddOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
+        public string AddOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
         {
             throw new NotImplementedException();
         }
