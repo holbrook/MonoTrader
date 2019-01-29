@@ -1,4 +1,6 @@
 ﻿using System;
+using Tangle.Trading.Base;
+
 namespace Tangle.Trading.RootNetAdapter
 {
     public static class Tangle2RootNet
@@ -25,5 +27,30 @@ namespace Tangle.Trading.RootNetAdapter
                     return "UNSUPPORT";
             }
         }
+
+        public static string OrderbookID2stkId(string orderbookID)
+        {
+            return orderbookID.Split('.')[0];
+        }
+     
+        public static string OrderbookID2exchId(string orderbookID)
+        {
+            return TransExchID(orderbookID.Split('.')[1]);
+        }
+
+        public static string TransOrderType(ORDER_SIDE side)
+        {
+            switch(side)
+            {
+                case ORDER_SIDE.BUY:
+                    return "B";
+                case ORDER_SIDE.SELL:
+                    return "S";
+                default:
+                    return "UNKNOWN";
+            }
+        }
+
+
     }
 }
