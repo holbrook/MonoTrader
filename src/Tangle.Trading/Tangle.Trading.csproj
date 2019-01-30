@@ -41,9 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Base\AccountBase.cs" />
     <Compile Include="Base\OrderBase.cs" />
-    <Compile Include="Base\PositionBase.cs" />
     <Compile Include="Future\Account.cs" />
     <Compile Include="Future\BiPosition.cs" />
     <Compile Include="Future\Order.cs" />
@@ -74,8 +72,6 @@
     <Compile Include="StrategyPlatformExtensions.cs" />
     <Compile Include="IBrokerMeta.cs" />
     <Compile Include="BrokerAttribute.cs" />
-    <Compile Include="DemoBroker.cs" />
-    <Compile Include="DemoBroker2.cs" />
     <Compile Include="NEEQMM\INEEQMMBroker.cs" />
     <Compile Include="IFeed.cs" />
   </ItemGroup>

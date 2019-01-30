@@ -9,15 +9,16 @@ namespace Tangle.Trading.Future
 {
     public interface IFutureBroker
     {
+        Account FutureAccountInfo { get; }
 
-        Order AddOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = -1);
-        void CancelOrder(Order order);
+        string AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = -1);
+        void CancelFutureOrder(string orderID);
 
-        List<Order> GetOpenOrders();
+        List<Order> GetOpenFutureOrders();
 
         /// <summary>
         /// 同步资金和持仓
         /// </summary>
-        void SynchronizeAccount();
+        void SynchronizeFutureAccount();
     }
 }

@@ -11,7 +11,7 @@ namespace Tangle.Trading.Future
     /// 期货双向持仓汇总
     /// 其中，对于空方向持仓，MarketValue为负值
     /// </summary>
-    public class BiPosition : PositionBase
+    public class BiPosition 
     {
 
         //holding_pnl decimal 当日持仓盈亏

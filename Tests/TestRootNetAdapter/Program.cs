@@ -15,8 +15,28 @@ namespace TestRootNetAdapter
             RootNetBroker broker = new RootNetBroker();
             broker.Initialize(null);
 
-            string a = broker.AddOrder("600000.XSHG", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 8000);
-            var orders = broker.GetOpenOrders();
+            //股票下单
+            string a = broker.AddStockOrder("600000.XSHG", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 8000);
+
+            //股票查询订单
+            var orders = broker.GetOpenStockOrders();
+
+            //股票撤单
+            broker.CancelFutureOrder(a);
+
+            //股票同步数据（资金，仓位）
+
+
+            //期货下单
+
+            //期货查询订单
+
+            //期货撤单
+
+            //期货同步数据
+
         }
+
+
     }
 }

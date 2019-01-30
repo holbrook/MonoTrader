@@ -34,7 +34,7 @@ namespace Tangle.Trading
         /// 所有的持仓。以代码为键
         /// </summary>
         /// <value>The positions.</value>
-        public Dictionary<string,PositionBase> Positions { get; set; }
+        //public Dictionary<string,Position> Positions { get; set; }
 
         //total_returns   decimal 投资组合至今的累积收益率
         //daily_returns decimal 投资组合每日收益率

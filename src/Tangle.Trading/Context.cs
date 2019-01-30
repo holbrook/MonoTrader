@@ -21,8 +21,6 @@ namespace Tangle.Trading
 
         public Portfolio Portfolio { get; private set; }
 
-        // Account 应该放到一个Pool中，随时扩充
-        public Dictionary<string, AccountBase> Accounts { get; private set; }
 
         public dynamic CustomData = new ExpandoObject();
 
