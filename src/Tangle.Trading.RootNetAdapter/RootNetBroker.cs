@@ -370,7 +370,43 @@ namespace Tangle.Trading.RootNetAdapter
 
         public string AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = -1)
         {
-            throw new NotImplementedException();
+            oPackage.ClearSendPackage();
+
+            oPackage.SetFunctionCode("20100030");   //期货普通报单
+            oPackage.SetFlags(0);
+
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
+
+            oPackage.SetValue(1, "regId", commonParams.regId);                  // 股东代码 N
+
+
+            //acctId 资金帐号    Y
+            //acctPwd 资金密码 Y
+            //exchId 市场代码    Y
+            //regId   交易编码 Y
+            //tradePwd 交易密码    Y
+            //currencyId  货币代码 Y
+            //stkId 合约编码    Y
+            //F_offSetFlag    开平标志 Y(OPEN, CLOSE)
+            //bsFlag 合约方向    Y B-多头 S - 空头
+            //F_hedgeFlag 投机套保标记  N 中金所不需要送，上期所、郑商所、大商所需要送
+            //orderQty    委托数量 Y
+            //F_orderPriceType 报单价格条件  Y
+            //futureOrderPrice    委托价格 Y
+            //coveredFlag 备兑标签    N   1 - 备兑,0 - 非备兑
+            //F_MatchCondition 订单有效时间类型    N GFD-当日有效、FOK - 即时成交否则撤销、IOC - 即时成交剩余撤销
+            //ClientId 策略ID    N
+            //orderSource 订单来源 N   "期权做市使用(501-期权做市询价应答双边，502-期权做市连续报价双边，503-期权做市连续报价单边，504-期权做市询价应答单边)
+            //"
+            //businessMark 业务类别    N OTO-个股期权交易,ORQ - 回应询价,ORR - 回应询价修改
+            //origContractNum 原询价回应合同序号   N 当业务类型 = ORR时要求必送, 送被修改询价回应订单(ORQ)的合同序号,其他业务不送
+
+            return null;
+
         }
 
         public void CancelFutureOrder(string orderID)
