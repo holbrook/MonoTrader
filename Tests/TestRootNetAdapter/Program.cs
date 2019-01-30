@@ -16,13 +16,14 @@ namespace TestRootNetAdapter
             broker.Initialize(null);
 
             //股票下单
-            string a = broker.AddStockOrder("600000.XSHG", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 8000);
+            //string a = broker.AddStockOrder("600000.XSHG", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 11.6m);
+            string a = broker.AddStockOrder("000001.XSHE", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 13m);
 
             //股票查询订单
             var orders = broker.GetOpenStockOrders();
 
             //股票撤单
-            broker.CancelFutureOrder(a);
+            //broker.CancelFutureOrder(a);
 
             //股票同步数据（资金，仓位）
 

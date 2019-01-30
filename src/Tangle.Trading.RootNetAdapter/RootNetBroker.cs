@@ -47,8 +47,9 @@ namespace Tangle.Trading.RootNetAdapter
             commonParams.optMode = "W5";        // 委托方式
             commonParams.acctId = "001653019819";        //现货资金帐号
             commonParams.tradePwd = "135246";     // 现货资金密码
-            commonParams.regId = "D890019819";   //股东代码
-
+            commonParams.regId = "0030605790";   //深圳股东代码
+            //commonParams.regId = "D890019819";   //上海股东代码
+            
 
             //TODO: 查询股东账号, 考虑两个市场？
 
