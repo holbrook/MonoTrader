@@ -35,5 +35,10 @@ namespace Tangle.Trading.Future
         /// 持仓信息
         /// </summary>
         public Dictionary<string, Position> Positions { get; set; }
+
+        public Account()
+        {
+            Positions = new Dictionary<string, Position>();
+        }
     }
 }

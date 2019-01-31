@@ -43,5 +43,10 @@ namespace Tangle.Trading.Stock
         /// 未到账的应收分红
         /// </summary>
         public decimal DividendReceivable { get; set; }
+
+        public Account()
+        {
+            Positions = new Dictionary<string, Position>();
+        }
     }
 }

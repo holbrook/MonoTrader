@@ -44,7 +44,7 @@ namespace Tangle.Trading.RootNetAdapter
 
             commonParams.optId = "99990";       // 柜员代码
             commonParams.optPwd = "112233";     // 柜员口令
-            commonParams.optMode = "A1";        // 委托方式
+            commonParams.optMode = "W5";        // 委托方式
             commonParams.acctId = "001653019819";        //现货资金帐号
             commonParams.tradePwd = "135246";     // 现货资金密码
             commonParams.regId = "0030605790";   //深圳股东代码
@@ -342,14 +342,29 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetFunctionCode("00100110");   //批量撤单委托
             oPackage.SetFlags(0);
 
+
+
+
+
+
+            //文档中没写，但是要送！！！
+
+            oPackage.SetValue(0, "recordCnt", "1");
+            
+            
+            //oPackage.SetValue(1, "maxRowNum", "500");
+            //oPackage.SetValue(1, "packNum", "1");
+            //oPackage.SetValue(1, "actionType", "asynchronous");
+
+            //======================================================
+
             oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
             oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
             oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
 
             oPackage.SetValue(1, "acctId", commonParams.acctId);                //资金帐号
             oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);                //交易密码
-            oPackage.SetValue(1, "permitMac", commonParams.permitMac);                //登录Mac地址
-            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //登录Mac地址
+            //oPackage.SetValue(1, "permitMac", commonParams.permitMac);                //登录Mac地址            
             oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码
             oPackage.SetValue(1, "contractNum", orderID);                //合同号
 
