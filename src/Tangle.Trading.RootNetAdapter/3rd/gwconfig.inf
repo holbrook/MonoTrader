@@ -11,9 +11,9 @@ TIMEOUT=0
 QUERYTIMEOUT=60000     #查询TIMEOUT时间，单位毫秒
 
 #是否记录日志，0-只记录异常日志，其他表示记录全部日志，缺省值为0
-LOGFLAG=0
-IP2=0.0.0.0
-PORT2=0
+LOGFLAG=1
+LOGLEVEL=6
+
 
 [SSL]
 PERMITSSL=0

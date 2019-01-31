@@ -29,22 +29,22 @@ namespace Tangle.Trading.RootNetAdapter
         {
             HardwareInfo info = new HardwareInfo();
 
-            commonParams.terminalInfo = string.Format(  // 终端信息 Y   
-            "PC;IIP:{0}; LIP:{1}; MAC:{2}; HD:{3}; PCN:{4};CPU:{5}; PI:{6}",
-            info.IpAddress,
-            info.IpAddress,
-            info.MacAddress,
-            info.DiskID,
-            info.ComputerName,
-            info.CpuID,
-            "XXX"
-        );
+            //commonParams.terminalInfo = string.Format(  // 终端信息 Y   
+            //"PC;IIP:{0}; LIP:{1}; MAC:{2}; HD:{3}; PCN:{4};CPU:{5}; PI:{6}",
+            //info.IpAddress,
+            //info.IpAddress,
+            //info.MacAddress,
+            //info.DiskID,
+            //info.ComputerName,
+            //info.CpuID,
+            //"XXX"
+            //);
 
             commonParams.permitMac = info.MacAddress;
 
             commonParams.optId = "99990";       // 柜员代码
             commonParams.optPwd = "112233";     // 柜员口令
-            commonParams.optMode = "W5";        // 委托方式
+            commonParams.optMode = "A1";        // 委托方式
             commonParams.acctId = "001653019819";        //现货资金帐号
             commonParams.tradePwd = "135246";     // 现货资金密码
             commonParams.regId = "0030605790";   //深圳股东代码
@@ -112,7 +112,8 @@ namespace Tangle.Trading.RootNetAdapter
 
             bool ret = oPackage.ExchangeMessage();
 
-            var x = oPackage.GetValue(0, "successflag");
+            var x = oPackage.GetValue(0, "successflg" +
+                "");
             var c = oPackage.GetValue(0, "errorcode");
             var y = oPackage.GetValue(0, "failinfo");
             Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
@@ -154,7 +155,7 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
             oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
             oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
-            oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
             oPackage.SetValue(1, "acctId", commonParams.acctId);                  // 资金账号
             oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);                   //交易密码 Y
@@ -168,7 +169,7 @@ namespace Tangle.Trading.RootNetAdapter
 
             bool ret = oPackage.ExchangeMessage();
 
-            var x = oPackage.GetValue(0, "successflag");
+            var x = oPackage.GetValue(0, "successflg");
             var c = oPackage.GetValue(0, "errorcode");
             var y = oPackage.GetValue(0, "failinfo");
             Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
@@ -205,6 +206,69 @@ namespace Tangle.Trading.RootNetAdapter
 
             }
         }
+
+
+        public void TestOrder()
+        {
+            oPackage.ClearSendPackage();
+            oPackage.SetFunctionCode("00100030");
+            oPackage.SetFlags(0);
+
+            oPackage.SetValue(0, "recordCnt", "1");
+
+            oPackage.SetValue(1, "optId", "99990");
+
+            //设置柜员密码
+            oPackage.SetValue(1, "optPwd", "112233");
+
+            //设置委托方式
+            oPackage.SetValue(1, "optMode", "W5");
+
+            //设置市场代码
+            oPackage.SetValue(1, "exchId", "0");
+
+            //设置股东代码
+            oPackage.SetValue(1, "regId", "D890019819");
+
+            //设置交易密码
+            oPackage.SetValue(1, "tradePwd", "135246");
+
+            //设置证券代码
+            oPackage.SetValue(1, "stkId", "600030");
+
+            //设置买卖方向
+            oPackage.SetValue(1, "orderType", "B");
+
+            //设置委托数量
+            oPackage.SetValue(1, "orderQty", "100");
+
+            //设置委托价格
+            oPackage.SetValue(1, "orderPrice", "19");
+
+            //设置MAC地址
+            oPackage.SetValue(1, "permitMac", "E3A4D7CBF6AF");
+
+            //和网关交互
+            if (oPackage.ExchangeMessage() == false)
+            {
+                Console.WriteLine("委托请求（00100211）交互失败");                
+                return;
+            }
+
+            //获取成功失败标志
+            if (oPackage.GetValue(0, "successflg").Equals("0") == false)
+            {//失败
+                Console.WriteLine(string.Format("委托失败，错误代码：{0}，错误信息{1}", oPackage.GetValue(0, "errorcode"), oPackage.GetValue(0, "failinfo")));                
+                return;
+            }
+
+            //获取返回记录条数
+            int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
+            //获取返回的合同序号
+            string sContractNum = oPackage.GetValue(1, "contractNum");
+
+
+        }
         public string AddStockOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
         {
 
@@ -217,7 +281,7 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
             oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
             oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
-            oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
             oPackage.SetValue(1, "regId", commonParams.regId);                  // 股东代码 N
             oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);                   //交易密码 Y
@@ -243,13 +307,14 @@ namespace Tangle.Trading.RootNetAdapter
 
             bool ret = oPackage.ExchangeMessage();
 
-            var x = oPackage.GetValue(0, "successflag");
+            var x = oPackage.GetValue(0, "successflg");
             var c = oPackage.GetValue(0, "errorcode");
             var y = oPackage.GetValue(0, "failinfo");
             Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
 
             //返回合同号
-            return oPackage.GetValue(1, " contractNum");
+            var no = oPackage.GetValue(1, "contractNum");
+            return no;
         }
 
         public void CancelStockOrder(string orderID)
@@ -280,10 +345,11 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
             oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
             oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+
             oPackage.SetValue(1, "acctId", commonParams.acctId);                //资金帐号
             oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);                //交易密码
             oPackage.SetValue(1, "permitMac", commonParams.permitMac);                //登录Mac地址
-            oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //登录Mac地址
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //登录Mac地址
             oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码
             oPackage.SetValue(1, "contractNum", orderID);                //合同号
 
@@ -293,7 +359,7 @@ namespace Tangle.Trading.RootNetAdapter
             //actionType  操作类型 N   asynchronous--表示该撤单请求可以使用异步方式
             bool ret = oPackage.ExchangeMessage();
 
-            var x = oPackage.GetValue(0, "successflag");
+            var x = oPackage.GetValue(0, "successflg");
             var c = oPackage.GetValue(0, "errorcode");
             var y = oPackage.GetValue(0, "failinfo");
             Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
@@ -330,7 +396,7 @@ namespace Tangle.Trading.RootNetAdapter
 
             bool ret = oPackage.ExchangeMessage();
 
-            var x = oPackage.GetValue(0, "successflag");
+            var x = oPackage.GetValue(0, "successflg");
             var c = oPackage.GetValue(0, "errorcode");
             var y = oPackage.GetValue(0, "failinfo");
             Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
@@ -380,7 +446,7 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
             oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
             oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
-            oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
             oPackage.SetValue(1, "regId", commonParams.regId);                  // 股东代码 N
 
