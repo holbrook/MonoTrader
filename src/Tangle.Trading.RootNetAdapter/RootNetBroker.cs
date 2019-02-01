@@ -271,7 +271,7 @@ namespace Tangle.Trading.RootNetAdapter
         }
         public string AddStockOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
         {
-
+            //TODO: 市价委托用 0B ?
             oPackage.ClearSendPackage();
 
             oPackage.SetFunctionCode("00100030");   //普通买卖委托
@@ -493,7 +493,28 @@ namespace Tangle.Trading.RootNetAdapter
 
         public void CancelFutureOrder(string orderID)
         {
-            throw new NotImplementedException();
+//            功能号 20100031        功能名称 期货报单操作请求
+//英文名 FTRD_OrderAction        请求类型 委托类
+//功能描述 对原有订单进行，撤单、挂起、激活等操作
+//输入参数    参数名 说明  必须 备注
+//    optId 柜员代码    Y
+//  optPwd  柜员口令 Y
+//    optMode 委托方式    Y
+//    acctId  资金帐号 Y
+//    acctPwd 资金密码    Y
+//    exchId  市场代码 Y
+//    regId 交易编码    Y
+//  tradePwd    交易密码 Y
+//    serialNum 流水号 N 二选一
+//    contractNum 合同序号    N
+//    actionFlag  报单操作类型 Y
+//    permitMac 登录Mac地址 N 二选一
+//    permitPhone 电话委托的主叫号码   N
+//    terminalInfo    终端信息 Y   "PC;IIP:公网IP; LIP:内网IP; MAC:MAC地址; HD:硬盘序列号; PCN:计算机名;CPU:CPU序列号; PI:硬盘分区信息（系统盘符,分区格式,硬盘大小）
+//示例：
+//PC; IIP: 123.112.54.8; LIP: 192.168.8.7; MAC: 00000000000000E0; HD: TF655AY91GHRVL; PCN: BJ - OA - ZHNAG - XC; CPU: BFEBFBFF000306A9; PI: C,NTFS,80"
+//输出参数 参数名 说明 备注
+    //serialNum 流水号
         }
 
         public List<Future.Order> GetOpenFutureOrders()
@@ -504,6 +525,75 @@ namespace Tangle.Trading.RootNetAdapter
         public void SynchronizeFutureAccount()
         {
             throw new NotImplementedException();
+        }
+
+        private void _syncFutureAccount()
+        {
+//            20800110        功能名称 客户资金查询
+//FQUERY_CashBalance 请求类型    查询类
+//客户资金查询
+//参数名 说明  必须 备注
+//optId 柜员代码    Y
+//optPwd  柜员口令 Y
+//optMode 委托方式    Y
+//acctId  资金帐号 Y
+//acctPwd 资金密码    Y
+//参数名 说明 备注
+//custType 客户类别
+//custId 客户代码
+//acctId 资金帐户
+//currentAmt 当前余额
+//usableAmt 可用余额（实时计算）              
+//realtimeAmt 权益（实时计算）                
+//closePNL 平仓盈亏
+//RealtimePNL 实时盈亏（实时计算）              
+//YdMarginUsedAmt 昨日保证金占用
+//marginUsedAmt 当日保证金占用（实时计算）       
+//tradeFrozenAmt 交易冻结金额
+//cashMovementAmt 当日出入金
+//commision 手续费用
+//overdraftLimit 信用资金
+        }
+
+        private void _syncFuturePositions()
+        {
+//            20800100        功能名称 持仓查询
+//FQUERY_Position 请求类型    查询类
+//持仓查询，查询客户期货持仓信息
+//参数名 说明 必须  备注
+//optId   柜员代码 Y
+//optPwd 柜员口令    Y
+//optMode 委托方式 Y
+//exchId 市场代码    Y
+//acctId  资金帐号 N   二选一
+//regId   交易编码 N
+//acctPwd 资金密码    N 二选一
+//tradePwd 交易密码    N
+//stkId   合约代码 N
+//参数名 说明  备注
+//exchId                      交易所代码
+//acctId                      资金帐户
+//regName                     帐户姓名
+//regId                       交易编码
+//stkId                       合约代码
+//stkName                     合约名称
+//bsFlag                      合约方向 B－多头，S - 空头
+//currentPositionQty 当前持仓数量
+//realTimePositionQty 实时持仓数（实时计算）         
+//YdPositionUsableQty 昨日持仓可平仓数
+//todayPositionUsableQty 今日持仓可平仓数
+//todayPositionCost 今开持仓均价
+//preSettlementPrice 昨日结算价
+//newPrice 最新价
+//closePNL 平仓盈亏
+//RealtimePNL 实时盈亏（实时计算）              
+//OpenFrozPositionQty 开仓冻结数量
+//TodayOffsFrozPositionQty 平今冻结
+//YdOffsFrozPositionQty 平昨冻结数
+//marginFrozenAmt 保证金冻结金额
+//marginUsedAmt 当日保证金占用（实时计算）       
+//TodayContractAmt 今日合约金额
+//YdContractAmt 昨日持仓合约金额
         }
     }
 }

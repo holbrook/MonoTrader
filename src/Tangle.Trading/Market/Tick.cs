@@ -7,7 +7,7 @@ using Tangle.Trading;
 
 namespace MonoTrader.Market
 {
-    public class Tick: IStrategyEvent
+    public class Tick
     {
         /// <summary>
         /// 证券代码

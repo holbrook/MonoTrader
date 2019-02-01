@@ -26,9 +26,12 @@ namespace Tangle.Trading.PyStrategy
             scope = engine.CreateScope();
 
             //传入函数
-            scope.SetVariable("order_shares", (Func<string, int, OrderType,Order>)this.OrderShares);
+            scope.SetVariable("order_shares", (Func<string, int, Order>)this.OrderShares);
+        }
 
-
+        public void Handle(Context ctx, Tick tick)
+        {
+            throw new NotImplementedException();
         }
 
         public void HandleMatch(Match match)
@@ -36,12 +39,8 @@ namespace Tangle.Trading.PyStrategy
 
         }
 
-        public void HandleTick(Tick tick)
-        {
 
-        }
-
-        public void Initialize(dynamic config)
+        public void Initialize(Context ctx, dynamic config = null)
         {
             // 加载外部 python 脚本文件
             //obj = pyRunTime.UseFile(config.PythonFile);
@@ -52,12 +51,12 @@ namespace Tangle.Trading.PyStrategy
 
 
 
-            var welcome = scope.GetVariable<Func<object,string>>("welcome");
+            var welcome = scope.GetVariable<Func<object, string>>("welcome");
             // 简单调用脚本文件中的方法.
             Console.WriteLine(welcome("测试中文看看是否正常！"));
 
             //测试函数调用
-            var testFunc = scope.GetVariable<Action<string,float>>("testFunc");
+            var testFunc = scope.GetVariable<Action<string, float>>("testFunc");
             testFunc("838006", 1000);
             //    var say_hello = scope.GetVariable<Func<object>>("say_hello");
         }

@@ -36,11 +36,14 @@ namespace Tangle.Trading.RootNetAdapter
 
         public static ORDER_SIDE TransOrderType(string type)
         {
+            //TODO: B, 0B 有什么区别？
             switch (type)
             {
                 case "B":
+                case "0B":
                     return ORDER_SIDE.BUY;
                 case "S":
+                case "0S":
                     return ORDER_SIDE.SELL;
                 default:
                     return ORDER_SIDE.UNKNOWN;
