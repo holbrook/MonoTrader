@@ -45,11 +45,41 @@ namespace Tangle.Trading.RootNetAdapter
             commonParams.optId = "99990";       // 柜员代码
             commonParams.optPwd = "112233";     // 柜员口令
             commonParams.optMode = "W5";        // 委托方式
-            commonParams.acctId = "001653019819";        //现货资金帐号
-            commonParams.tradePwd = "135246";     // 现货资金密码
-            commonParams.regId = "0030605790";   //深圳股东代码
-            //commonParams.regId = "D890019819";   //上海股东代码
-            
+
+
+            commonParams.stockAccount = new Dictionary<string, string>();
+            commonParams.stockAccount.Add("acctId", "001653019819");       //现货资金帐号
+            commonParams.stockAccount.Add("tradePwd", "135246");
+
+            commonParams.futureAccount = new Dictionary<string, string>();
+            commonParams.futureAccount.Add("acctId", "000000013856");       //现货资金帐号
+            commonParams.futureAccount.Add("tradePwd", "135246");
+
+
+            commonParams.accounts = new Dictionary<string, ExpandoObject>();
+
+            commonParams.accounts.Add("XSHG", new ExpandoObject());/// XSHG :上海证券交易所，
+            commonParams.accounts["XSHG.regID"] = "D890019819";
+            commonParams.accounts["XSHG.pwd"] = "135246";
+            commonParams.accounts["XSHG.acctId"] = "001653019819";        //现货资金帐号
+            commonParams.accounts["XSHG.tradePwd"] = "135246";     // 现货资金密码
+
+
+
+            commonParams.accounts.Add("XSHE", new ExpandoObject());    ///  :深圳证券交易所，
+            commonParams.accounts["XSHE.regID"] = "0030605790";
+            commonParams.accounts["XSHE.pwd"] = "135246";
+            commonParams.accounts["XSHE.acctId"] = "001653019819";        //现货资金帐号
+            commonParams.accounts["XSHE.tradePwd"] = "135246";     // 现货资金密码
+
+            commonParams.accounts.Add("CCFX", new ExpandoObject());    ///  :中国金融期货交易所，
+            commonParams.accounts["CCFX.regID"] = "02088981";
+            commonParams.accounts["CCFX.pwd"] = "135246";
+            commonParams.accounts["CCFX.acctId"] = "000000013856";        //期货资金帐号
+            commonParams.accounts["CCFX.tradePwd"] = "135246";     // 期货资金密码
+
+
+
 
             //TODO: 查询股东账号, 考虑两个市场？
 
@@ -98,8 +128,8 @@ namespace Tangle.Trading.RootNetAdapter
             //oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", commonParams.acctId);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount["acctId"]);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount["tradePwd"]);                   //交易密码 Y
 
             oPackage.SetValue(1, "maxRowNum", "500");                   //每次返回的最大记录数  Y 取值范围：1～500
             oPackage.SetValue(1, "packNum", "1");                   //查询序号    Y 首次查询时为1，查下一页时递加1
@@ -157,8 +187,8 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", commonParams.acctId);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount["acctId"]);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount["tradePwd"]);                   //交易密码 Y
 
             //custid  客户代码 N
             //exchId 交易市场代码  N 送股东代码的必须送市场
@@ -208,70 +238,10 @@ namespace Tangle.Trading.RootNetAdapter
         }
 
 
-        public void TestOrder()
-        {
-            oPackage.ClearSendPackage();
-            oPackage.SetFunctionCode("00100030");
-            oPackage.SetFlags(0);
 
-            oPackage.SetValue(0, "recordCnt", "1");
-
-            oPackage.SetValue(1, "optId", "99990");
-
-            //设置柜员密码
-            oPackage.SetValue(1, "optPwd", "112233");
-
-            //设置委托方式
-            oPackage.SetValue(1, "optMode", "W5");
-
-            //设置市场代码
-            oPackage.SetValue(1, "exchId", "0");
-
-            //设置股东代码
-            oPackage.SetValue(1, "regId", "D890019819");
-
-            //设置交易密码
-            oPackage.SetValue(1, "tradePwd", "135246");
-
-            //设置证券代码
-            oPackage.SetValue(1, "stkId", "600030");
-
-            //设置买卖方向
-            oPackage.SetValue(1, "orderType", "B");
-
-            //设置委托数量
-            oPackage.SetValue(1, "orderQty", "100");
-
-            //设置委托价格
-            oPackage.SetValue(1, "orderPrice", "19");
-
-            //设置MAC地址
-            oPackage.SetValue(1, "permitMac", "E3A4D7CBF6AF");
-
-            //和网关交互
-            if (oPackage.ExchangeMessage() == false)
-            {
-                Console.WriteLine("委托请求（00100211）交互失败");                
-                return;
-            }
-
-            //获取成功失败标志
-            if (oPackage.GetValue(0, "successflg").Equals("0") == false)
-            {//失败
-                Console.WriteLine(string.Format("委托失败，错误代码：{0}，错误信息{1}", oPackage.GetValue(0, "errorcode"), oPackage.GetValue(0, "failinfo")));                
-                return;
-            }
-
-            //获取返回记录条数
-            int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
-            //获取返回的合同序号
-            string sContractNum = oPackage.GetValue(1, "contractNum");
-
-
-        }
         public string AddStockOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
         {
-            //TODO: 市价委托用 0B ?
+            //TODO: 市价委托?
             oPackage.ClearSendPackage();
 
             oPackage.SetFunctionCode("00100030");   //普通买卖委托
@@ -283,8 +253,11 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "regId", commonParams.regId);                  // 股东代码 N
-            oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);                   //交易密码 Y
+
+            oPackage.SetValue(1, "regId", commonParams.accounts[orderbookID.Split('.')[1]].regId);                  // 股东代码 N
+            oPackage.SetValue(1, "tradePwd", commonParams.accounts[orderbookID.Split('.')[1]].pwd);                   //交易密码 Y
+
+
             oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 Y
             oPackage.SetValue(1, "stkId", Tangle2RootNet.OrderbookID2stkId(orderbookID));     //证券代码    Y 转股回售、权证行权时不使用这个字段
             oPackage.SetValue(1, "orderType", Tangle2RootNet.TransOrderType(side));   //交易类型 Y   JB - 行权，KS - ETF赎回，IS - 场内开放式基金可赎回数量
@@ -450,7 +423,7 @@ namespace Tangle.Trading.RootNetAdapter
             return orders;
         }
 
-        public string AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = -1)
+        public string AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = 0m)
         {
             oPackage.ClearSendPackage();
 
@@ -463,22 +436,28 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "regId", commonParams.regId);                  // 股东代码 N
+
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount["acctId"]);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount["tradePwd"]);                   //交易密码 Y
 
 
-            //acctId 资金帐号    Y
-            //acctPwd 资金密码 Y
-            //exchId 市场代码    Y
-            //regId   交易编码 Y
-            //tradePwd 交易密码    Y
-            //currencyId  货币代码 Y
-            //stkId 合约编码    Y
-            //F_offSetFlag    开平标志 Y(OPEN, CLOSE)
-            //bsFlag 合约方向    Y B-多头 S - 空头
+            oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 Y
+            oPackage.SetValue(1, "regId", commonParams.accounts[orderbookID.Split('.')[1]].regId);                  // 股东代码 N
+            oPackage.SetValue(1, "tradePwd", commonParams.accounts[orderbookID.Split('.')[1]].pwd);                   //交易密码 Y
+
+            oPackage.SetValue(1, "currencyId", "00");//   人民币     //currencyId  货币代码 Y
+
+            oPackage.SetValue(1, "stkId", Tangle2RootNet.OrderbookID2stkId(orderbookID));     //合约编码 
+
+            oPackage.SetValue(1, "F_offSetFlag", Tangle2RootNet.TransF_offSetFlag(effect));   //    开平标志 Y(OPEN, CLOSE)
+
+            oPackage.SetValue(1, "bsFlag", Tangle2RootNet.TransOrderType(side));  //bsFlag 合约方向    Y B-多头 S - 空头
+            oPackage.SetValue(1, "orderQty", quantity.ToString());  //orderQty    委托数量 Y
+
+            oPackage.SetValue(1, "F_orderPriceType", (0m == price) ? "ANY" : "LIMIT"); // 报单价格条件  Y
+            oPackage.SetValue(1, "futureOrderPrice", price.ToString());  //orderQty    委托数量 Y
+
             //F_hedgeFlag 投机套保标记  N 中金所不需要送，上期所、郑商所、大商所需要送
-            //orderQty    委托数量 Y
-            //F_orderPriceType 报单价格条件  Y
-            //futureOrderPrice    委托价格 Y
             //coveredFlag 备兑标签    N   1 - 备兑,0 - 非备兑
             //F_MatchCondition 订单有效时间类型    N GFD-当日有效、FOK - 即时成交否则撤销、IOC - 即时成交剩余撤销
             //ClientId 策略ID    N

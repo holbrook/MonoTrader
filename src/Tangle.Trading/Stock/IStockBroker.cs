@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tangle.PluginModel;
 using Tangle.Trading.Base;
 
 namespace Tangle.Trading.Stock
@@ -18,15 +19,15 @@ namespace Tangle.Trading.Stock
         /// <param name="orderbookID">Orderbook identifier.</param>
         /// <param name="quantity">Amount.</param>
         /// <param name="price">限价。不送表示市价单</param>
-        string AddStockOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price);
-        void CancelStockOrder(string orderID);
-        List<Order> GetOpenStockOrders();
+        ExecuteStatus AddStockOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price);
+        ExecuteStatus CancelStockOrder(string orderID);
+        ExecuteStatus GetOpenStockOrders();
 
 
 
         /// <summary>
         /// 同步资金和持仓
         /// </summary>
-        void SynchronizeStockAccount();
+        ExecuteStatus SynchronizeStockAccount();
     }
 }

@@ -33,7 +33,7 @@ namespace TestRootNetAdapter
             //broker.SynchronizeStockAccount();
 
             //期货下单
-
+            "IC1903.CCFX"
             //期货查询订单
 
             //期货撤单

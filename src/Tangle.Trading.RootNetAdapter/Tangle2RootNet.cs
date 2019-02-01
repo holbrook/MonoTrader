@@ -1,5 +1,6 @@
 ﻿using System;
 using Tangle.Trading.Base;
+using Tangle.Trading.Future;
 
 namespace Tangle.Trading.RootNetAdapter
 {
@@ -24,9 +25,35 @@ namespace Tangle.Trading.RootNetAdapter
                 case "XZCE":       //  郑商所,郑州商品交易所
                     return "Z";
                 default:
-                    return "UNSUPPORT";
+                    return "UN_SUPPORT";
             }
         }
+
+        public static string TransF_offSetFlag(POSITION_EFFECT effect)
+        {
+            switch (effect)
+            {
+                case POSITION_EFFECT.OPEN:
+                    return "OPEN";
+
+                case POSITION_EFFECT.CLOSE:
+                    return "CLOSE";
+
+                case POSITION_EFFECT.CLOSE_TODAY:
+                    return "CLOSETD";
+
+                case POSITION_EFFECT.CLSOE_YESTERDAY:
+                    return "CLOSEYD";
+
+                case POSITION_EFFECT.FORCE_CLOSE:
+                    return "FCLOSE";
+
+                default:
+                    return "UN_SUPPORT";
+            }
+        }
+
+
 
         public static string OrderbookID2stkId(string orderbookID)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tangle.PluginModel;
 using Tangle.Trading.Base;
 
 namespace Tangle.Trading.Future
@@ -11,14 +12,14 @@ namespace Tangle.Trading.Future
     {
         Account FutureAccountInfo { get; }
 
-        string AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = -1);
-        void CancelFutureOrder(string orderID);
+        ExecuteStatus AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = -1);
+        ExecuteStatus CancelFutureOrder(string orderID);
 
-        List<Order> GetOpenFutureOrders();
+        ExecuteStatus GetOpenFutureOrders();
 
         /// <summary>
         /// 同步资金和持仓
         /// </summary>
-        void SynchronizeFutureAccount();
+        ExecuteStatus SynchronizeFutureAccount();
     }
 }

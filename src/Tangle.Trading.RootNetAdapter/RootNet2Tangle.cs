@@ -1,5 +1,6 @@
 ﻿using System;
 using Tangle.Trading.Base;
+using Tangle.Trading.Future;
 
 namespace Tangle.Trading.RootNetAdapter
 {
@@ -33,6 +34,27 @@ namespace Tangle.Trading.RootNetAdapter
                     return "UNSUPPORT";
             }
         }
+
+        public static POSITION_EFFECT TransPositionEffect(string flag)
+        {
+            switch (flag)
+            {
+                case "OPEN":
+                    return POSITION_EFFECT.OPEN;
+                case "CLOSE":
+                    return POSITION_EFFECT.CLOSE;
+                case "CLOSETD":
+                    return POSITION_EFFECT.CLOSE_TODAY;
+                case "CLOSEYD":
+                    return POSITION_EFFECT.CLSOE_YESTERDAY;
+                case "FCLOSE":
+                    return POSITION_EFFECT.FORCE_CLOSE;
+                default:
+                    return POSITION_EFFECT.UN_SUPPORT;
+
+            }
+        }
+
 
         public static ORDER_SIDE TransOrderType(string type)
         {
