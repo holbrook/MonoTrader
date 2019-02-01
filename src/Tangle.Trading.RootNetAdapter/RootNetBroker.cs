@@ -109,13 +109,22 @@ namespace Tangle.Trading.RootNetAdapter
         }
 
 
-        public void SynchronizeStockAccount()
+        public ExecuteStatus SynchronizeStockAccount()
         {
-            _synchronizeStockAccount();
-            _synchronizeStockPosition();
+            ExecuteStatus s1 = _synchronizeStockAccount();
+            if (s1.Code != 0)
+                return s1;
+
+            ExecuteStatus s2 = _synchronizeStockPosition();
+
+            if (s2.Code != 0)
+                return s2;
+
+            return new ExecuteStatus(0, "同步股票账户成功");
+
         }
 
-        private void _synchronizeStockAccount()
+        private ExecuteStatus _synchronizeStockAccount()
         {
             oPackage.ClearSendPackage();
 
@@ -140,41 +149,52 @@ namespace Tangle.Trading.RootNetAdapter
             //flag    参考市值中体现当日逆回购数据标志 N   1 - 体现当日逆回购数据；其他值 - 不体现当日逆回购数据
 
 
-            bool ret = oPackage.ExchangeMessage();
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
 
-            var x = oPackage.GetValue(0, "successflg" +
-                "");
-            var c = oPackage.GetValue(0, "errorcode");
-            var y = oPackage.GetValue(0, "failinfo");
-            Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
 
-            //获取返回记录条数
-            int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
+            if(0!= ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode")+":"+ oPackage.GetValue(0, "failinfo");
 
-            StockAccountInfo.Cash = decimal.Parse(oPackage.GetValue(1, "usableAmt"));   //可用金额
-            StockAccountInfo.FrozenCash =
-                decimal.Parse(oPackage.GetValue(1, "tradeFrozenAmt")) +   //交易冻结
-                decimal.Parse(oPackage.GetValue(1, "exceptFrozenAmt"));   //异常冻结
-            StockAccountInfo.MarketValue = decimal.Parse(oPackage.GetValue(1, "currentStkValue"));   //参考市值        动态市值，包括未到期融券回购资产和场外开放式基金资产
-            StockAccountInfo.DividendReceivable = 0m;
-            StockAccountInfo.TransactionCost = 0m;
+            else
+            {
+                ret.Message = "调用成功";
 
-            //currencyId 货币代码
-            //custName 帐户姓名
-            //stkvalue 证券市值
-            //currentStkValue 
-            //currentAmt  当前资金余额
-            //currentAmtForAsset  实时资金余额 考虑实时买卖
-            //fundInAm 资金存入净值
-            //stkInAmt 证券转入净值
-            //profitAndLoss 投资损益
-            //OTCcurrentStkValue 场外开放基金参考市值
-            //HK_usableAmt 港股通可用金额
-            //str1 资金帐户属性      翻译后内容
+                //获取返回记录条数
+                int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
+
+                StockAccountInfo.Cash = decimal.Parse(oPackage.GetValue(1, "usableAmt"));   //可用金额
+                StockAccountInfo.FrozenCash =
+                    decimal.Parse(oPackage.GetValue(1, "tradeFrozenAmt")) +   //交易冻结
+                    decimal.Parse(oPackage.GetValue(1, "exceptFrozenAmt"));   //异常冻结
+                StockAccountInfo.MarketValue = decimal.Parse(oPackage.GetValue(1, "currentStkValue"));   //参考市值        动态市值，包括未到期融券回购资产和场外开放式基金资产
+                StockAccountInfo.DividendReceivable = 0m;
+                StockAccountInfo.TransactionCost = 0m;
+
+                //currencyId 货币代码
+                //custName 帐户姓名
+                //stkvalue 证券市值
+                //currentStkValue 
+                //currentAmt  当前资金余额
+                //currentAmtForAsset  实时资金余额 考虑实时买卖
+                //fundInAm 资金存入净值
+                //stkInAmt 证券转入净值
+                //profitAndLoss 投资损益
+                //OTCcurrentStkValue 场外开放基金参考市值
+                //HK_usableAmt 港股通可用金额
+                //str1 资金帐户属性      翻译后内容
+
+                ret.Data = StockAccountInfo;
+            }
+
+            return ret;
         }
 
 
-        private void _synchronizeStockPosition()
+        private ExecuteStatus _synchronizeStockPosition()
         {
             oPackage.ClearSendPackage();
 
@@ -197,49 +217,60 @@ namespace Tangle.Trading.RootNetAdapter
             //stkType 证券类别 N
 
 
-            bool ret = oPackage.ExchangeMessage();
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
 
-            var x = oPackage.GetValue(0, "successflg");
-            var c = oPackage.GetValue(0, "errorcode");
-            var y = oPackage.GetValue(0, "failinfo");
-            Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
 
-            StockAccountInfo.Positions.Clear();
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
 
-            //获取返回记录条数
-            int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
-
-
-            //逐条获取返回的结果
-            for (int i = 1; i <= iCnt; i++)
+            else
             {
-                string orderbookID = oPackage.GetValue(i, "stkId") + "." +
-                RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId"));
+                ret.Message = "调用成功";
 
-                Stock.Position position = new Stock.Position();
-                position.OrderbookID = orderbookID;
-                position.OrderbookName = oPackage.GetValue(i, "stkName");
-                position.Quantity = int.Parse(oPackage.GetValue(i, "currentQty"));//  股分余额
-                position.MarketValue = decimal.Parse(oPackage.GetValue(i, "stkValue"));// 证券市值
-                position.AvgPrice = decimal.Parse(oPackage.GetValue(i, "previousCost"));// 参考成本
-                position.Profit = decimal.Parse(oPackage.GetValue(i, "previousIncome"));// 参考收益
-                position.TodayQuantity = position.Quantity -
-                    int.Parse(oPackage.GetValue(i, "usableQty"));// 今仓 = 持仓-可用
+                StockAccountInfo.Positions.Clear();
 
-                //regId                   股东代码 汇总不送
-                //regName 股东姓名        汇总不送
-                //previousQty 昨日余额
-                //exceptFrozenQty 异常冻结
-                //unsaleableQty 非流通余额
+                //获取返回记录条数
+                int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
 
-                StockAccountInfo.Positions.Add(orderbookID, position);
 
+                //逐条获取返回的结果
+                for (int i = 1; i <= iCnt; i++)
+                {
+                    string orderbookID = oPackage.GetValue(i, "stkId") + "." +
+                    RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId"));
+
+                    Stock.Position position = new Stock.Position();
+                    position.OrderbookID = orderbookID;
+                    position.OrderbookName = oPackage.GetValue(i, "stkName");
+                    position.Quantity = int.Parse(oPackage.GetValue(i, "currentQty"));//  股分余额
+                    position.MarketValue = decimal.Parse(oPackage.GetValue(i, "stkValue"));// 证券市值
+                    position.AvgPrice = decimal.Parse(oPackage.GetValue(i, "previousCost"));// 参考成本
+                    position.Profit = decimal.Parse(oPackage.GetValue(i, "previousIncome"));// 参考收益
+                    position.TodayQuantity = position.Quantity -
+                        int.Parse(oPackage.GetValue(i, "usableQty"));// 今仓 = 持仓-可用
+
+                    //regId                   股东代码 汇总不送
+                    //regName 股东姓名        汇总不送
+                    //previousQty 昨日余额
+                    //exceptFrozenQty 异常冻结
+                    //unsaleableQty 非流通余额
+
+                    StockAccountInfo.Positions.Add(orderbookID, position);
+                }
+
+                ret.Data = StockAccountInfo;
             }
+
+            return ret;
         }
 
 
 
-        public string AddStockOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
+        public ExecuteStatus AddStockOrder(string orderbookID, int quantity, ORDER_SIDE side, decimal price)
         {
             //TODO: 市价委托?
             oPackage.ClearSendPackage();
@@ -278,23 +309,32 @@ namespace Tangle.Trading.RootNetAdapter
             //isSolicited 是否接受了投资顾问   N Y-是 / N - 否
             //oPackage.SetValue(0, "recordCnt", "1"));                  //设置请求记录数
 
-            bool ret = oPackage.ExchangeMessage();
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
 
-            var x = oPackage.GetValue(0, "successflg");
-            var c = oPackage.GetValue(0, "errorcode");
-            var y = oPackage.GetValue(0, "failinfo");
-            Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
 
-            //返回合同号
-            var no = oPackage.GetValue(1, "contractNum");
-            return no;
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
+
+            else
+            {
+                ret.Message = "调用成功";
+
+                //返回合同号
+                ret.Data = oPackage.GetValue(1, "contractNum");
+            }
+
+            return ret;
         }
 
-        public void CancelStockOrder(string orderID)
+        public ExecuteStatus CancelStockOrder(string orderID)
         {
             string orderbookID = null;
 
-            List<Stock.Order> orders = GetOpenStockOrders();
+            List<Stock.Order> orders = GetOpenStockOrders().Data;
             foreach (var order in orders)
             {
                 if (order.OrderID == orderID)
@@ -305,10 +345,7 @@ namespace Tangle.Trading.RootNetAdapter
             }
 
             if (null == orderbookID)
-            {
-                Console.WriteLine("未找到可撤的订单:" + orderID);
-                return;
-            }
+                return new ExecuteStatus(-1, "未找到可撤的订单:" + orderID);
 
             oPackage.ClearSendPackage();
 
@@ -345,18 +382,30 @@ namespace Tangle.Trading.RootNetAdapter
             //custid  客户代码 N
             //exteriorAcctId 外部帐号    N
             //actionType  操作类型 N   asynchronous--表示该撤单请求可以使用异步方式
-            bool ret = oPackage.ExchangeMessage();
 
-            var x = oPackage.GetValue(0, "successflg");
-            var c = oPackage.GetValue(0, "errorcode");
-            var y = oPackage.GetValue(0, "failinfo");
-            Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
 
-            Console.WriteLine(oPackage.GetValue(1, "completeNum"));     //成功撤单笔数
-            Console.WriteLine(oPackage.GetValue(1, "ordersum"));     //委托总笔数
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
+
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
+
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
+
+            else
+            {
+                ret.Message = "调用成功";
+                //ret.Data =
+                //Console.WriteLine(oPackage.GetValue(1, "completeNum"));     //成功撤单笔数
+                //Console.WriteLine(oPackage.GetValue(1, "ordersum"));     //委托总笔数
+            }
+
+            return ret;
         }
 
-        public List<Stock.Order> GetOpenStockOrders()
+        public ExecuteStatus GetOpenStockOrders()
         {
             oPackage.ClearSendPackage();
 
@@ -367,63 +416,72 @@ namespace Tangle.Trading.RootNetAdapter
             oPackage.SetValue(1, "optPwd", commonParams.optPwd);  // 柜员口令 
 
             oPackage.SetValue(1, "optMode", commonParams.optMode);  //  委托方式    Y
-                                                                    //oPackage.SetValue(1, "grantExchList   交易市场代码 N
-                                                                    //oPackage.SetValue(1, "custid 客户代码    N
             oPackage.SetValue(1, "acctId", commonParams.acctId);  //    资金帐号 N   二选一输入
-                                                                  //oPackage.SetValue(1, "regId   股东代码 N
+                                                                  
             oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);  //   交易密码                    Y
-                                                                      //oPackage.SetValue(1, "contractNum     合同序号 N
-                                                                      //oPackage.SetValue(1, "stkId 证券代码                    N
-                                                                      //oPackage.SetValue(1, "orderType       委托类型 N
-                                                                      //oPackage.SetValue(1, "maxOrderPrice 价格上限                    N
-                                                                      //oPackage.SetValue(1, "minOrderPrice   价格下限 N
-                                                                      //oPackage.SetValue(1, "maxOrderQty 数量上限    N
-                                                                      //oPackage.SetValue(1, "minOrderQty 数量下限 N
+          //oPackage.SetValue(1, "regId   股东代码 N
+          //oPackage.SetValue(1, "grantExchList   交易市场代码 N
+          //oPackage.SetValue(1, "custid 客户代码    N
+
+            //oPackage.SetValue(1, "contractNum     合同序号 N
+            //oPackage.SetValue(1, "stkId 证券代码                    N
+            //oPackage.SetValue(1, "orderType       委托类型 N
+            //oPackage.SetValue(1, "maxOrderPrice 价格上限                    N
+            //oPackage.SetValue(1, "minOrderPrice   价格下限 N
+            //oPackage.SetValue(1, "maxOrderQty 数量上限    N
+            //oPackage.SetValue(1, "minOrderQty 数量下限 N
             oPackage.SetValue(1, "maxRowNum", "500");         // 每次返回的最大记录数  Y 取值范围：1～500
             oPackage.SetValue(1, "packNum", "1");         // 查询序号    Y 首次查询时为1，查下一页时递加1
 
-            bool ret = oPackage.ExchangeMessage();
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
 
-            var x = oPackage.GetValue(0, "successflg");
-            var c = oPackage.GetValue(0, "errorcode");
-            var y = oPackage.GetValue(0, "failinfo");
-            Console.WriteLine(string.Format("Error {0}:{1}", oPackage.GetValue(0, "errorCode"), oPackage.GetValue(0, "failInfo")));
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
 
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
 
-            List<Stock.Order> orders = new List<Stock.Order>();
-
-            //获取返回记录条数
-            int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
-
-            //逐条获取返回的结果
-            for (int i = 1; i <= iCnt; i++)
+            else
             {
-                Stock.Order order = new Stock.Order();
+                ret.Message = "调用成功";
+                List<Stock.Order> orders = new List<Stock.Order>();
 
-                order.OrderID = oPackage.GetValue(i, "contractNum"); // 合同序号
-                order.OrderbookID = oPackage.GetValue(i, "stkId") + "." +
-                    RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId")); //证券代码+交易市场
-                order.OrderbookName = oPackage.GetValue(i, "stkName");      //证券名称
-                order.Side = RootNet2Tangle.TransOrderType(oPackage.GetValue(i, "orderType"));  //买卖类别
-                order.OrderPrice = decimal.Parse(oPackage.GetValue(i, "orderPrice"));   //委托价格
-                order.Quantity = int.Parse(oPackage.GetValue(i, "orderQty"));   //委托数量
-                order.FilledQuantity = int.Parse(oPackage.GetValue(i, "knockQty"));   //成交数量,单位为委托单位
-                order.CancelledQuantity = int.Parse(oPackage.GetValue(i, "withdrawQty"));   //撤单数量,单位为委托单位
-                order.OrderTime = DateTime.Parse(oPackage.GetValue(i, "orderTime"));     //委托时间
+                //获取返回记录条数
+                int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
 
-                orders.Add(order);
-                //sendFlag    报盘标志
-                //regId 股东代码
-                //regName 股东姓名
-                //acctId  资金帐号
-                //exteriorAcctId  外部帐号 特定用户使用
-                //offerTime 申报时间
+                //逐条获取返回的结果
+                for (int i = 1; i <= iCnt; i++)
+                {
+                    Stock.Order order = new Stock.Order();
+
+                    order.OrderID = oPackage.GetValue(i, "contractNum"); // 合同序号
+                    order.OrderbookID = oPackage.GetValue(i, "stkId") + "." +
+                        RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId")); //证券代码+交易市场
+                    order.OrderbookName = oPackage.GetValue(i, "stkName");      //证券名称
+                    order.Side = RootNet2Tangle.TransOrderType(oPackage.GetValue(i, "orderType"));  //买卖类别
+                    order.OrderPrice = decimal.Parse(oPackage.GetValue(i, "orderPrice"));   //委托价格
+                    order.Quantity = int.Parse(oPackage.GetValue(i, "orderQty"));   //委托数量
+                    order.FilledQuantity = int.Parse(oPackage.GetValue(i, "knockQty"));   //成交数量,单位为委托单位
+                    order.CancelledQuantity = int.Parse(oPackage.GetValue(i, "withdrawQty"));   //撤单数量,单位为委托单位
+                    order.OrderTime = DateTime.Parse(oPackage.GetValue(i, "orderTime"));     //委托时间
+
+                    orders.Add(order);
+                    //sendFlag    报盘标志
+                    //regId 股东代码
+                    //regName 股东姓名
+                    //acctId  资金帐号
+                    //exteriorAcctId  外部帐号 特定用户使用
+                    //offerTime 申报时间
+                }
+                ret.Data = orders;
             }
 
-            return orders;
+            return ret;
         }
 
-        public string AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = 0m)
+        public ExecuteStatus AddFutureOrder(string orderbookID, int quantity, ORDER_SIDE side, POSITION_EFFECT effect, decimal price = 0m)
         {
             oPackage.ClearSendPackage();
 
@@ -466,113 +524,391 @@ namespace Tangle.Trading.RootNetAdapter
             //businessMark 业务类别    N OTO-个股期权交易,ORQ - 回应询价,ORR - 回应询价修改
             //origContractNum 原询价回应合同序号   N 当业务类型 = ORR时要求必送, 送被修改询价回应订单(ORQ)的合同序号,其他业务不送
 
-            return null;
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
+
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
+
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
+
+            else
+            {
+                ret.Message = "调用成功";
+                ret.Data = oPackage.GetValue(1, "contractNum");  // 合同序号
+                //orderTime 委托时间
+                //orderQty 委托数量
+                //openFrozMargin 开仓冻结保证金
+                //usableAmt 可用金额
+                //serialnum 流水号
+            }
+
+            return ret;
+        }
+
+        public ExecuteStatus CancelFutureOrder(string orderID)
+        {
+            string orderbookID = null;
+
+            List<Future.Order> orders = GetOpenFutureOrders().Data;
+            foreach (var order in orders)
+            {
+                if (order.OrderID == orderID)
+                {
+                    orderbookID = order.OrderbookID;
+                    break;
+                }
+            }
+
+            if (null == orderbookID)
+                return new ExecuteStatus(-1, "未找到可撤的订单:" + orderID);
+
+            oPackage.ClearSendPackage();
+
+            oPackage.SetFunctionCode("20100031");   //期货报单操作请求
+            oPackage.SetFlags(0);
+
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
+
+
+            oPackage.SetValue(1, "contractNum", orderID);          //合同序号
+
+
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount["acctId"]);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount["tradePwd"]);                   //交易密码 Y
+
+
+            oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 Y
+            oPackage.SetValue(1, "regId", commonParams.accounts[orderbookID.Split('.')[1]].regId);                  // 股东代码 N
+            oPackage.SetValue(1, "tradePwd", commonParams.accounts[orderbookID.Split('.')[1]].pwd);
+            oPackage.SetValue(1, "actionFlag", "DELETE");   //      报单操作类型 Y
+
+
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
+
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
+
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
+
+            else
+            {
+                ret.Message = "期货撤单成功";
+                //输出参数 参数名 说明 备注
+                //serialNum 流水号
+
+            }
+            return ret;
+        }
+
+        public ExecuteStatus GetOpenFutureOrders()
+        {
+
+            oPackage.ClearSendPackage();
+
+            oPackage.SetFunctionCode("20800010");   //当日报单情况查询
+            oPackage.SetFlags(0);
+
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
+
+
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount["acctId"]);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount["tradePwd"]);                   //交易密码 Y
+
+
+            //oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 N
+            //oPackage.SetValue(1, "regId", commonParams.accounts[""].regId);                  // 股东代码 N
+            //oPackage.SetValue(1, "tradePwd", commonParams.accounts[""].pwd);
+            //F_offSetFlag    开平标志 N
+            //  F_orderStatus 报单状态    N
+            //contractNum 合同序号 N
+            //ClientId 策略ID    N
+            //stkId   合约代码 N
+
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
+
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
+
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
+
+            else
+            {
+                ret.Message = "期货查询可撤委托成功";
+
+                List<Future.Order> orders = new List<Future.Order>();
+
+                //获取返回记录条数
+                int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
+
+                //F_orderStatus 报单状态
+                //NEW 已接收
+                //ALLTRD 全部成交
+                //P_TRD_Q 部分成交，还在队列中
+                //P_TRD_NQ    部分成交，不在队列中
+                //N_TRD_Q     未成交还在队列中
+                //N_TRD_NQ    未成交不在队列中
+                //CANCEL      撤单
+                //DELETE_N    删除订单 - 新状态
+                //DELETE_S_I 删除订单-内部撤单成功
+                //DELETE_S_E 删除订单-交易所撤单成功
+                //DELETE_F 删除订单-失败状态
+
+                List<string> cancelableStatus = new List<string>(new string[]{
+                    "NEW",
+                    "P_TRD_Q", "P_TRD_NQ",
+                    "N_TRD_Q", "N_TRD_NQ"
+                 });
+
+
+                //逐条获取返回的结果
+                for (int i = 1; i <= iCnt; i++)
+                {
+                    if (!cancelableStatus.Contains(oPackage.GetValue(i, "F_orderStatus")))
+                        continue;
+
+                    Future.Order order = new Future.Order();
+
+                    order.OrderID = oPackage.GetValue(i, "contractNum"); // 合同序号
+                    order.OrderbookID = oPackage.GetValue(i, "stkId") + "." +
+                        RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId")); //证券代码+交易市场
+                    order.OrderbookName = oPackage.GetValue(i, "stkName");      //证券名称
+                    order.Side = RootNet2Tangle.TransOrderType(oPackage.GetValue(i, "bsFlag"));  //合约方向，       B－多头，S - 空头
+                    order.OrderPrice = decimal.Parse(oPackage.GetValue(i, "futureOrderPrice"));   // 委托价格(精确到小数点后4位)
+                    order.Quantity = int.Parse(oPackage.GetValue(i, "orderQty"));   //委托数量
+                    order.FilledQuantity = int.Parse(oPackage.GetValue(i, "knockQty"));   //成交数量,单位为委托单位
+                    order.CancelledQuantity = int.Parse(oPackage.GetValue(i, "withdrawQty"));   //撤单数量,单位为委托单位
+                    order.OrderTime = DateTime.Parse(oPackage.GetValue(i, "orderTime"));     //委托时间
+
+                    order.FilledPrice = decimal.Parse(oPackage.GetValue(i, "averagePrice"));   // 成交均价
+                    order.PositonEffect = RootNet2Tangle.TransPositionEffect(oPackage.GetValue(i, "F_offSetFlag")); //开平标志
+
+
+                    //F_orderStatus 报单状态
+                    //F_forceCloseReason 强平原因
+                    //exchErrorCode 交易所返回的错误代码
+                    //exchErrorMsg 错误信息
+
+                    orders.Add(order);
+
+                    //actionFlag 报单的操作类型
+                    //knockAmt 成交金额
+                    //F_orderPriceType 报单价格条件
+                    //acctId 资金帐户
+                    //regName 客户姓名
+                    //regId 交易编号
+
+
+                    //validFlag 合法标志
+                    //CoveredFlag 备兑标签        1 - 备兑,0 - 非备兑
+                    //F_MatchCondition 订单有效时间类型        GFD - 当日有效、FOK - 即时成交否则撤销、IOC - 即时成交剩余撤销
+
+                    //    ClientId 策略ID
+                    //    orderId 交易的订单编号
+                    //    serialNum 流水号
+                    //basketid 组合代码        CTS_6.0.2.0后才支持
+                }
+                ret.Data = orders;
+
+
+            }
+            return ret;
+        }
+
+        public ExecuteStatus SynchronizeFutureAccount()
+        {
+            ExecuteStatus s1 = _syncFutureAccount();
+            if (s1.Code != 0)
+                return s1;
+
+            ExecuteStatus s2 = _syncFuturePositions();
+
+            if (s2.Code != 0)
+                return s2;
+
+            return new ExecuteStatus(0, "同步期货账户成功");
+        }
+
+
+
+        private ExecuteStatus _syncFutureAccount()
+        {
+            oPackage.ClearSendPackage();
+
+            oPackage.SetFunctionCode("20800110");   //资金查询
+            oPackage.SetFlags(0);
+
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            //oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
+
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount["acctId"]);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount["tradePwd"]);                   //交易密码 Y
+
+            oPackage.SetValue(1, "maxRowNum", "500");                   //每次返回的最大记录数  Y 取值范围：1～500
+            oPackage.SetValue(1, "packNum", "1");                   //查询序号    Y 首次查询时为1，查下一页时递加1
+
+            //custid  客户代码 N
+            //currencyId 货币代码    Y
+            //regId   股东代码 N  二选一输入
+            //flag    参考市值中体现当日逆回购数据标志 N   1 - 体现当日逆回购数据；其他值 - 不体现当日逆回购数据
+
+
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
+
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
+
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
+
+            else
+            {
+                ret.Message = "调用成功";
+
+                //获取返回记录条数
+                int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
+
+                FutureAccountInfo.Cash = decimal.Parse(oPackage.GetValue(1, "usableAmt"));   //可用金额
+                FutureAccountInfo.FrozenCash =
+                    decimal.Parse(oPackage.GetValue(1, "tradeFrozenAmt"));   //交易冻结
+
+                FutureAccountInfo.MarketValue = decimal.Parse(oPackage.GetValue(1, "realtimeAmt"));   //权益（实时计算）  
+
+                FutureAccountInfo.TransactionCost = decimal.Parse(oPackage.GetValue(1, "commision")); // 手续费用
+
+                //custType 客户类别
+                //currentAmt 当前余额
+
+                //closePNL 平仓盈亏
+                //RealtimePNL 实时盈亏（实时计算）              
+                //YdMarginUsedAmt 昨日保证金占用
+                //marginUsedAmt 当日保证金占用（实时计算）       
+                //cashMovementAmt 当日出入金
+
+                //overdraftLimit 信用资金
+
+                ret.Data = FutureAccountInfo;
+            }
+
+            return ret;
+
 
         }
 
-        public void CancelFutureOrder(string orderID)
+        private ExecuteStatus _syncFuturePositions()
         {
-//            功能号 20100031        功能名称 期货报单操作请求
-//英文名 FTRD_OrderAction        请求类型 委托类
-//功能描述 对原有订单进行，撤单、挂起、激活等操作
-//输入参数    参数名 说明  必须 备注
-//    optId 柜员代码    Y
-//  optPwd  柜员口令 Y
-//    optMode 委托方式    Y
-//    acctId  资金帐号 Y
-//    acctPwd 资金密码    Y
-//    exchId  市场代码 Y
-//    regId 交易编码    Y
-//  tradePwd    交易密码 Y
-//    serialNum 流水号 N 二选一
-//    contractNum 合同序号    N
-//    actionFlag  报单操作类型 Y
-//    permitMac 登录Mac地址 N 二选一
-//    permitPhone 电话委托的主叫号码   N
-//    terminalInfo    终端信息 Y   "PC;IIP:公网IP; LIP:内网IP; MAC:MAC地址; HD:硬盘序列号; PCN:计算机名;CPU:CPU序列号; PI:硬盘分区信息（系统盘符,分区格式,硬盘大小）
-//示例：
-//PC; IIP: 123.112.54.8; LIP: 192.168.8.7; MAC: 00000000000000E0; HD: TF655AY91GHRVL; PCN: BJ - OA - ZHNAG - XC; CPU: BFEBFBFF000306A9; PI: C,NTFS,80"
-//输出参数 参数名 说明 备注
-    //serialNum 流水号
-        }
+            oPackage.ClearSendPackage();
 
-        public List<Future.Order> GetOpenFutureOrders()
-        {
-            throw new NotImplementedException();
-        }
+            oPackage.SetFunctionCode("20800100");   //查询客户期货持仓信息
+            oPackage.SetFlags(0);
 
-        public void SynchronizeFutureAccount()
-        {
-            throw new NotImplementedException();
-        }
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
+            //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-        private void _syncFutureAccount()
-        {
-//            20800110        功能名称 客户资金查询
-//FQUERY_CashBalance 请求类型    查询类
-//客户资金查询
-//参数名 说明  必须 备注
-//optId 柜员代码    Y
-//optPwd  柜员口令 Y
-//optMode 委托方式    Y
-//acctId  资金帐号 Y
-//acctPwd 资金密码    Y
-//参数名 说明 备注
-//custType 客户类别
-//custId 客户代码
-//acctId 资金帐户
-//currentAmt 当前余额
-//usableAmt 可用余额（实时计算）              
-//realtimeAmt 权益（实时计算）                
-//closePNL 平仓盈亏
-//RealtimePNL 实时盈亏（实时计算）              
-//YdMarginUsedAmt 昨日保证金占用
-//marginUsedAmt 当日保证金占用（实时计算）       
-//tradeFrozenAmt 交易冻结金额
-//cashMovementAmt 当日出入金
-//commision 手续费用
-//overdraftLimit 信用资金
-        }
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount["acctId"]);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount["tradePwd"]);                   //交易密码 Y
 
-        private void _syncFuturePositions()
-        {
-//            20800100        功能名称 持仓查询
-//FQUERY_Position 请求类型    查询类
-//持仓查询，查询客户期货持仓信息
-//参数名 说明 必须  备注
-//optId   柜员代码 Y
-//optPwd 柜员口令    Y
-//optMode 委托方式 Y
-//exchId 市场代码    Y
-//acctId  资金帐号 N   二选一
-//regId   交易编码 N
-//acctPwd 资金密码    N 二选一
-//tradePwd 交易密码    N
-//stkId   合约代码 N
-//参数名 说明  备注
-//exchId                      交易所代码
-//acctId                      资金帐户
-//regName                     帐户姓名
-//regId                       交易编码
-//stkId                       合约代码
-//stkName                     合约名称
-//bsFlag                      合约方向 B－多头，S - 空头
-//currentPositionQty 当前持仓数量
-//realTimePositionQty 实时持仓数（实时计算）         
-//YdPositionUsableQty 昨日持仓可平仓数
-//todayPositionUsableQty 今日持仓可平仓数
-//todayPositionCost 今开持仓均价
-//preSettlementPrice 昨日结算价
-//newPrice 最新价
-//closePNL 平仓盈亏
-//RealtimePNL 实时盈亏（实时计算）              
-//OpenFrozPositionQty 开仓冻结数量
-//TodayOffsFrozPositionQty 平今冻结
-//YdOffsFrozPositionQty 平昨冻结数
-//marginFrozenAmt 保证金冻结金额
-//marginUsedAmt 当日保证金占用（实时计算）       
-//TodayContractAmt 今日合约金额
-//YdContractAmt 昨日持仓合约金额
+            oPackage.SetValue(1, "exchId", "CCFX");
+
+            // 市场代码    Y
+
+
+            bool flag = oPackage.ExchangeMessage();
+            if (!flag)
+                return new ExecuteStatus(-1, "调用失败，请检查日志");
+
+            ExecuteStatus ret = new ExecuteStatus();
+            ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
+
+            if (0 != ret.Code)
+                ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
+
+            else
+            {
+                ret.Message = "调用成功";
+
+                FutureAccountInfo.Positions.Clear();
+
+                //获取返回记录条数
+                int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
+
+
+                //逐条获取返回的结果
+                for (int i = 1; i <= iCnt; i++)
+                {
+                    string orderbookID = oPackage.GetValue(i, "stkId") + "." +
+                    RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId"));
+
+                    Future.Position position = new Future.Position();
+
+                    position.OrderbookID = orderbookID;
+                    position.OrderbookName = oPackage.GetValue(i, "stkName");
+                    position.Quantity = int.Parse(oPackage.GetValue(i, "realTimePositionQty"));//  实时持仓数（实时计算）  
+                    position.MarketValue = decimal.Parse(oPackage.GetValue(i, "newPrice"))* position.Quantity;// 证券市值
+                    //position.AvgPrice = decimal.Parse(oPackage.GetValue(i, "previousCost"));// 参考成本
+                    position.Profit = decimal.Parse(oPackage.GetValue(i, "closePNL"));// 参考收益
+                    //position.TodayQuantity = position.Quantity -
+                    //    int.Parse(oPackage.GetValue(i, "usableQty"));// 今仓 = 持仓-可用
+
+                    //参数名 说明  备注
+
+                    //acctId                      资金帐户
+                    //regName                     帐户姓名
+                    //regId                       交易编码
+
+
+                    //bsFlag                      合约方向 B－多头，S - 空头
+                    //currentPositionQty 当前持仓数量
+                    //        
+                    //YdPositionUsableQty 昨日持仓可平仓数
+                    //todayPositionUsableQty 今日持仓可平仓数
+                    //todayPositionCost 今开持仓均价
+                    //preSettlementPrice 昨日结算价
+                    //newPrice 最新价
+                    //closePNL 平仓盈亏
+                    //RealtimePNL 实时盈亏（实时计算）              
+                    //OpenFrozPositionQty 开仓冻结数量
+                    //TodayOffsFrozPositionQty 平今冻结
+                    //YdOffsFrozPositionQty 平昨冻结数
+                    //marginFrozenAmt 保证金冻结金额
+                    //marginUsedAmt 当日保证金占用（实时计算）       
+                    //TodayContractAmt 今日合约金额
+                    //YdContractAmt 昨日持仓合约金额
+
+                    FutureAccountInfo.Positions.Add(orderbookID, position);
+                }
+
+                ret.Data = FutureAccountInfo;
+            }
+
+            return ret;
+
+
+
         }
     }
 }

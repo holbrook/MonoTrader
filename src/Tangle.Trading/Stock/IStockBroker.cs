@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tangle.PluginModel;
 using Tangle.Trading.Base;
 
 namespace Tangle.Trading.Stock

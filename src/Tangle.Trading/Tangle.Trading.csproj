@@ -74,6 +74,7 @@
     <Compile Include="BrokerAttribute.cs" />
     <Compile Include="NEEQMM\INEEQMMBroker.cs" />
     <Compile Include="IFeed.cs" />
+    <Compile Include="ExecuteStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />
@@ -85,12 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TangleFramework\src\Tangle.PluginModel\Tangle.PluginModel.csproj">
-      <Project>{F06571B0-398F-45A3-B887-842CE494819E}</Project>
-      <Name>Tangle.PluginModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\MonoTrader\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets" Condition="Exists('..\MonoTrader\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets')" />

@@ -43,6 +43,8 @@ namespace Tangle.Trading.Future
 
     public class Order:OrderBase
     {
+        //trading_datetime    datetime.datetime 订单的交易日期（对应期货夜盘）
 
+        public POSITION_EFFECT PositonEffect { get; set; }
     }
 }

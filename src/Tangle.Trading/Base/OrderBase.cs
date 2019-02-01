@@ -104,14 +104,17 @@ namespace Tangle.Trading.Base
         /// <value>The order time.</value>
         public DateTime OrderTime { get; set; }
 
+        /// <summary>
+        /// 成交均价
+        /// </summary>
+        /// <value>avg_price</value>
+        public decimal FilledPrice { get; set; }
 
-        //datetime    datetime.datetime 
         //type ORDER_TYPE  订单类型
         //transaction_cost    decimal 费用
-        //avg_price decimal 成交均价
+
         //status ORDER_STATUS    订单状态
         //message str 信息。比如拒单时候此处会提示拒单原因
-        //trading_datetime    datetime.datetime 订单的交易日期（对应期货夜盘）
-        //position_effect POSITION_EFFECT 订单开平（期货专用）
+
     }
 }
