@@ -8,10 +8,10 @@ using Tangle.Trading.Stock;
 
 namespace Tangle.Trading.RootNetAdapter
 {
-    [Export(typeof(IBroker))]
+    [Export(typeof(IAdapter))]
     [Broker(typeof(IStockBroker), new string[] { "XSHE", "XSHG", "NEEQ" })]
     [Broker(typeof(IFutureBroker), new string[] { "CCFX", "XDCE", "XSGE", "XZCE" })]
-    public class RootNetBroker : IBroker, IStockBroker, IFutureBroker
+    public class RootNetAdapter : IAdapter, IStockBroker, IFutureBroker
     {
         private GWDPApiCS.GWDPApiCS oPackage;
         private dynamic commonParams = new ExpandoObject();
@@ -19,7 +19,7 @@ namespace Tangle.Trading.RootNetAdapter
         public Stock.Account StockAccountInfo { get; private set; }
         public Future.Account FutureAccountInfo { get; private set; }
 
-        public RootNetBroker()
+        public RootNetAdapter()
         {
             StockAccountInfo = new Stock.Account();
             FutureAccountInfo = new Future.Account();

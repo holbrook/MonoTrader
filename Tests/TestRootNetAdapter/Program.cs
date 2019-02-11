@@ -12,7 +12,7 @@ namespace TestRootNetAdapter
         static void Main(string[] args)
         {
 
-            RootNetBroker broker = new RootNetBroker();
+            RootNetAdapter broker = new RootNetAdapter();
             broker.Initialize(null);
 
             //broker.TestOrder();

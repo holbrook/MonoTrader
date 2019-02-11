@@ -52,7 +52,6 @@
     <Compile Include="Instrument\InstrumentBase.cs" />
     <Compile Include="Instrument\Stock.cs" />
     <Compile Include="Market\Bar.cs" />
-    <Compile Include="Market\Tick.cs" />
     <Compile Include="Stock\Account.cs" />
     <Compile Include="Stock\Position.cs" />
     <Compile Include="Context.cs" />
@@ -68,13 +67,16 @@
     <Compile Include="NEEQMM\NEEQMMMatch.cs" />
     <Compile Include="Future\IFutureBroker.cs" />
     <Compile Include="Stock\StockMatch.cs" />
-    <Compile Include="IBroker.cs" />
+    <Compile Include="IAdapter.cs" />
     <Compile Include="StrategyPlatformExtensions.cs" />
     <Compile Include="IBrokerMeta.cs" />
     <Compile Include="BrokerAttribute.cs" />
     <Compile Include="NEEQMM\INEEQMMBroker.cs" />
     <Compile Include="IFeed.cs" />
     <Compile Include="ExecuteStatus.cs" />
+    <Compile Include="FeedEventArgs.cs" />
+    <Compile Include="Stock\Tick.cs" />
+    <Compile Include="Future\Tick.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />

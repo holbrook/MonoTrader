@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RootNetBroker.cs" />
+    <Compile Include="RootNetAdapter.cs" />
     <Compile Include="RTSubscribeAPI.cs" />
     <Compile Include="RootNet2Tangle.cs" />
     <Compile Include="Tangle2RootNet.cs" />

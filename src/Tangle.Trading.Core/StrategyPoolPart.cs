@@ -11,7 +11,7 @@ namespace Tangle.Trading.Core
 
         [ImportMany]
         //public List<Lazy<IFoo, IFooMultiMeta>> Foos { get; set; }
-        public List<IBroker> Brokers { get; set; }
+        public List<IAdapter> Brokers { get; set; }
 
         public IPartContext Context { get; set; }
 

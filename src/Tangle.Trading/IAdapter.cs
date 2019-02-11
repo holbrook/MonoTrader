@@ -3,7 +3,7 @@ using Tangle.Trading.Base;
 
 namespace Tangle.Trading
 {
-    public interface IBroker
+    public interface IAdapter
     {
         /// <summary>
         /// 初始化
