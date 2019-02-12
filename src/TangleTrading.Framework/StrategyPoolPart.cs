@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Tangle.PluginModel;
+using TangleTrading.Model;
 
 namespace Tangle.Trading.Core
 {

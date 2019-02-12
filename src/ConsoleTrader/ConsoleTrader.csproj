@@ -89,11 +89,5 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TangleFramework\src\Tangle.Framework\Tangle.Framework.csproj">
-      <Project>{B6142CEF-47D1-44B6-8761-50474F290736}</Project>
-      <Name>Tangle.Framework</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
