@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TangleTrading.Model.Command
+namespace TangleTrading.Command
 {
     /// <summary>
     /// 仅仅是标记接口(Marker Interface).

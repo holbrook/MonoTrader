@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Dynamic;
 
-namespace TangleTrading.Model
+namespace TangleTrading
 {
     public class ExecuteStatus
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model.Stock
+namespace TangleTrading.Stock
 {
     /// <summary>
     /// 股票交易网关要实现的接口。

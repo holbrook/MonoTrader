@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TangleTrading.Model
+namespace TangleTrading.Strategy
 {
     /// <summary>
     /// 策略行情类的扩展方法，在编写策略时可以直接调用

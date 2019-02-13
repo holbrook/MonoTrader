@@ -56,14 +56,14 @@
     <Compile Include="PyStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tangle.Trading\Tangle.Trading.csproj">
+    <None Include="packages.config" />
+    <None Include="SpreadTrading.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TangleTrading.Model\TangleTrading.Model.csproj">
       <Project>{F1E2B7B5-E1BD-4D19-B646-BEFCC4B634AD}</Project>
       <Name>TangleTrading.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="SpreadTrading.py" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

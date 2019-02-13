@@ -1,7 +1,7 @@
 ﻿using System;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model.NEEQMM
+namespace TangleTrading.NEEQMM
 {
     public class NEEQMMMatch:Match
     {

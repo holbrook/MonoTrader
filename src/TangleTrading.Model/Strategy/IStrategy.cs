@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MonoTrader.Market;
-using TangleTrading.Model.Base;
+using TangleTrading.Adapter;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model
+namespace TangleTrading.Strategy
 {
     /// <summary>
     /// 策略接口。这里只定义必须的接口

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TangleTrading.Model.Base
+namespace TangleTrading.Base
 {
     /// <summary>
     /// 成交信息

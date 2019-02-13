@@ -1,6 +1,6 @@
 ﻿using System;
-using TangleTrading.Model.Base;
-using TangleTrading.Model.Future;
+using TangleTrading.Base;
+using TangleTrading.Future;
 
 namespace TangleTrading.RootNetAdapter
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 
-namespace TangleTrading.Model
+namespace TangleTrading.Strategy
 {
     /// <summary>
     /// IStrategy 的描述,包括：

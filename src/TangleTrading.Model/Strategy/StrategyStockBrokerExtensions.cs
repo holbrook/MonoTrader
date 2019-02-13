@@ -1,7 +1,7 @@
 ﻿using System;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model
+namespace TangleTrading.Strategy
 {
     /// <summary>
     /// 策略交易类的扩展方法，在编写策略时可以直接调用
@@ -33,7 +33,7 @@ namespace TangleTrading.Model
         /// <item>style=LimitOrder(limit_price)</item>
         /// </list>
         ///</param>
-        public static TangleTrading.Model.Stock.Order OrderShares(this IStrategy stgy, 
+        public static TangleTrading.Stock.Order OrderShares(this IStrategy stgy, 
         string orderbookID, int amount)
         {
             //TODO: if null, default as MarketOrder

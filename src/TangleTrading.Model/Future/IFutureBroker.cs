@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model.Future
+namespace TangleTrading.Future
 {
     public interface IFutureBroker
     {

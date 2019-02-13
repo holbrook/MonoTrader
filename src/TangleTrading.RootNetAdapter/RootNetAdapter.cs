@@ -2,31 +2,38 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Dynamic;
-using MonoTrader.Instrument;
-using TangleTrading.Model;
-using TangleTrading.Model.Base;
-using TangleTrading.Model.Future;
-using TangleTrading.Model.Stock;
+using TangleTrading.Adapter;
+using TangleTrading.Base;
+using TangleTrading.Future;
+using TangleTrading.Stock;
 
 namespace TangleTrading.RootNetAdapter
 {
-    [Export(typeof(IAdapter))]
-    [Broker(typeof(IStockBroker), new string[] { "XSHE", "XSHG", "NEEQ" })]
-    [Broker(typeof(IFutureBroker), new string[] { "CCFX", "XDCE", "XSGE", "XZCE" })]
-    public class RootNetAdapter : IAdapter, IStockBroker, IFutureBroker
+    [Export(typeof(IBroker))]
+    [Broker(new Dictionary<Type, string[]>()
+        {
+            { typeof(IStockBroker), new string[] { "XSHE", "XSHG", "NEEQ" }},
+            { typeof(IFutureBroker), new string[] { "CCFX", "XDCE", "XSGE", "XZCE" }}
+        })]
+
+
+    //[Feed(typeof(Stock.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
+    //[Feed(typeof(Future.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
+
+    public class RootNetAdapter : IBroker, IStockBroker, IFutureBroker
     {
         private GWDPApiCS.GWDPApiCS oPackage;
         private dynamic commonParams = new ExpandoObject();
 
-        public Model.Stock.Account StockAccountInfo { get; private set; }
-        public Model.Future.Account FutureAccountInfo { get; private set; }
+        public Stock.Account StockAccountInfo { get; private set; }
+        public Future.Account FutureAccountInfo { get; private set; }
 
-        Model.Stock.Account IStockBroker.StockAccountInfo => throw new NotImplementedException();
+
 
         public RootNetAdapter()
         {
-            StockAccountInfo = new Model.Stock.Account();
-            FutureAccountInfo = new Model.Future.Account();
+            StockAccountInfo = new Stock.Account();
+            FutureAccountInfo = new Future.Account();
         }
 
         public void Initialize(dynamic param)
@@ -247,7 +254,7 @@ namespace TangleTrading.RootNetAdapter
                     string orderbookID = oPackage.GetValue(i, "stkId") + "." +
                     RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId"));
 
-                    Model.Stock.Position position = new Model.Stock.Position();
+                    Stock.Position position = new Stock.Position();
                     position.OrderbookID = orderbookID;
                     position.OrderbookName = oPackage.GetValue(i, "stkName");
                     position.Quantity = int.Parse(oPackage.GetValue(i, "currentQty"));//  股分余额
@@ -338,7 +345,7 @@ namespace TangleTrading.RootNetAdapter
         {
             string orderbookID = null;
 
-            List<Model.Stock.Order> orders = GetOpenStockOrders().Data;
+            List<Stock.Order> orders = GetOpenStockOrders().Data;
             foreach (var order in orders)
             {
                 if (order.OrderID == orderID)
@@ -450,7 +457,7 @@ namespace TangleTrading.RootNetAdapter
             else
             {
                 ret.Message = "调用成功";
-                List<Model.Stock.Order> orders = new List<Model.Stock.Order>();
+                List<Stock.Order> orders = new List<Stock.Order>();
 
                 //获取返回记录条数
                 int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
@@ -458,7 +465,7 @@ namespace TangleTrading.RootNetAdapter
                 //逐条获取返回的结果
                 for (int i = 1; i <= iCnt; i++)
                 {
-                    Model.Stock.Order order = new Model.Stock.Order();
+                    Stock.Order order = new Stock.Order();
 
                     order.OrderID = oPackage.GetValue(i, "contractNum"); // 合同序号
                     order.OrderbookID = oPackage.GetValue(i, "stkId") + "." +
@@ -556,7 +563,7 @@ namespace TangleTrading.RootNetAdapter
         {
             string orderbookID = null;
 
-            List<Model.Future.Order> orders = GetOpenFutureOrders().Data;
+            List<Future.Order> orders = GetOpenFutureOrders().Data;
             foreach (var order in orders)
             {
                 if (order.OrderID == orderID)
@@ -656,7 +663,7 @@ namespace TangleTrading.RootNetAdapter
             {
                 ret.Message = "期货查询可撤委托成功";
 
-                List<Model.Future.Order> orders = new List<Model.Future.Order>();
+                List<Future.Order> orders = new List<Future.Order>();
 
                 //获取返回记录条数
                 int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
@@ -687,7 +694,7 @@ namespace TangleTrading.RootNetAdapter
                     if (!cancelableStatus.Contains(oPackage.GetValue(i, "F_orderStatus")))
                         continue;
 
-                    Model.Future.Order order = new Model.Future.Order();
+                    Future.Order order = new Future.Order();
 
                     order.OrderID = oPackage.GetValue(i, "contractNum"); // 合同序号
                     order.OrderbookID = oPackage.GetValue(i, "stkId") + "." +
@@ -867,7 +874,7 @@ namespace TangleTrading.RootNetAdapter
                     string orderbookID = oPackage.GetValue(i, "stkId") + "." +
                     RootNet2Tangle.TransExchID(oPackage.GetValue(i, "exchId"));
 
-                    Model.Future.Position position = new Model.Future.Position();
+                    Future.Position position = new Future.Position();
 
                     position.OrderbookID = orderbookID;
                     position.OrderbookName = oPackage.GetValue(i, "stkName");

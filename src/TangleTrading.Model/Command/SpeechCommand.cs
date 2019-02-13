@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TangleTrading.Model.Command
+namespace TangleTrading.Command
 {
-    class SpeakCommand : ICommand
+    public class SpeechCommand : ICommand
     {
-        public int Volume {get;set; }    //设置朗读音量 [范围 0 ~ 100] 
-        public int Rate { get; set; }      //设置朗读频率 [范围  -10 ~ 10] 
-        public string Message { get; set; }
+        public int Volume {get;private set; }    //设置朗读音量 [范围 0 ~ 100] 
+        public int Rate { get; private set; }      //设置朗读频率 [范围  -10 ~ 10] 
+        public string Message { get; private set; }
 
-        public SpeakCommand(string msg, int volume=100, int rate=0)
+        public SpeechCommand(string msg, int volume=100, int rate=0)
         {
             Message = msg.Trim();
             Volume = volume;

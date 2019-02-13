@@ -1,7 +1,7 @@
 ﻿using System;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model.Stock
+namespace TangleTrading.Stock
 {
     public class StockMatch :Match
     {

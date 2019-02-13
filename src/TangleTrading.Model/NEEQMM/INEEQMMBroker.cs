@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TangleTrading.Model.NEEQMM
+namespace TangleTrading.NEEQMM
 {
     public interface INEEQMMBroker
     {

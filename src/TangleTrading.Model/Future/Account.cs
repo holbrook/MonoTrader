@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model.Future
+namespace TangleTrading.Future
 {
     public class Account
     {

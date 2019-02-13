@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TangleTrading.Model
+namespace TangleTrading.Strategy
 {
     public static class StrategyPlatformExtensions
     {

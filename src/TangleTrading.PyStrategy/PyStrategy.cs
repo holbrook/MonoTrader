@@ -1,7 +1,8 @@
 ﻿using System;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
-using TangleTrading.Model;
+using TangleTrading.Stock;
+using TangleTrading.Strategy;
 
 namespace TangleTrading.PyStrategy
 {
@@ -27,15 +28,11 @@ namespace TangleTrading.PyStrategy
             scope.SetVariable("order_shares", (Func<string, int, Order>)this.OrderShares);
         }
 
-        public void Handle(Context ctx, Tick tick)
+        public void Handle(Context ctx, FeedEventArgs feedEvent)
         {
             throw new NotImplementedException();
         }
 
-        public void HandleMatch(Match match)
-        {
-
-        }
 
 
         public void Initialize(Context ctx, dynamic config = null)

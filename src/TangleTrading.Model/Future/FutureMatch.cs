@@ -1,7 +1,7 @@
 ﻿using System;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model.Future
+namespace TangleTrading.Future
 {
     public class FutureMatch:Match
     {

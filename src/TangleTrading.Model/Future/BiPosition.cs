@@ -1,11 +1,11 @@
-﻿using TangleTrading.Model.Base;
+﻿using TangleTrading.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TangleTrading.Model.Future
+namespace TangleTrading.Future
 {
     /// <summary>
     /// 期货双向持仓汇总

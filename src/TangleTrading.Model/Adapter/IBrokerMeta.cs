@@ -1,9 +1,12 @@
 ﻿using System;
-namespace TangleTrading.Model
+using System.Collections.Generic;
+
+namespace TangleTrading.Adapter
 {
     public interface IBrokerMeta
     {
-        Type BrokerType { get;}
+        Dictionary<Type,string[]> Exchanges { get; }
+        //Type BrokerType { get;}
 
         // 上海证券交易所（英文：Shanghai Stock Exchange） SHSE
         // 深圳证券交易所 Shenzhen Stock Exchange        SZSE
@@ -49,6 +52,6 @@ namespace TangleTrading.Model
         //Y 深期权
         /// </summary>
         /// <value>The markets.</value>
-        string[] Exchanges { get; }
+        //string[] Exchanges { get; }
     }
 }

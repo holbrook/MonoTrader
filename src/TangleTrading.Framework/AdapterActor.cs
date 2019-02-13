@@ -1,7 +1,7 @@
 ﻿using System;
 using Akka.Actor;
 using Tangle.Trading.Core;
-using TangleTrading.Model;
+using TangleTrading;
 
 namespace TangleTrading.Framework
 {
@@ -15,8 +15,7 @@ namespace TangleTrading.Framework
 
             if(config.SyncTickMillseconds>0)
             {
-                Context.System.Scheduler.ScheduleTellRepeatedly(
-                )
+                Context.System.Scheduler.ScheduleTellRepeatedly(0, config.SyncTickMillseconds,Self,"SYNCTICK",Self);
             }
 
             Receive<AdapterCommand>((AdapterCommand arg) => { });

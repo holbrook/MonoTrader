@@ -1,9 +1,9 @@
 ﻿using System;
-using TangleTrading.Model.Base;
+using TangleTrading.Base;
 
-namespace TangleTrading.Model
+namespace TangleTrading.Adapter
 {
-    public interface IAdapter
+    public interface IBroker
     {
         /// <summary>
         /// 初始化

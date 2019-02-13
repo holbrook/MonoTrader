@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TangleTrading.Model.Future
+namespace TangleTrading.Future
 {
     public class Tick
     {

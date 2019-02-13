@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TangleTrading.Model.Base
+namespace TangleTrading.Base
 {
 
     public enum ORDER_STATUS

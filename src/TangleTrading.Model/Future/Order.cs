@@ -1,11 +1,11 @@
-﻿using TangleTrading.Model.Base;
+﻿using TangleTrading.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TangleTrading.Model.Future
+namespace TangleTrading.Future
 {
     public enum POSITION_EFFECT
     {
