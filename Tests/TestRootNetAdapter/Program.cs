@@ -1,5 +1,7 @@
 ﻿using TangleTrading.Framework.Util;
+using TangleTrading.Future;
 using TangleTrading.RootNetAdapter;
+using TangleTrading.Stock;
 
 namespace TestRootNetAdapter
 {
@@ -7,32 +9,32 @@ namespace TestRootNetAdapter
     {
         static void Main(string[] args)
         {
-            //RootNetBrokerConfig config = new RootNetBrokerConfig();
+            RootNetConfig config = new RootNetConfig();
 
-            //config.OptID = "99990";       // 柜员代码
-            //config.OptPwd = "112233";     // 柜员口令
-            //config.OptMode = "W5";        // 委托方式
+            config.OptID = "99990";       // 柜员代码
+            config.OptPwd = "112233";     // 柜员口令
+            config.OptMode = "W5";        // 委托方式
 
-            //BrokerConfig stockConfig = new BrokerConfig();
-            //stockConfig.BrokerType = "StockBroker";
-            //stockConfig.AccountID = "001653019819";
-            //stockConfig.AccountPwd = "135246";
+            BrokerConfig stockConfig = new BrokerConfig();
+            stockConfig.BrokerType = typeof(IStockBroker);// "StockBroker";
+            stockConfig.AccountID = "001653019819";
+            stockConfig.AccountPwd = "135246";
 
-            //stockConfig.Accounts.Add(new AccountConfig("XSHG", "D890019819", "135246"));    //上交所
-            //stockConfig.Accounts.Add(new AccountConfig("XSHE", "0030605790", "135246"));    //上交所
+            stockConfig.Accounts.Add(new AccountConfig("XSHG", "D890019819", "135246"));    //上交所
+            stockConfig.Accounts.Add(new AccountConfig("XSHE", "0030605790", "135246"));    //上交所
 
-            //config.Brokers.Add(stockConfig);
+            config.Brokers.Add(stockConfig);
 
 
-            //BrokerConfig futureConfig = new BrokerConfig();
-            //futureConfig.BrokerType = "FutureBroker";
-            //futureConfig.AccountID = "000000013856";
-            //futureConfig.AccountPwd = "135246";
+            BrokerConfig futureConfig = new BrokerConfig();
+            futureConfig.BrokerType = typeof(IFutureBroker);
+            futureConfig.AccountID = "000000013856";
+            futureConfig.AccountPwd = "135246";
 
-            //futureConfig.Accounts.Add(new AccountConfig("CCFX", "02088981", "135246"));    //中金所
-            //config.Brokers.Add(futureConfig);
+            futureConfig.Accounts.Add(new AccountConfig("CCFX", "02088981", "135246"));    //中金所
+            config.Brokers.Add(futureConfig);
 
-            //ConfigUtil.Save(config, "rncfg.xml");
+            ConfigUtil.Save(config, "rncfg.xml");
             RootNetConfig config = ConfigUtil.Load<RootNetConfig>("rncfg.xml");
 
             RootNetBroker broker = new RootNetBroker();

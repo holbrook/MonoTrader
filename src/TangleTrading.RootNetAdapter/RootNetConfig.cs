@@ -48,7 +48,7 @@ namespace TangleTrading.RootNetAdapter
         /// Broker类型
         /// </summary>
         [XmlAttribute]
-        public string BrokerType { get; set; }
+        public Type BrokerType { get; set; }
 
         /// <summary>
         /// 资金帐号
