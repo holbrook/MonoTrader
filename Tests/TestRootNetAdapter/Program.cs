@@ -16,26 +16,27 @@ namespace TestRootNetAdapter
             config.OptMode = "W5";        // 委托方式
 
             BrokerConfig stockConfig = new BrokerConfig();
-            stockConfig.BrokerType = typeof(IStockBroker);// "StockBroker";
+            stockConfig.BrokerType = typeof(IStockBroker).Name;// "StockBroker";
             stockConfig.AccountID = "001653019819";
             stockConfig.AccountPwd = "135246";
 
-            stockConfig.Accounts.Add(new AccountConfig("XSHG", "D890019819", "135246"));    //上交所
-            stockConfig.Accounts.Add(new AccountConfig("XSHE", "0030605790", "135246"));    //上交所
+            stockConfig.Accounts.Add("XSHG", new AccountConfig("XSHG", "D890019819", "135246"));    //上交所
+            stockConfig.Accounts.Add("XSHE", new AccountConfig("XSHE", "0030605790", "135246"));    //上交所
 
-            config.Brokers.Add(stockConfig);
+            config.Brokers.Add(stockConfig.BrokerType, stockConfig);
 
 
             BrokerConfig futureConfig = new BrokerConfig();
-            futureConfig.BrokerType = typeof(IFutureBroker);
+            futureConfig.BrokerType = typeof(IFutureBroker).Name;
             futureConfig.AccountID = "000000013856";
             futureConfig.AccountPwd = "135246";
 
-            futureConfig.Accounts.Add(new AccountConfig("CCFX", "02088981", "135246"));    //中金所
-            config.Brokers.Add(futureConfig);
+            futureConfig.Accounts.Add("CCFX", new AccountConfig("CCFX", "02088981", "135246"));    //中金所
+            config.Brokers.Add(futureConfig.BrokerType, futureConfig);
 
             ConfigUtil.Save(config, "rncfg.xml");
-            RootNetConfig config = ConfigUtil.Load<RootNetConfig>("rncfg.xml");
+            
+            config = ConfigUtil.Load<RootNetConfig>("rncfg.xml");
 
             RootNetBroker broker = new RootNetBroker();
 

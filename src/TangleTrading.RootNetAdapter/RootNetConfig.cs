@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using TangleTrading.Base;
+
 
 namespace TangleTrading.RootNetAdapter
 {
@@ -48,7 +50,7 @@ namespace TangleTrading.RootNetAdapter
         /// Broker类型
         /// </summary>
         [XmlAttribute]
-        public Type BrokerType { get; set; }
+        public string BrokerType { get; set; }
 
         /// <summary>
         /// 资金帐号
@@ -62,12 +64,13 @@ namespace TangleTrading.RootNetAdapter
         [XmlAttribute]
         public string AccountPwd { get; set; }
 
-        [XmlArray]
-        public List<AccountConfig> Accounts { get; set; }
+        [XmlElement]
+        public SerializableDictionary<string,AccountConfig> Accounts { get; set; }
+        //public List<AccountConfig> Accounts { get; set; }
 
         public BrokerConfig()
         {
-            Accounts = new List<AccountConfig>();
+            Accounts = new SerializableDictionary<string, AccountConfig>();
         }
     }
 
@@ -95,12 +98,15 @@ namespace TangleTrading.RootNetAdapter
         public string OptMode { get; set; }
 
 
-        [XmlArray]
-        public List<BrokerConfig> Brokers { get; set; }
+        //[XmlArray]
+        //public List<BrokerConfig> Brokers { get; set; }
+        [XmlElement]
+        public SerializableDictionary<string, BrokerConfig> Brokers { get; set; }
+
 
         public RootNetConfig()
         {
-            Brokers = new List<BrokerConfig>();
+            Brokers = new SerializableDictionary<string, BrokerConfig>();
         }
 
     }
