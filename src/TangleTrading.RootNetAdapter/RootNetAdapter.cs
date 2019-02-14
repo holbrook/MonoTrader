@@ -10,13 +10,7 @@ using TangleTrading.Stock;
 namespace TangleTrading.RootNetAdapter
 {
     [Export(typeof(IBroker))]
-    [Broker(new Dictionary<Type, string[]>()
-        {
-            { typeof(IStockBroker), new string[] { "XSHE", "XSHG", "NEEQ" }},
-            { typeof(IFutureBroker), new string[] { "CCFX", "XDCE", "XSGE", "XZCE" }}
-        })]
-
-
+    [Export(typeof(IFeed))]
     //[Feed(typeof(Stock.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
     //[Feed(typeof(Future.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
 
