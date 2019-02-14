@@ -5,17 +5,20 @@ using System.ComponentModel.Composition;
 namespace TangleTrading.Adapter
 {
     [MetadataAttribute,AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class BrokerAttribute : ExportAttribute, IBrokerMeta
+    public class BrokerAttribute : ExportAttribute, IBrokerAttribute
     {
         //public Type BrokerType { get; private set; }
 
         //public string[] Exchanges { get; private set; }
 
-        public Dictionary<Type, string[]> Exchanges { get; private set; }
+        public string Name { get; set; }
 
-        public BrokerAttribute(Dictionary<Type, string[]> exchanges)
+        public Type ConfigType { get; set; }
+
+        public BrokerAttribute(string name, Type cfgType)
         {
-            Exchanges = exchanges;
+            Name = name;
+            ConfigType = cfgType;
         }
 
 

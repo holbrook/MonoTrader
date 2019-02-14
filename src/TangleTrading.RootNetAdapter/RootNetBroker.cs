@@ -11,10 +11,12 @@ namespace TangleTrading.RootNetAdapter
 {
     [Export(typeof(IBroker))]
     [Export(typeof(IFeed))]
+
+    [Broker("根网适配器",typeof(RootNetConfig))]    
     //[Feed(typeof(Stock.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
     //[Feed(typeof(Future.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
 
-    public class RootNetAdapter : IBroker, IStockBroker, IFutureBroker
+    public class RootNetBroker : IBroker, IStockBroker, IFutureBroker
     {
         private GWDPApiCS.GWDPApiCS oPackage;
         private dynamic commonParams = new ExpandoObject();
@@ -24,7 +26,7 @@ namespace TangleTrading.RootNetAdapter
 
 
 
-        public RootNetAdapter()
+        public RootNetBroker()
         {
             StockAccountInfo = new Stock.Account();
             FutureAccountInfo = new Future.Account();
@@ -33,17 +35,13 @@ namespace TangleTrading.RootNetAdapter
         public void Initialize(dynamic param)
         {
             HardwareInfo info = new HardwareInfo();
+            RootNetConfig config = param as RootNetConfig;
+            //if(null==config)
+            //{
+            //    return;
+            //}
+            
 
-            //commonParams.terminalInfo = string.Format(  // 终端信息 Y   
-            //"PC;IIP:{0}; LIP:{1}; MAC:{2}; HD:{3}; PCN:{4};CPU:{5}; PI:{6}",
-            //info.IpAddress,
-            //info.IpAddress,
-            //info.MacAddress,
-            //info.DiskID,
-            //info.ComputerName,
-            //info.CpuID,
-            //"XXX"
-            //);
 
             commonParams.permitMac = info.MacAddress;
 
@@ -64,24 +62,24 @@ namespace TangleTrading.RootNetAdapter
             commonParams.accounts = new Dictionary<string, ExpandoObject>();
 
             commonParams.accounts.Add("XSHG", new ExpandoObject());/// XSHG :上海证券交易所，
-            commonParams.accounts["XSHG.regID"] = "D890019819";
-            commonParams.accounts["XSHG.pwd"] = "135246";
-            commonParams.accounts["XSHG.acctId"] = "001653019819";        //现货资金帐号
-            commonParams.accounts["XSHG.tradePwd"] = "135246";     // 现货资金密码
+            commonParams.accounts["XSHG"].regID = "D890019819";
+            commonParams.accounts["XSHG"].pwd = "135246";
+            commonParams.accounts["XSHG"].acctId = "001653019819";        //现货资金帐号
+            commonParams.accounts["XSHG"].tradePwd = "135246";     // 现货资金密码
 
 
 
-            commonParams.accounts.Add("XSHE", new ExpandoObject());    ///  :深圳证券交易所，
-            commonParams.accounts["XSHE.regID"] = "0030605790";
-            commonParams.accounts["XSHE.pwd"] = "135246";
-            commonParams.accounts["XSHE.acctId"] = "001653019819";        //现货资金帐号
-            commonParams.accounts["XSHE.tradePwd"] = "135246";     // 现货资金密码
+            commonParams.accounts.Add("", new ExpandoObject());    ///  :深圳证券交易所，
+            commonParams.accounts["XSHE"].regID = "0030605790";
+            commonParams.accounts["XSHE"].pwd = "135246";
+            commonParams.accounts["XSHE"].acctId = "001653019819";        //现货资金帐号
+            commonParams.accounts["XSHE"].tradePwd = "135246";     // 现货资金密码
 
             commonParams.accounts.Add("CCFX", new ExpandoObject());    ///  :中国金融期货交易所，
-            commonParams.accounts["CCFX.regID"] = "02088981";
-            commonParams.accounts["CCFX.pwd"] = "135246";
-            commonParams.accounts["CCFX.acctId"] = "000000013856";        //期货资金帐号
-            commonParams.accounts["CCFX.tradePwd"] = "135246";     // 期货资金密码
+            commonParams.accounts["CCFX"].regID = "02088981";
+            commonParams.accounts["CCFX"].pwd = "135246";
+            commonParams.accounts["CCFX"].acctId = "000000013856";        //期货资金帐号
+            commonParams.accounts["CCFX"].tradePwd = "135246";     // 期货资金密码
 
 
 
@@ -421,9 +419,9 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetValue(1, "optPwd", commonParams.optPwd);  // 柜员口令 
 
             oPackage.SetValue(1, "optMode", commonParams.optMode);  //  委托方式    Y
-            oPackage.SetValue(1, "acctId", commonParams.acctId);  //    资金帐号 N   二选一输入
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount["acctId"]);  //    资金帐号 N   二选一输入
                                                                   
-            oPackage.SetValue(1, "tradePwd", commonParams.tradePwd);  //   交易密码                    Y
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount["tradePwd"]);  //   交易密码                    Y
           //oPackage.SetValue(1, "regId   股东代码 N
           //oPackage.SetValue(1, "grantExchList   交易市场代码 N
           //oPackage.SetValue(1, "custid 客户代码    N
@@ -444,6 +442,7 @@ namespace TangleTrading.RootNetAdapter
 
             ExecuteStatus ret = new ExecuteStatus();
             ret.Code = int.Parse(oPackage.GetValue(0, "successflg"));
+            ret.Data = new List<Stock.Order>();
 
             if (0 != ret.Code)
                 ret.Message = oPackage.GetValue(0, "errorcode") + ":" + oPackage.GetValue(0, "failinfo");
@@ -451,7 +450,7 @@ namespace TangleTrading.RootNetAdapter
             else
             {
                 ret.Message = "调用成功";
-                List<Stock.Order> orders = new List<Stock.Order>();
+                List<Stock.Order> orders = ret.Data;
 
                 //获取返回记录条数
                 int iCnt = int.Parse(oPackage.GetValue(0, "recordCnt"));
@@ -482,7 +481,7 @@ namespace TangleTrading.RootNetAdapter
                 }
                 ret.Data = orders;
             }
-
+            
             return ret;
         }
 

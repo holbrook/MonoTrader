@@ -4,10 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
-using System.Linq;
 using System.Reflection;
-using Tangle.PluginModel;
 
 namespace TangleTrading.Framework
 {
@@ -40,7 +37,7 @@ namespace TangleTrading.Framework
 
         
 
-        private Dictionary<IPart, IPartAttribute> _parts = new Dictionary<IPart, IPartAttribute>();
+        //private Dictionary<IPart, IPartAttribute> _parts = new Dictionary<IPart, IPartAttribute>();
         //protected List<IPart> parts = new List<IPart>();
 
        // [Export]
@@ -92,38 +89,38 @@ namespace TangleTrading.Framework
             Container.ComposeParts(this);
 
             // Container.GetExportedValues<IPart>()
-            var parts = Container.GetExports<IPart,IPartAttribute>();
-            foreach (var kv in parts)
-            {
-                try
-                {
-                    _parts.Add(kv.Value, kv.Metadata);
-                    logger.Info(string.Format("发现插件: {0}({1})", kv.Metadata.Name, kv.Value.GetType().FullName));
-                }catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+    //        var parts = Container.GetExports<IPart,IPartAttribute>();
+    //        foreach (var kv in parts)
+    //        {
+    //            try
+    //            {
+    //                _parts.Add(kv.Value, kv.Metadata);
+    //                logger.Info(string.Format("发现插件: {0}({1})", kv.Metadata.Name, kv.Value.GetType().FullName));
+    //            }catch(Exception e)
+    //            {
+    //                Console.WriteLine(e.Message);
+    //            }
 
-                //通过反射，将所有监听的消息注册到NEsper
-				//TODO: ICommand
-                var part = kv.Value;
-                var interfaces = part.GetType().GetInterfaces()
-               .Where(x => typeof(IHandle).IsAssignableFrom(x) && x.IsGenericType);
+    //            //通过反射，将所有监听的消息注册到NEsper
+				////TODO: ICommand
+    //           // var part = kv.Value;
+    //           // var interfaces = part.GetType().GetInterfaces()
+    //           //.Where(x => typeof(IHandle).IsAssignableFrom(x) && x.IsGenericType);
 
-                foreach (var @interface in interfaces)
-                {
-                    var type = @interface.GetGenericArguments()[0];
-                    logger.Info(string.Format("    监听消息：{0}", type.FullName));
+    //           // foreach (var @interface in interfaces)
+    //           // {
+    //           //     var type = @interface.GetGenericArguments()[0];
+    //           //     logger.Info(string.Format("    监听消息：{0}", type.FullName));
 
-                    cepActor.Tell(type);
+    //           //     cepActor.Tell(type);
 
-                    //所有消息都发送到CEPActor
-                    System.EventStream.Subscribe(cepActor, type);
+    //           //     //所有消息都发送到CEPActor
+    //           //     System.EventStream.Subscribe(cepActor, type);
 
-                    types.Add(type);
+    //           //     types.Add(type);
 
-                }                
-            }
+    //           // }                
+    //        }
             
             
         }
@@ -189,13 +186,13 @@ namespace TangleTrading.Framework
         }
 
         //创建Actor
-        private void AddPart(IPart part, string name = null)
-        {
-            logger.Info("      添加部件");
-            //parts.Add(part);
+        //private void AddPart(IPart part, string name = null)
+        //{
+        //    logger.Info("      添加部件");
+        //    //parts.Add(part);
 
-            //BridgeActor = system.ActorOf(Props.Create(() => new PartActor(part)), name);//.WithDispatcher("akka.actor.synchronized-dispatcher"));
-        }
+        //    //BridgeActor = system.ActorOf(Props.Create(() => new PartActor(part)), name);//.WithDispatcher("akka.actor.synchronized-dispatcher"));
+        //}
 
 
         
@@ -204,13 +201,13 @@ namespace TangleTrading.Framework
         {
 
             
-            foreach (var part in Container.GetExportedValues<IPart>())
-            {
-                Console.WriteLine("创建Actor:" + part.GetType().FullName);
-                System.ActorOf(Props.Create(() => new PartActor(part)));//, part.GetType().FullName);
-                part.Initialize(null);
-                part.Start();
-            }
+            //foreach (var part in Container.GetExportedValues<IPart>())
+            //{
+            //    Console.WriteLine("创建Actor:" + part.GetType().FullName);
+            //    System.ActorOf(Props.Create(() => new PartActor(part)));//, part.GetType().FullName);
+            //    part.Initialize(null);
+            //    part.Start();
+            //}
         }
 
         //装配

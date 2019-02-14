@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace TangleTrading.Adapter
 {
-    public interface IBrokerMeta
+    public interface IBrokerAttribute
     {
-        Dictionary<Type,string[]> Exchanges { get; }
+        //Dictionary<Type,string[]> Exchanges { get; }
         //Type BrokerType { get;}
 
         // 上海证券交易所（英文：Shanghai Stock Exchange） SHSE
@@ -53,5 +53,8 @@ namespace TangleTrading.Adapter
         /// </summary>
         /// <value>The markets.</value>
         //string[] Exchanges { get; }
+
+        string Name { get; }
+        Type ConfigType { get; }
     }
 }

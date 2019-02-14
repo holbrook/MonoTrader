@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\MonoTrader\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.props" Condition="Exists('..\MonoTrader\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.props')" />
   <PropertyGroup>
@@ -79,22 +79,12 @@
     <Compile Include="Adapter\BrokerAttribute.cs" />
     <Compile Include="Adapter\FeedEventArgs.cs" />
     <Compile Include="Adapter\IBroker.cs" />
-    <Compile Include="Adapter\IBrokerMeta.cs" />
+    <Compile Include="Adapter\IBrokerAttribute.cs" />
     <Compile Include="Adapter\IFeed.cs" />
     <Compile Include="Adapter\IFeedMeta.cs" />
     <Compile Include="Adapter\FeedAttribute.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Base\" />
-    <Folder Include="Future\" />
-    <Folder Include="Instrument\" />
-    <Folder Include="Market\" />
-    <Folder Include="Stock\" />
-    <Folder Include="NEEQMM\" />
-    <Folder Include="Command\" />
-    <Folder Include="Adapter\" />
-    <Folder Include="Strategy\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

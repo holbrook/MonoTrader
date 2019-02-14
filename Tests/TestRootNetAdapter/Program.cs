@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tangle.Trading.RootNetAdapter;
+﻿using TangleTrading.Framework.Util;
+using TangleTrading.RootNetAdapter;
 
 namespace TestRootNetAdapter
 {
@@ -11,9 +7,39 @@ namespace TestRootNetAdapter
     {
         static void Main(string[] args)
         {
+            //RootNetBrokerConfig config = new RootNetBrokerConfig();
 
-            RootNetAdapter broker = new RootNetAdapter();
-            broker.Initialize(null);
+            //config.OptID = "99990";       // 柜员代码
+            //config.OptPwd = "112233";     // 柜员口令
+            //config.OptMode = "W5";        // 委托方式
+
+            //BrokerConfig stockConfig = new BrokerConfig();
+            //stockConfig.BrokerType = "StockBroker";
+            //stockConfig.AccountID = "001653019819";
+            //stockConfig.AccountPwd = "135246";
+
+            //stockConfig.Accounts.Add(new AccountConfig("XSHG", "D890019819", "135246"));    //上交所
+            //stockConfig.Accounts.Add(new AccountConfig("XSHE", "0030605790", "135246"));    //上交所
+
+            //config.Brokers.Add(stockConfig);
+
+
+            //BrokerConfig futureConfig = new BrokerConfig();
+            //futureConfig.BrokerType = "FutureBroker";
+            //futureConfig.AccountID = "000000013856";
+            //futureConfig.AccountPwd = "135246";
+
+            //futureConfig.Accounts.Add(new AccountConfig("CCFX", "02088981", "135246"));    //中金所
+            //config.Brokers.Add(futureConfig);
+
+            //ConfigUtil.Save(config, "rncfg.xml");
+            RootNetConfig config = ConfigUtil.Load<RootNetConfig>("rncfg.xml");
+
+            RootNetBroker broker = new RootNetBroker();
+
+           
+
+            broker.Initialize(config);
 
             //broker.TestOrder();
 
@@ -22,23 +48,26 @@ namespace TestRootNetAdapter
             //string a = broker.AddStockOrder("000001.XSHE", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 14m);
 
             //股票查询订单
-            var orders = broker.GetOpenStockOrders();
+            //var orders = broker.GetOpenStockOrders();
 
             //股票撤单
-            broker.CancelStockOrder("00000024");
-            orders = broker.GetOpenStockOrders();
+            //broker.CancelStockOrder("00000024");
+            //orders = broker.GetOpenStockOrders();
 
             //Console.WriteLine(orders.Count);
             //股票同步数据（资金，仓位）
             //broker.SynchronizeStockAccount();
 
             //期货下单
-            "IC1903.CCFX"
+            //
+            broker.AddFutureOrder("IC1903.CCFX", 1, TangleTrading.Base.ORDER_SIDE.BUY, TangleTrading.Future.POSITION_EFFECT.OPEN);
             //期货查询订单
 
             //期货撤单
 
             //期货同步数据
+
+
 
         }
 

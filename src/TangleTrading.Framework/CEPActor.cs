@@ -2,10 +2,6 @@
 using com.espertech.esper.client;
 using Common.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TangleTrading.Framework
 {

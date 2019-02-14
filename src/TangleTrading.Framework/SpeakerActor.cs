@@ -20,13 +20,13 @@ namespace TangleTrading.Framework
             speaker.Rate = 0;      //设置朗读频率 [范围  -10 ~ 10] 
             speaker.SelectVoice("Microsoft Lili");  //SpeakChina
             //speaker.SelectVoice("Microsoft Anna");  //SpeakEnglish
-            speaker.SelectVoiceByHints(VoiceGender.Male, 
+            speaker.SelectVoiceByHints(VoiceGender.Male,
                 VoiceAge.Child, 2, System.Globalization.CultureInfo.CurrentCulture);
 
             Receive<SpeechCommand>((cmd) =>
             {
                 ExecuteSpeech(cmd);
-            })
+            });
         }
 
         private void ExecuteSpeech(SpeechCommand cmd)

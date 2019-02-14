@@ -1,26 +1,29 @@
-﻿using System;
-using Akka.Actor;
-using Tangle.Trading.Core;
-using TangleTrading;
+﻿using Akka.Actor;
+using TangleTrading.Adapter;
+using TangleTrading.Framework.Command;
 
 namespace TangleTrading.Framework
 {
     public class AdapterActor : ReceiveActor
     {
-        private IAdapter Adapter { get; set; }
-        public AdapterActor(IAdapter adapter, dynamic config=null)
+        private IBroker Broker { get; set; }
+        public AdapterActor(IBroker broker, dynamic config = null)
         {
-            Adapter = adapter;
-            Adapter.Initialize(config);
+            Broker = broker;
+            Broker.Initialize(config);
 
-            if(config.SyncTickMillseconds>0)
+            if (config.SyncTickMillseconds > 0)
             {
-                Context.System.Scheduler.ScheduleTellRepeatedly(0, config.SyncTickMillseconds,Self,"SYNCTICK",Self);
+               // Context.System.Scheduler.ScheduleTellRepeatedly(0, config.SyncTickMillseconds, Self, "SYNCTICK", Self);
             }
 
             Receive<AdapterCommand>((AdapterCommand arg) => { });
 
-            Adapter.Start();
+            //Broker.Start();
         }
+
+
+
+
     }
 }
