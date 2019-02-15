@@ -1,4 +1,5 @@
 ﻿using System;
+using TangleTrading.Adapter;
 using TangleTrading.Base;
 using TangleTrading.Framework.Util;
 using TangleTrading.Future;
@@ -43,20 +44,38 @@ namespace TestRootNetAdapter
             RootNetFeeder feeder = new RootNetFeeder();
             feeder.Initialize(config);
 
+            feeder.Subscribe("512160.XSHG");
+            feeder.Subscribe("113011.XSHG");
+            feeder.Subscribe("128024.XSHE");
+            feeder.Subscribe("IC1903.CCFX");
+            feeder.Subscribe("IF1903.CCFX");
+
+            feeder.FeedEventHandler += new EventHandler<FeedEventArgs>((sender, e) =>
+            {
+                if(e.Event is TangleTrading.Stock.Tick)
+                {
+                    Console.WriteLine(string.Format("stock Tick:{0}", e.Event));
+                    return;
+                }
+
+                if (e.Event is TangleTrading.Future.Tick)
+                {
+                    Console.WriteLine(string.Format("future Tick:{0}", e.Event));
+                    return;
+                }
+            });
+
+
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Enabled = true;
             timer.Interval = 500;//执行间隔时间,单位为毫秒
            
+
+
             timer.Elapsed += new System.Timers.ElapsedEventHandler((sender,arg)=> {
-                
-                Console.WriteLine(string.Format("{0}\t{1}",//\t{2}\t{3}",
-                    //feeder.GetStockTick("512160.XSHG").Data,
-                    //feeder.GetStockTick("128024.XSHE").Data,
-                    feeder.GetStockTick("113011.XSHG").Data,
-                    //feeder.GetFutureTick("113011.XSHG").Data,
-                    feeder.GetFutureTick("IF1903.CCFX").Data
-                ));
+                feeder.Go();
             });
+
             timer.Start();
             Console.ReadLine();
 
@@ -97,6 +116,9 @@ namespace TestRootNetAdapter
 
         }
 
-
+        private static void Feeder_FeedEventHandler(object sender, TangleTrading.Adapter.FeedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

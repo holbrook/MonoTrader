@@ -4,33 +4,98 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TangleTrading.Adapter;
+using TangleTrading.Future;
+using TangleTrading.Stock;
 
 namespace TangleTrading.RootNetAdapter
 {
-    public class RootNetFeeder : RootNetBase, IFeeder
+    public class RootNetFeeder : RootNetBase, IFeeder, IFeed<Stock.Tick>, IFeed<Future.Tick>
     {
-        private List<string> Codes { get; set; }
+        private List<string> StockCodes { get; set; }
+        private List<string> FutureCodes { get; set; }
+
+
+        public event EventHandler<FeedEventArgs> FeedEventHandler;        
 
         public RootNetFeeder():base()
         {
-            Codes = new List<string>();
+            StockCodes = new List<string>();
+            FutureCodes = new List<string>();
         }
 
-        public void Subscribe(string code, string type)
+        
+
+        public ExecuteStatus Subscribe(string code, string type=null)
         {
-            if (!Codes.Contains(code))
-                Codes.Add(code);            
+            foreach(var accountConfig in commonParams.stockAccount.Accounts)
+            {
+                if (accountConfig.MarketID != code.Split('.')[1].ToUpper())
+                    continue;
+                if (!StockCodes.Contains(code))
+                {
+                    StockCodes.Add(code);
+                    return new ExecuteStatus(0, "订阅股票" + code + "成功！");
+                }else
+                {
+                    return new ExecuteStatus(1, "已经订阅股票" + code);
+                }
+                
+            }
+
+            foreach (var accountConfig in commonParams.futureAccount.Accounts)
+            {
+                if (accountConfig.MarketID != code.Split('.')[1].ToUpper())
+                    continue;
+                if (!FutureCodes.Contains(code))
+                {
+                    FutureCodes.Add(code);
+                    return new ExecuteStatus(0, "订阅期货" + code + "成功！");
+                }
+                else
+                {
+                    return new ExecuteStatus(1, "已经订阅期货" + code);
+                }
+            }
+
+            return new ExecuteStatus(-1, "未知的市场代码" + code);
         }
 
-        public void UnSubscribe(string code, string type)
+        public ExecuteStatus UnSubscribe(string code, string type=null)
         {
-            if (Codes.Contains(code))
-                Codes.Remove(code);
+            if (StockCodes.Contains(code))
+            {
+                StockCodes.Remove(code);
+                return new ExecuteStatus(0, "取消订阅股票" + code + "成功！");
+
+            }
+
+            if (FutureCodes.Contains(code))
+            {
+                FutureCodes.Remove(code);
+                return new ExecuteStatus(0, "取消订阅股票" + code + "成功！");
+            }
+
+            return new ExecuteStatus(-1, "未订阅证券代码" + code);
         }
 
         //轮询
         public void Go()
         {
+            if (null == FeedEventHandler)
+                return;
+
+            foreach(var code in StockCodes)
+            {
+                var x = GetStockTick(code);
+                if(x.Data is Stock.Tick)
+                {
+                    FeedEventHandler(this, new FeedEventArgs(code, x.Data));
+                }
+
+            }
+
+            var codes = string.Join("^", FutureCodes.ToArray());
+            
 
         }
 

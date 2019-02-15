@@ -3,17 +3,14 @@ namespace TangleTrading.Adapter
 {
     public class FeedEventArgs:EventArgs
     {
+        public string InstrumentID { get; protected set; }
+        public object Event { get; protected set; }
 
-    }
-
-    public class FeedEventArgs<T>: FeedEventArgs
-    {
-        public string InstrumentID { get; private set; }
-        public T Event { get; private set; }
-        public FeedEventArgs(string instrumentID, T e)
+        public FeedEventArgs(string instrumentID, object e)
         {
             InstrumentID = instrumentID;
             Event = e;
         }
+
     }
 }

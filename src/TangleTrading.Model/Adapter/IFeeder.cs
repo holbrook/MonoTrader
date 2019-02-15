@@ -3,13 +3,15 @@ namespace TangleTrading.Adapter
 {
     public interface IFeeder
     {
-        void Subscribe(string code, string type);
-        void UnSubscribe(string code, string type);
+        ExecuteStatus Subscribe(string code, string type);
+        ExecuteStatus UnSubscribe(string code, string type);
+
+        event EventHandler<FeedEventArgs> FeedEventHandler;
     }
 
     public interface IFeed<T>
     {
-        event EventHandler<FeedEventArgs<T>> OnEvent;
+        
         
     }
 }
