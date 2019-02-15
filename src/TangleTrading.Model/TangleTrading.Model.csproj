@@ -83,9 +83,9 @@
     <Compile Include="Adapter\FeedEventArgs.cs" />
     <Compile Include="Adapter\IBroker.cs" />
     <Compile Include="Adapter\IBrokerAttribute.cs" />
-    <Compile Include="Adapter\IFeed.cs" />
-    <Compile Include="Adapter\IFeedMeta.cs" />
-    <Compile Include="Adapter\FeedAttribute.cs" />
+    <Compile Include="Adapter\IFeeder.cs" />
+    <Compile Include="Adapter\IFeederAttribute.cs" />
+    <Compile Include="Adapter\FeederAttribute.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

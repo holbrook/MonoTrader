@@ -9,57 +9,29 @@ using TangleTrading.Stock;
 
 namespace TangleTrading.RootNetAdapter
 {
-    [Export(typeof(IBroker))]
-    [Export(typeof(IFeed))]
+    //[Export(typeof(IBroker))]
+    //[Export(typeof(IFeed))]
 
     [Broker("根网适配器",typeof(RootNetConfig))]    
     //[Feed(typeof(Stock.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
     //[Feed(typeof(Future.Tick), new string[] { "XSHE", "XSHG", "NEEQ" })]
 
-    public class RootNetBroker : IBroker, IStockBroker, IFutureBroker
+    public class RootNetBroker : RootNetBase, IBroker, IStockBroker, IFutureBroker
     {
-        private GWDPApiCS.GWDPApiCS oPackage;
-        //private dynamic commonParams = new ExpandoObject();
-        private string permitMac = null;
-
-        private RootNetConfig config = null;
+        
+        
 
         public Stock.Account StockAccountInfo { get; private set; }
         public Future.Account FutureAccountInfo { get; private set; }
 
 
-
-        public RootNetBroker()
+        public RootNetBroker():base()
         {
             StockAccountInfo = new Stock.Account();
-            FutureAccountInfo = new Future.Account();
+            FutureAccountInfo = new Future.Account();            
         }
 
-        public void Initialize(dynamic param)
-        {
-            HardwareInfo info = new HardwareInfo();
-            config = param as RootNetConfig;
-
-            if (null == config)
-            {
-                //TODO: Log
-                return;
-            }          
-
-
-            permitMac = info.MacAddress;
-
-            //TODO: 同步一次账号
-
-            oPackage = new GWDPApiCS.GWDPApiCS();
-
-            //初始化。一个对象初始化一次就可以
-            if (oPackage.Init() == false)
-            {
-                //Logger.Error("初始化通讯对象失败！");
-                return;
-            }
-        }
+        
 
 
 
@@ -97,14 +69,14 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("00800140");   //资金查询
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
             //oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IStockBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IStockBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount.AccountPwd);                   //交易密码 Y
 
             oPackage.SetValue(1, "maxRowNum", "500");                   //每次返回的最大记录数  Y 取值范围：1～500
             oPackage.SetValue(1, "packNum", "1");                   //查询序号    Y 首次查询时为1，查下一页时递加1
@@ -167,14 +139,14 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("00300021");   //股份查询（建议交易查询时使用，效率高） 
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IStockBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IStockBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount.AccountPwd);                   //交易密码 Y
 
 
             //custid  客户代码 N
@@ -245,14 +217,14 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("00100030");   //普通买卖委托
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IStockBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IStockBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount.AccountPwd);                   //交易密码 Y
 
 
 
@@ -335,14 +307,14 @@ namespace TangleTrading.RootNetAdapter
 
             //======================================================
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IStockBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IStockBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount.AccountPwd);                   //交易密码 Y
 
 
             
@@ -383,14 +355,14 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("00807300");   //查询可撤单委托
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IStockBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IStockBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.stockAccount.AccountPwd);                   //交易密码 Y
 
 
           //oPackage.SetValue(1, "regId   股东代码 N
@@ -463,20 +435,20 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("20100030");   //期货普通报单
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IStockBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IStockBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "tradePwd", commonParams.futureAccount.AccountPwd);                   //交易密码 Y
 
 
 
             oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 Y
-            oPackage.SetValue(1, "regId", config.Brokers["IFutureBroker"].Accounts[orderbookID.Split('.')[1]].RegID);                  // 股东代码 N
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IFutureBroker"].Accounts[orderbookID.Split('.')[1]].TradePwd);            //交易密码 Y
+            oPackage.SetValue(1, "regId", commonParams.marketAccounts[orderbookID.Split('.')[1]].regId);                  // 股东代码 N
+            oPackage.SetValue(1, "tradePwd", commonParams.marketAccounts[orderbookID.Split('.')[1]].regPwd);            //交易密码 Y
 
             oPackage.SetValue(1, "currencyId", "00");//   人民币     //currencyId  货币代码 Y
 
@@ -545,14 +517,14 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("20100031");   //期货报单操作请求
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IStockBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "acctPwd", config.Brokers["IStockBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.stockAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.stockAccount.AccountPwd);                   //交易密码 Y
 
 
 
@@ -560,8 +532,10 @@ namespace TangleTrading.RootNetAdapter
 
 
             oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 Y
-            oPackage.SetValue(1, "regId", config.Brokers["IStockBroker"].Accounts[orderbookID.Split('.')[1]].RegID);                  // 股东代码 N
-            oPackage.SetValue(1, "tradePwd", config.Brokers["IStockBroker"].Accounts[orderbookID.Split('.')[1]].TradePwd);            //交易密码 Y
+
+            oPackage.SetValue(1, "regId", commonParams.marketAccounts[orderbookID.Split('.')[1]].regId);                  // 股东代码 N
+            oPackage.SetValue(1, "tradePwd", commonParams.marketAccounts[orderbookID.Split('.')[1]].regPwd);            //交易密码 Y
+
 
             oPackage.SetValue(1, "actionFlag", "DELETE");   //      报单操作类型 Y
 
@@ -594,16 +568,16 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("20800010");   //当日报单情况查询
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IFutureBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "acctPwd", config.Brokers["IFutureBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount.AccountPwd);                   //交易密码 Y
 
-
+            
             //oPackage.SetValue(1, "exchId", Tangle2RootNet.OrderbookID2exchId(orderbookID)); //市场代码 N
             //oPackage.SetValue(1, "regId", commonParams.accounts[""].regId);                  // 股东代码 N
             //oPackage.SetValue(1, "tradePwd", commonParams.accounts[""].pwd);
@@ -729,14 +703,14 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("20800110");   //资金查询
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
             //oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IFutureBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "acctPwd", config.Brokers["IFutureBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount.AccountPwd);                   //交易密码 Y
 
             oPackage.SetValue(1, "maxRowNum", "500");                   //每次返回的最大记录数  Y 取值范围：1～500
             oPackage.SetValue(1, "packNum", "1");                   //查询序号    Y 首次查询时为1，查下一页时递加1
@@ -798,14 +772,14 @@ namespace TangleTrading.RootNetAdapter
             oPackage.SetFunctionCode("20800100");   //查询客户期货持仓信息
             oPackage.SetFlags(0);
 
-            oPackage.SetValue(1, "optId", config.OptID);                  //柜员代码
-            oPackage.SetValue(1, "optPwd", config.OptPwd);                //柜员密码
-            oPackage.SetValue(1, "optMode", config.OptMode);              //委托方式
-            oPackage.SetValue(1, "permitMac", permitMac);          //登录Mac地址
+            oPackage.SetValue(1, "optId", commonParams.optId);                  //柜员代码
+            oPackage.SetValue(1, "optPwd", commonParams.optPwd);                //柜员密码
+            oPackage.SetValue(1, "optMode", commonParams.optMode);              //委托方式
+            oPackage.SetValue(1, "permitMac", commonParams.permitMac);          //登录Mac地址
             //oPackage.SetValue(1, "terminalInfo", commonParams.terminalInfo);                //终端信息
 
-            oPackage.SetValue(1, "acctId", config.Brokers["IFutureBroker"].AccountID);                  // 资金账号
-            oPackage.SetValue(1, "acctPwd", config.Brokers["IFutureBroker"].AccountPwd);                   //交易密码 Y
+            oPackage.SetValue(1, "acctId", commonParams.futureAccount.AccountID);                  // 资金账号
+            oPackage.SetValue(1, "acctPwd", commonParams.futureAccount.AccountPwd);                   //交易密码 Y
 
 
             oPackage.SetValue(1, "exchId", "CCFX");

@@ -4,9 +4,9 @@ using System.ComponentModel.Composition;
 namespace TangleTrading.Adapter
 {
     [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class FeedAttribute : ExportAttribute, IFeedMeta
+    public class FeederAttribute : ExportAttribute, IFeederAttribute
     {
-        public FeedAttribute()
+        public FeederAttribute()
         {
         }
     }

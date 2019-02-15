@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RootNetBase.cs" />
     <Compile Include="RootNetBroker.cs" />
     <Compile Include="RootNetConfig.cs" />
     <Compile Include="RootNetFeeder.cs" />

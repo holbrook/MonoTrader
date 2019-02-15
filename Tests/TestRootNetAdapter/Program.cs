@@ -1,4 +1,6 @@
-﻿using TangleTrading.Framework.Util;
+﻿using System;
+using TangleTrading.Base;
+using TangleTrading.Framework.Util;
 using TangleTrading.Future;
 using TangleTrading.RootNetAdapter;
 using TangleTrading.Stock;
@@ -20,10 +22,10 @@ namespace TestRootNetAdapter
             stockConfig.AccountID = "001653019819";
             stockConfig.AccountPwd = "135246";
 
-            stockConfig.Accounts.Add("XSHG", new AccountConfig("XSHG", "D890019819", "135246"));    //上交所
-            stockConfig.Accounts.Add("XSHE", new AccountConfig("XSHE", "0030605790", "135246"));    //上交所
+            stockConfig.Accounts.Add(new AccountConfig("XSHG", "D890019819", "135246"));    //上交所
+            stockConfig.Accounts.Add(new AccountConfig("XSHE", "0030605790", "135246"));    //上交所
 
-            config.Brokers.Add(stockConfig.BrokerType, stockConfig);
+            config.Brokers.Add(stockConfig);
 
 
             BrokerConfig futureConfig = new BrokerConfig();
@@ -31,24 +33,44 @@ namespace TestRootNetAdapter
             futureConfig.AccountID = "000000013856";
             futureConfig.AccountPwd = "135246";
 
-            futureConfig.Accounts.Add("CCFX", new AccountConfig("CCFX", "02088981", "135246"));    //中金所
-            config.Brokers.Add(futureConfig.BrokerType, futureConfig);
+            futureConfig.Accounts.Add(new AccountConfig("CCFX", "02088981", "135246"));    //中金所
+            config.Brokers.Add(futureConfig);
 
             ConfigUtil.Save(config, "rncfg.xml");
             
             config = ConfigUtil.Load<RootNetConfig>("rncfg.xml");
 
-            RootNetBroker broker = new RootNetBroker();
+            RootNetFeeder feeder = new RootNetFeeder();
+            feeder.Initialize(config);
 
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Enabled = true;
+            timer.Interval = 500;//执行间隔时间,单位为毫秒
            
+            timer.Elapsed += new System.Timers.ElapsedEventHandler((sender,arg)=> {
+                
+                Console.WriteLine(string.Format("{0}\t{1}",//\t{2}\t{3}",
+                    //feeder.GetStockTick("512160.XSHG").Data,
+                    //feeder.GetStockTick("128024.XSHE").Data,
+                    feeder.GetStockTick("113011.XSHG").Data,
+                    //feeder.GetFutureTick("113011.XSHG").Data,
+                    feeder.GetFutureTick("IF1903.CCFX").Data
+                ));
+            });
+            timer.Start();
+            Console.ReadLine();
 
-            broker.Initialize(config);
+            //RootNetBroker broker = new RootNetBroker();
+
+
+
+            //broker.Initialize(config);
 
             //broker.TestOrder();
 
             //股票下单
-            //string a = broker.AddStockOrder("600000.XSHG", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 11.6m);
-            //string a = broker.AddStockOrder("000001.XSHE", 100, Tangle.Trading.Base.ORDER_SIDE.BUY, 14m);
+            //var a = broker.AddStockOrder("600000.XSHG", 100, ORDER_SIDE.BUY, 11.6m);
+            //var b = broker.AddStockOrder("000001.XSHE", 100, ORDER_SIDE.BUY, 14m);
 
             //股票查询订单
             //var orders = broker.GetOpenStockOrders();
@@ -63,9 +85,10 @@ namespace TestRootNetAdapter
 
             //期货下单
             //
-            broker.AddFutureOrder("IC1903.CCFX", 1, TangleTrading.Base.ORDER_SIDE.BUY, TangleTrading.Future.POSITION_EFFECT.OPEN);
-            //期货查询订单
+            //broker.AddFutureOrder("IF1903.CCFX", 1, TangleTrading.Base.ORDER_SIDE.BUY, TangleTrading.Future.POSITION_EFFECT.OPEN);
 
+            //期货查询订单
+            //broker.GetOpenFutureOrders();
             //期货撤单
 
             //期货同步数据

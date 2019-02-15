@@ -64,13 +64,16 @@ namespace TangleTrading.RootNetAdapter
         [XmlAttribute]
         public string AccountPwd { get; set; }
 
-        [XmlElement]
-        public SerializableDictionary<string,AccountConfig> Accounts { get; set; }
-        //public List<AccountConfig> Accounts { get; set; }
+        //xml格式不友好，适合界面配置，不适合手工
+        //[XmlElement]
+        //public SerializableDictionary<string,AccountConfig> Accounts { get; set; }
+        
+        [XmlArray]
+        public List<AccountConfig> Accounts { get; set; }
 
         public BrokerConfig()
         {
-            Accounts = new SerializableDictionary<string, AccountConfig>();
+            Accounts = new List<AccountConfig>();
         }
     }
 
@@ -98,15 +101,16 @@ namespace TangleTrading.RootNetAdapter
         public string OptMode { get; set; }
 
 
-        //[XmlArray]
-        //public List<BrokerConfig> Brokers { get; set; }
-        [XmlElement]
-        public SerializableDictionary<string, BrokerConfig> Brokers { get; set; }
+        [XmlArray]
+        public List<BrokerConfig> Brokers { get; set; }
+
+        //[XmlElement]
+        //public SerializableDictionary<string, BrokerConfig> Brokers { get; set; }
 
 
         public RootNetConfig()
         {
-            Brokers = new SerializableDictionary<string, BrokerConfig>();
+            Brokers = new List<BrokerConfig>();
         }
 
     }

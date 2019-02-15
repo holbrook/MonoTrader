@@ -9,6 +9,11 @@ namespace TangleTrading.Stock
         public string OrderbookID { get; set; }
 
         /// <summary>
+        /// 证券名称
+        /// </summary>
+        public string InstrumentName { get; set; }
+
+        /// <summary>
         /// 当前快照数据的时间戳
         /// </summary>
         public DateTime Timestamp { get; set; }
@@ -31,7 +36,7 @@ namespace TangleTrading.Stock
         /// <summary>
         /// 最新价
         /// </summary>
-        public decimal Last { get; set; }
+        public decimal LastPrice { get; set; }
 
         /// <summary>
         /// 昨日收盘价
@@ -72,7 +77,10 @@ namespace TangleTrading.Stock
         /// <value>The ask volumes.</value>
         public int[] BidVolumes { get; set; }
 
-
+        public override string ToString()
+        {
+            return string.Format("{0}({1}): 最新价:{2}", OrderbookID, InstrumentName, LastPrice);
+        }
 
     }
 }
