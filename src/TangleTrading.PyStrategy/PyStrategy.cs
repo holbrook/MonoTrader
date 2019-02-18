@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using Common.Logging;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
@@ -12,7 +13,7 @@ namespace TangleTrading.PyStrategy
     /// 执行Python脚本编写的策略。
     /// 兼容RiceQuant()
     /// </summary>
-    public class PyStrategy :IStrategy
+    public class PyStrategy : IStrategy
     {
         //ScriptRuntime pyRuntime = Python.CreateRuntime();
         //dynamic py = pyRuntime.UseFile(@"E:\Test\test.py");
@@ -51,13 +52,16 @@ namespace TangleTrading.PyStrategy
             try
             {
                 source.Execute(scope);
+                var init = scope.GetVariable<Action<ExpandoObject>>("initialize");
+                init(ctx.CustomData);
+                Console.WriteLine(ctx.CustomData.securities);
 
             }catch(Exception e)
             {
+                //this.Hint("abc");
 
-                Hint("abc");
-                //GetLogger().Info();
-                Console.WriteLine("脚本错误:" + e.Message);
+                this.GetLogger().Error("脚本错误:" + e.Message);
+                return;
             }
 
 
