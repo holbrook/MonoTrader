@@ -40,6 +40,9 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Serialization" />
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\SerializableDictionary.cs" />

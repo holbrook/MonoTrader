@@ -1,13 +1,13 @@
-﻿using Tangle.PluginModel;
-using System.Timers;
+﻿using System.Timers;
+using Common.Logging;
 using TangleTrading.Adapter;
 
 namespace Plugin1
 {
     [Broker("Mock适配器", typeof(MockConfig1))]
-    public class MockBroker : IPart
+    public class MockBroker : IBroker
     {
-        public IPartContext Context { get; set; }
+        ILog Logger { get; set; }
 
         private Timer _timer = new Timer();
 
@@ -29,8 +29,8 @@ namespace Plugin1
         private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
 
-            Context.Logger.Info("Part1 send Apple");
-            Context.Publish(new Apple());
+            Logger.Info("Part1 send Apple");
+            //Context.Publish(new Apple());
             _count++;
             if (_count > 5)
                 _timer.Stop();

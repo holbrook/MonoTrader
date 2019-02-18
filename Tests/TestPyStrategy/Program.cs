@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using TangleTrading.PyStrategy;
+using TangleTrading.Strategy;
 
 namespace TestPyStrategy
 {
@@ -15,11 +16,13 @@ namespace TestPyStrategy
         {
             //Console.WriteLine("Hello World!");
             PyStrategy stgy = new PyStrategy();
-            dynamic config = new ExpandoObject();
-            config.PythonFile = "hello.py";
-            //stgy.Initialize(config);
 
-            Save1();
+            Context ctx = new Context();
+            dynamic config = new ExpandoObject();
+            config.PythonFile = "SpreadTrading.py";
+            stgy.Initialize(ctx,config);
+
+            //Save1();
 
         }
 

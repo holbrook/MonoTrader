@@ -1,6 +1,8 @@
 ﻿using System;
+using Common.Logging;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using TangleTrading.Adapter;
 using TangleTrading.Stock;
 using TangleTrading.Strategy;
 
@@ -15,6 +17,8 @@ namespace TangleTrading.PyStrategy
         //ScriptRuntime pyRuntime = Python.CreateRuntime();
         //dynamic py = pyRuntime.UseFile(@"E:\Test\test.py");
 
+        
+
         ScriptEngine engine;
         ScriptScope scope;
         ScriptSource source;
@@ -27,6 +31,8 @@ namespace TangleTrading.PyStrategy
             //传入函数
             scope.SetVariable("order_shares", (Func<string, int, Order>)this.OrderShares);
         }
+
+
 
         public void Handle(Context ctx, FeedEventArgs feedEvent)
         {
@@ -41,7 +47,19 @@ namespace TangleTrading.PyStrategy
             //obj = pyRunTime.UseFile(config.PythonFile);
 
             source = engine.CreateScriptSourceFromFile(config.PythonFile);
-            source.Execute(scope);
+
+            try
+            {
+                source.Execute(scope);
+
+            }catch(Exception e)
+            {
+
+                Hint("abc");
+                //GetLogger().Info();
+                Console.WriteLine("脚本错误:" + e.Message);
+            }
+
 
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Logging;
 using MonoTrader.Market;
 using TangleTrading.Adapter;
 using TangleTrading.Base;
@@ -16,6 +17,7 @@ namespace TangleTrading.Strategy
     /// </summary>
     public interface IStrategy
     {
+        //ILog Logger { get; set; }
         void Initialize(Context ctx, dynamic config=null);
         void Handle(Context ctx, FeedEventArgs feedEvent);
     }
