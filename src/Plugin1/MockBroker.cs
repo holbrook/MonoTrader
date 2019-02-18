@@ -1,10 +1,11 @@
 ﻿using Tangle.PluginModel;
 using System.Timers;
+using TangleTrading.Adapter;
 
 namespace Plugin1
 {
-    [PartAttribute("部件1")]
-    public class Part1InPlugin1 : IPart
+    [Broker("Mock适配器", typeof(MockConfig1))]
+    public class MockBroker : IPart
     {
         public IPartContext Context { get; set; }
 
